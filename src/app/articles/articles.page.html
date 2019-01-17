@@ -10,9 +10,10 @@
       <ion-label>
           <ion-icon name="search" slot="left" color="dark"></ion-icon>
       </ion-label>
-      <ion-input placeholder="Search Articles"></ion-input>
+      <ion-input #searchQuery placeholder="Search Articles" (input)="searchArticles($event.target.value)"></ion-input>
+      <ion-icon slot="end" name="close-circle-outline" (click)="clearSearchQuery(searchQuery)" *ngIf="searchQuery.value"></ion-icon>
     </ion-item>
-    <ion-item *ngFor="let article of articles" [routerLink]="['/article', article.id]" detail>
+    <ion-item *ngFor="let article of currentArticles" [routerLink]="['/article', article.id]" detail>
       <ion-label text-wrap>
         <h2>{{article.title}}</h2>
         <p>{{article.text | slice:0:80}}...</p>

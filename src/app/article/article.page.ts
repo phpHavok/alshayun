@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Article, ArticlesService } from '../services/articles.service'
 
 @Component({
   selector: 'app-article',
@@ -9,24 +10,12 @@ import { ActivatedRoute } from '@angular/router';
 export class ArticlePage implements OnInit {
   private article: Article;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private articles: ArticlesService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.article = {
-        id: +params.get('id'),
-        title: 'TODO',
-        text: 'TODO',
-        tags: []
-      }
+      this.article = this.articles.getArticle(+params.get('id'));
     });
   }
 
-}
-
-export interface Article {
-  id: number,
-  title: string,
-  text: string,
-  tags: string[]
 }
