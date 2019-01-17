@@ -1,5 +1,7 @@
 {
   "name": "alshayun",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
