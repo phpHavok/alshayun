@@ -16,7 +16,8 @@ export class ArticlePage implements OnInit {
       this.article = {
         id: +params.get('id'),
         title: 'TODO',
-        text: 'TODO'
+        text: 'TODO',
+        tags: []
       }
     });
   }
@@ -26,5 +27,6 @@ export class ArticlePage implements OnInit {
 export interface Article {
   id: number,
   title: string,
-  text: string
+  text: string,
+  tags: string[]
 }

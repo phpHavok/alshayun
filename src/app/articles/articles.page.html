@@ -4,10 +4,24 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let article of articles" [routerLink]="['/article', article.id]">
-      <ion-label>{{article.title}}</ion-label>
+<ion-content>
+  <ion-list lines="full">
+    <ion-item>
+      <ion-label>
+          <ion-icon name="search" slot="left" color="dark"></ion-icon>
+      </ion-label>
+      <ion-input placeholder="Search Articles"></ion-input>
+    </ion-item>
+    <ion-item *ngFor="let article of articles" [routerLink]="['/article', article.id]" detail>
+      <ion-label text-wrap>
+        <h2>{{article.title}}</h2>
+        <p>{{article.text | slice:0:80}}...</p>
+        <p>
+          <ng-container *ngFor="let tag of article.tags">
+            <ion-badge>{{tag}}</ion-badge>&nbsp;
+          </ng-container>
+        </p>
+      </ion-label>
     </ion-item>
   </ion-list>
 </ion-content>
