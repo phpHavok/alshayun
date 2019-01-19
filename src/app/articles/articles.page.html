@@ -16,7 +16,7 @@
     <ion-item *ngFor="let article of currentArticles" [routerLink]="['/article', article.id]" detail>
       <ion-label text-wrap>
         <h2>{{article.title}}</h2>
-        <p>{{article.text | slice:0:80}}...</p>
+        <p>{{article.excerpt | slice:0:80}}...</p>
         <p>
           <ng-container *ngFor="let tag of article.tags">
             <ion-badge>{{tag}}</ion-badge>&nbsp;

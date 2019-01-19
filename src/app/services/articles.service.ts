@@ -1,26 +1,27 @@
 import { Injectable } from '@angular/core';
+import { File } from '@ionic-native/file/ngx';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticlesService {
-  private articles: Article[] = [
-    { id: 1, title: 'The first article', text: 'This is an article with some longer text. We have a couple of lines to be excerpted.', tags: ['tag1', 'tag2'] },
-    { id: 2, title: 'The second article', text: 'Bogus2', tags: ['tag3'] },
-    { id: 3, title: 'The third article', text: 'Bogus3', tags: [] },
-    { id: 4, title: 'The fourth article', text: 'Bogus4', tags: [] },
-    { id: 5, title: 'The fifth article', text: 'Bogus5', tags: ['tag1', 'tag9'] },
-  ];
+  private articles: Article[];
 
-  constructor() { }
+  constructor(private file: File) { }
 
-  getArticles(query?: string) {
+  async getArticles(query?: string) {
+    // If no articles, load them and wait.
+    if (!this.articles) {
+      await this.file.readAsText(this.file.applicationDirectory, "www/assets/articles/manifest.json").then(manifest => {
+        this.articles = JSON.parse(manifest);
+      });
+    }
     if (!query || 0 === query.length) {
       return this.articles;
     } else {
       return this.articles.filter(article => {
         return article.title.toLowerCase().includes(query.toLowerCase()) ||
-               article.text.toLowerCase().includes(query.toLowerCase()) ||
+               article.excerpt.toLowerCase().includes(query.toLowerCase()) ||
                article.tags.filter(tag => {
                  return tag.toLowerCase().includes(query.toLowerCase());
                }).length > 0;
@@ -41,6 +42,6 @@ export class ArticlesService {
 export interface Article {
   id: number,
   title: string,
-  text: string,
+  excerpt: string,
   tags: string[]
 }

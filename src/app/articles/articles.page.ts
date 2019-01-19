@@ -12,11 +12,15 @@ export class ArticlesPage implements OnInit {
   constructor(private articles: ArticlesService) { }
 
   ngOnInit() {
-    this.currentArticles = this.articles.getArticles();
+    this.articles.getArticles().then(articles => {
+      this.currentArticles = articles;
+    });
   }
 
   searchArticles(query: string) {
-    this.currentArticles = this.articles.getArticles(query);
+    this.articles.getArticles(query).then(articles => {
+      this.currentArticles = articles;
+    });
   }
 
   clearSearchQuery(queryField) {
