@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Article, ArticlesService } from '../services/articles.service'
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-article',
@@ -10,12 +11,27 @@ import { Article, ArticlesService } from '../services/articles.service'
 export class ArticlePage implements OnInit {
   private article: Article;
 
-  constructor(private route: ActivatedRoute, private articles: ArticlesService) { }
+  constructor(private route: ActivatedRoute,
+              private articles: ArticlesService,
+              private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.article = this.articles.getArticle(+params.get('id'));
+    this.loadArticle();
+  }
+
+  async loadArticle() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading article...'
     });
+    await loading.present();
+    let id = await new Promise((resolve, reject) => {
+      this.route.paramMap.subscribe(params => {
+        resolve(+params.get('id'));
+      });
+    });
+    let article = await this.articles.getArticle(<number>id);
+    this.article = article;
+    return await loading.dismiss();
   }
 
 }

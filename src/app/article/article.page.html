@@ -1,9 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>article</ion-title>
+    <ion-title>Article</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  Viewing article {{article.id}}
+  <h1>{{article?.title}}</h1>
+  <p>
+    <ng-container *ngFor="let tag of article?.tags">
+      <ion-badge>{{tag}}</ion-badge>&nbsp;
+    </ng-container>
+  </p>
+  <p>
+    {{article?.text}}
+  </p>
 </ion-content>

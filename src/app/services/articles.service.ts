@@ -12,7 +12,7 @@ export class ArticlesService {
   async getArticles(query?: string) {
     // If no articles, load them and wait.
     if (!this.articles) {
-      await this.file.readAsText(this.file.applicationDirectory, "www/assets/articles/manifest.json").then(manifest => {
+      await this.file.readAsText(this.file.applicationDirectory, 'www/assets/articles/manifest.json').then(manifest => {
         this.articles = JSON.parse(manifest);
       });
     }
@@ -29,9 +29,16 @@ export class ArticlesService {
     }
   }
 
-  getArticle(id: number) {
+  async getArticle(id: number) {
     for (let article of this.articles) {
       if (id === article.id) {
+        // Load article text if we don't have it.
+        if (!article.text) {
+          await this.file.readAsText(this.file.applicationDirectory,
+                                     'www/assets/articles/article.' + article.id.toString() + '.md').then(text => {
+            article.text = text;
+          });
+        }
         return article;
       }
     }
@@ -43,5 +50,6 @@ export interface Article {
   id: number,
   title: string,
   excerpt: string,
-  tags: string[]
+  tags: string[],
+  text: string // Text is loaded separately.
 }
