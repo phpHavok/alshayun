@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Article, ArticlesService } from '../services/articles.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-articles',
@@ -9,12 +10,20 @@ import { Article, ArticlesService } from '../services/articles.service';
 export class ArticlesPage implements OnInit {
   private currentArticles: Article[];
 
-  constructor(private articles: ArticlesService) { }
+  constructor(private articles: ArticlesService, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
-    this.articles.getArticles().then(articles => {
-      this.currentArticles = articles;
+    this.loadArticles();
+  }
+
+  async loadArticles() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading articles...'
     });
+    await loading.present();
+    let articles = await this.articles.getArticles();
+    this.currentArticles = articles;
+    return await loading.dismiss();
   }
 
   searchArticles(query: string) {
