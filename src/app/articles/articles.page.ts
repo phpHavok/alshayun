@@ -32,10 +32,4 @@ export class ArticlesPage implements OnInit {
     });
   }
 
-  clearSearchQuery(queryField) {
-    queryField.value = '';
-    this.searchArticles('');
-    queryField.setFocus();
-  }
-
 }
