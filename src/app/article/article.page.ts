@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Article, ArticlesService } from '../services/articles.service'
-import { LoadingController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Article, ArticleAttributes, ArticlesService } from '../services/articles.service'
+import { LoadingController, IonContent } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-article',
@@ -10,10 +11,13 @@ import { LoadingController } from '@ionic/angular';
 })
 export class ArticlePage implements OnInit {
   private article: Article;
+  private attrs: ArticleAttributes;
+  @ViewChild(IonContent) content: IonContent;
 
   constructor(private route: ActivatedRoute,
               private articles: ArticlesService,
-              private loadingCtrl: LoadingController) { }
+              private loadingCtrl: LoadingController,
+              private location: Location) { }
 
   ngOnInit() {
     this.loadArticle();
@@ -29,9 +33,31 @@ export class ArticlePage implements OnInit {
         resolve(+params.get('id'));
       });
     });
-    let article = await this.articles.getArticle(<number>id);
-    this.article = article;
+    this.article = await this.articles.getArticle(<number>id);
+    this.attrs = await this.articles.getArticleAttributes(<number>id);
+    this.attrs.read = true;
+    this.articles.setArticleAttributes(this.article.id, this.attrs);
+    if (this.attrs.readPos > 0) {
+      // TODO: the magic offset is to account for the header. Do this better.
+      this.content.scrollToPoint(0, Math.max(this.attrs.readPos - 60, 0));
+    }
     return await loading.dismiss();
+  }
+
+  markUnread(evt) {
+    this.attrs.read = false;
+    this.attrs.readPos = 0;
+    this.articles.setArticleAttributes(this.article.id, this.attrs).then(_ => {
+      this.location.back();
+    });
+  }
+
+  onScroll(evt) {
+    this.attrs.readPos = evt.detail.scrollTop;
+  }
+
+  onScrollEnd() {
+    this.articles.setArticleAttributes(this.article.id, this.attrs);
   }
 
 }

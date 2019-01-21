@@ -8,7 +8,7 @@
   <ion-searchbar placeholder="Search Articles" (ionChange)="searchArticles($event.target.value)"></ion-searchbar>
   <ion-list lines="full">
     <ion-item *ngFor="let article of currentArticles" [routerLink]="['/article', article.id]" detail>
-      <ion-label text-wrap>
+      <ion-label text-wrap [color]="articleRead(article.id) ? 'medium' : null">
         <h2>{{article.title}}</h2>
         <p>{{article.excerpt | slice:0:80}}...</p>
         <p>
@@ -17,6 +17,7 @@
           </ng-container>
         </p>
       </ion-label>
+      <ion-icon name="book" *ngIf="articleRead(article.id)" color="medium" slot="end"></ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>

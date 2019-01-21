@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { File } from '@ionic-native/file/ngx';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { File } from '@ionic-native/file/ngx';
 export class ArticlesService {
   private articles: Article[];
 
-  constructor(private file: File) { }
+  constructor(private file: File, private storage: Storage) { }
 
   async getArticles(query?: string) {
     // If no articles, load them and wait.
@@ -44,6 +45,22 @@ export class ArticlesService {
     }
     return null;
   }
+
+  async getArticleAttributes(id: number) {
+    let attrs = await this.storage.get('attrs.' + id.toString());
+    if (!attrs) {
+      // Default attributes.
+      attrs = {
+        read: false,
+        readPos: 0
+      }
+    }
+    return <ArticleAttributes>attrs;
+  }
+
+  setArticleAttributes(id: number, attrs: ArticleAttributes) {
+    return this.storage.set('attrs.' + id.toString(), attrs);
+  }
 }
 
 export interface Article {
@@ -52,4 +69,9 @@ export interface Article {
   excerpt: string,
   tags: string[],
   text: string // Text is loaded separately.
+}
+
+export interface ArticleAttributes {
+  read: boolean,
+  readPos: number
 }

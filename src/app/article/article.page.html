@@ -4,12 +4,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding [scrollEvents]="true" (ionScroll)="onScroll($event)" (ionScrollEnd)="onScrollEnd()">
   <h1>{{article?.title}}</h1>
   <p>
     <ng-container *ngFor="let tag of article?.tags">
       <ion-badge>{{tag}}</ion-badge>&nbsp;
     </ng-container>
+  </p>
+  <p *ngIf="attrs?.read">
+    <ion-button color="medium" fill="outline" (click)="markUnread()">
+      <ion-icon name="book" slot="start"></ion-icon>
+      Mark Unread
+    </ion-button>
   </p>
   <p>
     {{article?.text}}
