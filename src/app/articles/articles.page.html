@@ -6,18 +6,23 @@
 
 <ion-content>
   <ion-searchbar placeholder="Search Articles" (ionChange)="searchArticles($event.target.value)"></ion-searchbar>
-  <ion-list lines="full">
-    <ion-item *ngFor="let article of currentArticles" [routerLink]="['/article', article.id]" detail>
-      <ion-label text-wrap [color]="articleRead(article.id) ? 'medium' : null">
-        <h2>{{article.title}}</h2>
-        <p>{{article.excerpt | slice:0:80}}...</p>
-        <p>
-          <ng-container *ngFor="let tag of article.tags">
-            <ion-badge>{{tag}}</ion-badge>&nbsp;
-          </ng-container>
-        </p>
-      </ion-label>
-      <ion-icon name="book" *ngIf="articleRead(article.id)" color="medium" slot="end"></ion-icon>
-    </ion-item>
+  <ion-list lines="full" #articlesList>
+    <ion-item-sliding *ngFor="let article of currentArticles">
+      <ion-item [routerLink]="['/article', article.id]" detail>
+        <ion-label text-wrap [color]="articleRead(article.id) ? 'medium' : null">
+          <h2>{{article.title}}</h2>
+          <p>{{article.excerpt | slice:0:80}}...</p>
+          <p>
+            <ng-container *ngFor="let tag of article.tags">
+              <ion-badge>{{tag}}</ion-badge>&nbsp;
+            </ng-container>
+          </p>
+        </ion-label>
+        <ion-icon name="book" *ngIf="articleRead(article.id)" color="medium" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="markUnread(article.id, articlesList)" *ngIf="articleRead(article.id)">Mark Unread</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>

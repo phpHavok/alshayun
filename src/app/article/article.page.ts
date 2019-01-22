@@ -38,18 +38,9 @@ export class ArticlePage implements OnInit {
     this.attrs.read = true;
     this.articles.setArticleAttributes(this.article.id, this.attrs);
     if (this.attrs.readPos > 0) {
-      // TODO: the magic offset is to account for the header. Do this better.
-      this.content.scrollToPoint(0, Math.max(this.attrs.readPos - 60, 0));
+      this.content.scrollToPoint(0, Math.max(this.attrs.readPos, 0));
     }
     return await loading.dismiss();
-  }
-
-  markUnread(evt) {
-    this.attrs.read = false;
-    this.attrs.readPos = 0;
-    this.articles.setArticleAttributes(this.article.id, this.attrs).then(_ => {
-      this.location.back();
-    });
   }
 
   onScroll(evt) {

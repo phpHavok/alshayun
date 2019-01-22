@@ -47,6 +47,14 @@ export class ArticlesPage implements OnInit {
     return attrs && attrs.read;
   }
 
+  markUnread(id, list) {
+    let attrs = this.currentAttrs.get(id);
+    attrs.read = false;
+    attrs.readPos = 0;
+    this.articles.setArticleAttributes(id, attrs);
+    list.closeSlidingItems();
+  }
+
   ionViewWillEnter() {
     if (this.articlesLoaded) {
       this.refreshAttributes();

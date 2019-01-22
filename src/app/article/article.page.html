@@ -11,12 +11,6 @@
       <ion-badge>{{tag}}</ion-badge>&nbsp;
     </ng-container>
   </p>
-  <p *ngIf="attrs?.read">
-    <ion-button color="medium" fill="outline" (click)="markUnread()">
-      <ion-icon name="book" slot="start"></ion-icon>
-      Mark Unread
-    </ion-button>
-  </p>
   <p>
     {{article?.text}}
   </p>
