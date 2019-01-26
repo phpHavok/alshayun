@@ -58,5 +58,11 @@
     "title": "A markdown test article",
     "excerpt": "This is a test article with various Markdown to test the Markdown parser engine.",
     "tags": ["markdown"]
+  },
+  {
+    "id": 11,
+    "title": "Markdown with a table",
+    "excerpt": "This is a markdown article with a raw HTML table.",
+    "tags": ["markdown"]
   }
 ]
