@@ -52,5 +52,11 @@
     "title": "An article of unknown proportions",
     "excerpt": "Newton used to say that this article would never be written. Well, he was wrong.",
     "tags": []
+  },
+  {
+    "id": 10,
+    "title": "A markdown test article",
+    "excerpt": "This is a test article with various Markdown to test the Markdown parser engine.",
+    "tags": ["markdown"]
   }
 ]

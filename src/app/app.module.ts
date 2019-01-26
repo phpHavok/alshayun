@@ -11,11 +11,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { ArticlesService } from './services/articles.service';
 import { File } from '@ionic-native/file/ngx';
 import { IonicStorageModule } from '@ionic/storage';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot()],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    IonicStorageModule.forRoot(),
+    MarkdownModule.forRoot()
+  ],
   providers: [
     StatusBar,
     SplashScreen,

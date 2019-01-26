@@ -11,7 +11,5 @@
       <ion-badge>{{tag}}</ion-badge>&nbsp;
     </ng-container>
   </p>
-  <p>
-    {{article?.text}}
-  </p>
+  <div [innerHtml]="parsedText"></div>
 </ion-content>

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Article, ArticleAttributes, ArticlesService } from '../services/articles.service'
 import { LoadingController, IonContent } from '@ionic/angular';
 import { Location } from '@angular/common';
+import { MarkdownService } from 'ngx-markdown';
 
 @Component({
   selector: 'app-article',
@@ -12,12 +13,14 @@ import { Location } from '@angular/common';
 export class ArticlePage implements OnInit {
   private article: Article;
   private attrs: ArticleAttributes;
+  private parsedText: string;
   @ViewChild(IonContent) content: IonContent;
 
   constructor(private route: ActivatedRoute,
               private articles: ArticlesService,
               private loadingCtrl: LoadingController,
-              private location: Location) { }
+              private location: Location,
+              private markdown: MarkdownService) { }
 
   ngOnInit() {
     this.loadArticle();
@@ -34,6 +37,7 @@ export class ArticlePage implements OnInit {
       });
     });
     this.article = await this.articles.getArticle(<number>id);
+    this.parsedText = this.markdown.compile(this.article.text);
     this.attrs = await this.articles.getArticleAttributes(<number>id);
     this.attrs.read = true;
     this.articles.setArticleAttributes(this.article.id, this.attrs);
