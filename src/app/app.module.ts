@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ArticlesService } from './services/articles.service';
 import { File } from '@ionic-native/file/ngx';
 import { IonicStorageModule } from '@ionic/storage';
-import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +21,19 @@ import { MarkdownModule } from 'ngx-markdown';
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot({
+      markedOptions: {
+        provide: MarkedOptions,
+        useValue: {
+          gfm: true,
+          pedantic: false,
+          sanitize: false,
+          tables: true,
+          smartLists: true,
+          smartypants: false
+        }
+      }
+    })
   ],
   providers: [
     StatusBar,

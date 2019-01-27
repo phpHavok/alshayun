@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article, ArticleAttributes, ArticlesService } from '../services/articles.service'
 import { LoadingController, IonContent } from '@ionic/angular';
-import { Location } from '@angular/common';
 import { MarkdownService } from 'ngx-markdown';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-article',
@@ -19,7 +19,7 @@ export class ArticlePage implements OnInit {
   constructor(private route: ActivatedRoute,
               private articles: ArticlesService,
               private loadingCtrl: LoadingController,
-              private location: Location,
+              private sanitizer: DomSanitizer,
               private markdown: MarkdownService) { }
 
   ngOnInit() {
