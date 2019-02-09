@@ -12,24 +12,24 @@ First, install [Singularity
 Next, obtain a copy of the Ionic Singularity container. You can pull the
 container from the Sylabs Cloud with the following command.
 
-    singularity pull library://phphavok/default/ionic:4.10.1
+    singularity pull ionic.sif library://phphavok/default/ionic:4.10.1
 
 If that fails for some reason in the future, a copy of the recipe is provided in
 this repository, and you can manually build the container with the following
 command.
 
-    sudo singularity build ionic_4.10.1.sif Singularity
+    sudo singularity build ionic.sif Singularity
 
 Once you have the container in hand, run the following commands.
 
     mkdir -p sdk/build-tools sdk/platforms
     singularity exec -B sdk/build-tools:/usr/local/android/build-tools \
                      -B sdk/platforms:/usr/local/android/platforms \
-                     ionic_4.10.1.sif \
+                     ionic.sif \
                      sdkmanager 'platforms;android-27' 'build-tools;27.0.3' 
     singularity shell -B sdk/build-tools:/usr/local/android/build-tools \
                       -B sdk/platforms:/usr/local/android/platforms \
-                      ionic_4.10.1.sif
+                      ionic.sif
     ionic cordova build android
 
 Out pops an APK file that you can install on a compatible Android phone. You can
