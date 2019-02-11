@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Applet } from '../applet';
 
 @Component({
@@ -9,7 +9,7 @@ import { Applet } from '../applet';
 export class AppletExampleComponent extends Applet implements OnInit {
   private color;
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor() {
     super();
   }
 
@@ -18,7 +18,6 @@ export class AppletExampleComponent extends Applet implements OnInit {
     if (!this.color) {
       this.color = '#00FF00';
     }
-    //this.cdr.markForCheck();
   }
 
 }
