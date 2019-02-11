@@ -4,7 +4,7 @@ import { Article, ArticleAttributes, ArticlesService } from '../services/article
 import { LoadingController, IonContent } from '@ionic/angular';
 import { MarkdownService } from 'ngx-markdown';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AppletExampleComponent } from '../applets/applet-example/applet-example.component';
+import { AppletExampleComponent } from '../applets/applet-example.component';
 import { Applet } from '../applets/applet';
 
 @Component({

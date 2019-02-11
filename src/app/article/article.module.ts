@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ArticlePage } from './article.page';
-import { AppletExampleComponent } from '../applets/applet-example/applet-example.component';
+import { AppletExampleComponent } from '../applets/applet-example.component';
 
 const routes: Routes = [
   {
