@@ -3,7 +3,7 @@ From: ubuntu:18.04
 
 %labels
     MAINTAINER Jacob Chappell <chappellind@gmail.com>
-    IONIC_VERSION 4.10.1
+    IONIC_VERSION 4.10.2
     CORDOVA_VERSION 8.1.2
     NODEJS_VERSION 10.15.1
     JDK_VERSION 8
@@ -53,8 +53,8 @@ From: ubuntu:18.04
     export PATH="/usr/local/gradle/gradle-5.1.1/bin:$PATH"
     # Android
     export ANDROID_HOME="/usr/local/android"
-    export PATH="$ANDROID_HOME/tools:$PATH"
     export PATH="$ANDROID_HOME/tools/bin:$PATH"
+    export PATH="$ANDROID_HOME/emulator:$PATH"
     export PATH="$ANDROID_HOME/platform-tools:$PATH"
 
 %help
@@ -73,4 +73,4 @@ using a bind mount.
                      sdkmanager 'platforms;android-27' 'build-tools;27.0.3'
 
 Be sure to bind mount the extra directories into the container anytime you want
-to use them.
+to use them. The same technique can be used to create AVDs and what not.
