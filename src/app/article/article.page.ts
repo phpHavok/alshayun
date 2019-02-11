@@ -34,18 +34,20 @@ export class ArticlePage implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    let container = this.container.nativeElement as HTMLElement;
-    let applets = container.getElementsByTagName('applet');
-    for (let i = 0; i < applets.length; ++i) {
-      let applet = applets.item(i);
-      if (!applet.hasChildNodes()) {
-        let element: HTMLElement = null;
-        if (this.applets.length >= i + 1) {
-          element = this.applets[i];
-        } else {
-          element = this.createApplet(applet);
+    if (this.container) {
+      let container = this.container.nativeElement as HTMLElement;
+      let applets = container.getElementsByTagName('applet');
+      for (let i = 0; i < applets.length; ++i) {
+        let applet = applets.item(i);
+        if (!applet.hasChildNodes()) {
+          let element: HTMLElement = null;
+          if (this.applets.length >= i + 1) {
+            element = this.applets[i];
+          } else {
+            element = this.createApplet(applet);
+          }
+          applet.append(element);
         }
-        applet.append(element);
       }
     }
   }

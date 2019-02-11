@@ -11,5 +11,5 @@
       <ion-badge>{{tag}}</ion-badge>&nbsp;
     </ng-container>
   </p>
-  <div #container [innerHtml]="sanitizer.bypassSecurityTrustHtml(parsedText)"></div>
+  <div #container *ngIf="parsedText" [innerHtml]="sanitizer.bypassSecurityTrustHtml(parsedText)"></div>
 </ion-content>
