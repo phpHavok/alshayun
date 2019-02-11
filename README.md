@@ -25,11 +25,11 @@ Once you have the container in hand, run the following commands.
     mkdir -p sdk/build-tools sdk/platforms
     singularity exec -B sdk/build-tools:/usr/local/android/build-tools \
                      -B sdk/platforms:/usr/local/android/platforms \
-                     ionic.sif \
+                     -p ionic.sif \
                      sdkmanager 'platforms;android-27' 'build-tools;27.0.3' 
     singularity shell -B sdk/build-tools:/usr/local/android/build-tools \
                       -B sdk/platforms:/usr/local/android/platforms \
-                      ionic.sif
+                      -p ionic.sif
     ionic cordova build android
 
 Out pops an APK file that you can install on a compatible Android phone. You can
