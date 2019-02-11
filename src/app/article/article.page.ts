@@ -5,6 +5,7 @@ import { LoadingController, IonContent } from '@ionic/angular';
 import { MarkdownService } from 'ngx-markdown';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AppletExampleComponent } from '../applets/applet-example/applet-example.component';
+import { Applet } from '../applets/applet';
 
 @Component({
   selector: 'app-article',
@@ -59,6 +60,8 @@ export class ArticlePage implements OnInit, AfterViewChecked {
         return null;
     }
     const componentRef = this.cfr.resolveComponentFactory(component).create(this.injector);
+    (componentRef.instance as Applet).setAppletTag(applet);
+    componentRef.changeDetectorRef.detectChanges();
     this.appRef.attachView(componentRef.hostView);
     let element = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
     this.applets.push(element);
