@@ -23,4 +23,10 @@ Can we render **a table?** Let's find out!
 </tr>
 </table>
 
-Looks like it worked... **yay!!**
+Looks like it worked... **yay!!** Here is an example applet:
+
+<applet name="example" color="#FF0000"></applet>
+
+How's it look? And another:
+
+<applet name="example" color="#0000FF"></applet>

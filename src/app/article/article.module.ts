@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ArticlePage } from './article.page';
+import { AppletExampleComponent } from '../applets/applet-example/applet-example.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,12 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ArticlePage]
+  declarations: [
+    ArticlePage,
+    AppletExampleComponent
+  ],
+  entryComponents: [
+    AppletExampleComponent
+  ]
 })
 export class ArticlePageModule {}
