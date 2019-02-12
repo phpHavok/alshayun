@@ -15,6 +15,9 @@ export class Applet implements AfterViewInit {
         this.canvas = this.canvasRef.nativeElement as HTMLCanvasElement;
         this.ctx = this.canvas.getContext('2d');
         this.resize();
+        this.platform.resize.subscribe(() => {
+            this.resize();
+        });
         if (this.animated) {
             setInterval(() => {
                 this.draw();
