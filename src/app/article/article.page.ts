@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, ComponentFactoryResolver, Injector, ApplicationRef, EmbeddedViewRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, ComponentFactoryResolver, Injector, ApplicationRef, EmbeddedViewRef, Renderer } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article, ArticleAttributes, ArticlesService } from '../services/articles.service'
 import { LoadingController, IonContent } from '@ionic/angular';
@@ -18,7 +18,9 @@ export class ArticlePage implements OnInit, AfterViewChecked {
   private parsedText: string;
   @ViewChild(IonContent) content: IonContent;
   @ViewChild('container') container: ElementRef;
+  @ViewChild('header', {read: ElementRef}) header: ElementRef;
   private applets: HTMLElement[] = [];
+  private processScrolls = true;
 
   constructor(private route: ActivatedRoute,
               private articles: ArticlesService,
@@ -27,7 +29,8 @@ export class ArticlePage implements OnInit, AfterViewChecked {
               private markdown: MarkdownService,
               private cfr: ComponentFactoryResolver,
               private injector: Injector,
-              private appRef: ApplicationRef) { }
+              private appRef: ApplicationRef,
+              private renderer: Renderer) { }
 
   ngOnInit() {
     this.loadArticle();
@@ -63,6 +66,13 @@ export class ArticlePage implements OnInit, AfterViewChecked {
     }
     const componentRef = this.cfr.resolveComponentFactory(component).create(this.injector);
     (componentRef.instance as Applet).setAppletTag(applet);
+    (componentRef.instance as Applet).fullscreen.subscribe(fullscreen => {
+      this.processScrolls = !fullscreen;
+      this.renderer.setElementClass(this.header.nativeElement, 'hidden', fullscreen);
+      if (this.processScrolls) {
+        this.content.scrollToPoint(0, Math.max(this.attrs.readPos, 0));
+      }
+    });
     componentRef.changeDetectorRef.detectChanges();
     this.appRef.attachView(componentRef.hostView);
     let element = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
@@ -92,11 +102,15 @@ export class ArticlePage implements OnInit, AfterViewChecked {
   }
 
   onScroll(evt) {
-    this.attrs.readPos = evt.detail.scrollTop;
+    if (this.processScrolls) {
+      this.attrs.readPos = evt.detail.scrollTop;
+    }
   }
 
   onScrollEnd() {
-    this.articles.setArticleAttributes(this.article.id, this.attrs);
+    if (this.processScrolls) {
+      this.articles.setArticleAttributes(this.article.id, this.attrs);
+    }
   }
 
 }

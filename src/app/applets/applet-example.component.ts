@@ -45,5 +45,7 @@ export class AppletExampleComponent extends Applet implements OnInit, AfterViewI
       this.ctx.stroke();
     }
     this.angle += 0.01;
+    this.ctx.fillStyle = this.color;
+    this.ctx.fillRect(0, 0, small_length * 0.1, small_length * 0.1);
   }
 }
