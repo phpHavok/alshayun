@@ -44,6 +44,6 @@ export class AppletExampleComponent extends Applet implements OnInit, AfterViewI
                   false);
       this.ctx.stroke();
     }
-    this.angle += 0.025;
+    this.angle += 0.01;
   }
 }

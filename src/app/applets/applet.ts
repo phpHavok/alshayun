@@ -37,8 +37,7 @@ export class Applet implements AfterViewInit {
     }
 
     protected clear() {
-        this.ctx.fillStyle = '#EEEEEE';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     protected draw() {
