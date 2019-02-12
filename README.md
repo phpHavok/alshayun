@@ -12,7 +12,7 @@ First, install [Singularity
 Next, obtain a copy of the Ionic Singularity container. You can pull the
 container from the Sylabs Cloud with the following command.
 
-    singularity pull ionic.sif library://phphavok/default/ionic:4.10.1
+    singularity pull ionic.sif library://phphavok/default/ionic:latest
 
 If that fails for some reason in the future, a copy of the recipe is provided in
 this repository, and you can manually build the container with the following
@@ -68,4 +68,4 @@ installed in the previous step. Note that, by default, AVDs are installed under
 
 Launch the AVD in an emulator.
 
-    /usr/local/android/emulator/emulator -avd test
+    emulator -avd test
