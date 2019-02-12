@@ -68,4 +68,4 @@ installed in the previous step. Note that, by default, AVDs are installed under
 
 Launch the AVD in an emulator.
 
-    emulator -avd test
+    emulator -no-snapshot -avd test
