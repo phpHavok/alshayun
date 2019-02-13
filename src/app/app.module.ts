@@ -12,6 +12,7 @@ import { ArticlesService } from './services/articles.service';
 import { File } from '@ionic-native/file/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +34,8 @@ import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
           smartypants: false
         }
       }
-    })
+    }),
+    HttpClientModule
   ],
   providers: [
     StatusBar,
