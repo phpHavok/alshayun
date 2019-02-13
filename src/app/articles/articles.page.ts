@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Article, ArticlesService, ArticleAttributes } from '../services/articles.service';
 import { LoadingController } from '@ionic/angular';
 
@@ -11,6 +11,7 @@ export class ArticlesPage implements OnInit {
   private currentArticles: Article[];
   private currentAttrs: Map<number, ArticleAttributes> = new Map<number, ArticleAttributes>();
   private articlesLoaded: boolean = false;
+  @ViewChild('searchbar') searchbar;
 
   constructor(private articles: ArticlesService, private loadingCtrl: LoadingController) { }
 
@@ -19,10 +20,13 @@ export class ArticlesPage implements OnInit {
   }
 
   async loadArticles() {
+    this.articlesLoaded = false;
+    this.searchbar.value = '';
     const loading = await this.loadingCtrl.create({
       message: 'Loading articles...'
     });
     await loading.present();
+    await this.articles.loadArticles();
     this.currentArticles = await this.articles.getArticles();
     await this.refreshAttributes();
     this.articlesLoaded = true;
@@ -59,6 +63,12 @@ export class ArticlesPage implements OnInit {
     if (this.articlesLoaded) {
       this.refreshAttributes();
     }
+  }
+
+  reloadArticles(evt) {
+    this.loadArticles().then(_ => {
+      evt.target.complete();
+    });
   }
 
 }
