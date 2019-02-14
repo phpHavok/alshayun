@@ -17,7 +17,7 @@ export class AppletExampleComponent extends Applet implements OnInit, AfterViewI
   }
 
   ngOnInit() {
-    this.color = this.appletTag.getAttribute('color');
+    this.color = this.appletTag.getAttribute('data-color');
     if (!this.color) {
       this.color = '#00FF00';
     }

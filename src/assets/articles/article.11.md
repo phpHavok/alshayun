@@ -25,8 +25,8 @@ Can we render **a table?** Let's find out!
 
 Looks like it worked... **yay!!** Here is an example applet:
 
-<applet name="example" color="#FF0000"></applet>
+<applet name="example" data-color="#FF0000"></applet>
 
 How's it look? And another:
 
-<applet name="example" color="#0000FF"></applet>
+<applet name="example" data-color="#0000FF"></applet>
