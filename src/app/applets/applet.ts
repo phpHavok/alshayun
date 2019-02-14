@@ -1,23 +1,31 @@
-import { ViewChild, ElementRef, Renderer, AfterViewInit, Output, EventEmitter } from "@angular/core";
+import { ViewChild, ElementRef, Renderer, AfterViewInit, Output, EventEmitter, OnInit } from "@angular/core";
 import { Platform } from "@ionic/angular";
 
-export class Applet implements AfterViewInit {
+export class Applet implements AfterViewInit, OnInit {
     @Output('fullscreen') fullscreen = new EventEmitter();
     @ViewChild('canvas') canvasRef: ElementRef;
     protected canvas: HTMLCanvasElement;
     protected ctx: CanvasRenderingContext2D;
     protected appletTag: HTMLElement;
     private isFullscreen: boolean;
+    protected width: string;
 
     constructor(protected platform: Platform, protected renderer: Renderer, private animated: boolean) {
         console.log('Applet API constructor called.');
         this.isFullscreen = false;
     }
 
+    ngOnInit() {
+        this.width = this.appletTag.getAttribute('width');
+    }
+
     ngAfterViewInit() {
         this.canvas = this.canvasRef.nativeElement as HTMLCanvasElement;
         this.ctx = this.canvas.getContext('2d');
         this.resize();
+        if (this.width) {
+            this.renderer.setElementStyle(this.canvas, 'width', this.width);
+        }
         this.platform.resize.subscribe(() => {
             this.resize();
         });
