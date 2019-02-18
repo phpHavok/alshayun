@@ -20,7 +20,7 @@ def read_manifest():
 
 def write_manifest(manifest):
     f = open('articles/manifest.json', 'w')
-    f.write(json.dumps(manifest))
+    f.write(json.dumps(manifest, indent = 4))
     f.close()
 
 @app.route('/article', methods = ['POST'])
