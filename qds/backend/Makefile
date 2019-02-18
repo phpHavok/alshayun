@@ -4,13 +4,14 @@ $(TARGET): Singularity
 	sudo singularity build -F $@ $<
 
 start: $(TARGET)
-	singularity instance start $(TARGET) qds-backend
+	singularity instance start -B articles:/srv/articles \
+		$(TARGET) qds-backend
 
 stop:
 	singularity instance stop -F qds-backend
 
 run: $(TARGET)
-	singularity run -p $(TARGET)
+	singularity run -p -B articles:/srv/articles $(TARGET)
 
 clean:
 	rm -f $(TARGET)

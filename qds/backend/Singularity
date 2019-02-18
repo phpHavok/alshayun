@@ -18,11 +18,13 @@ From: ubuntu:18.04
    pip install Flask
 
 %runscript
-    export FLASK_APP=/srv/qds-backend.py
+    cd /srv
+    export FLASK_APP=qds-backend.py
     . /usr/local/flask/bin/activate
     flask run
 
 %startscript
-    export FLASK_APP=/srv/qds-backend.py
+    cd /srv
+    export FLASK_APP=qds-backend.py
     . /usr/local/flask/bin/activate
     flask run
