@@ -52,12 +52,11 @@ def create_article():
     ret['message'] = 'Success'
     return json.dumps(ret)
 
-@app.route('/article', methods = ['DELETE'])
-def delete_article():
-    if (not request.json) or \
-            (not 'id' in request.json):
-                abort(400)
-    aid = int(request.json['id'])
+@app.route('/article/<aid>', methods = ['DELETE'])
+def delete_article(aid):
+    if (not aid):
+        abort(400)
+    aid = int(aid)
     # Remove article from manifest.
     manifest = read_manifest()
     index = -1
