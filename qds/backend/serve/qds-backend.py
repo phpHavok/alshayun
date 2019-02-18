@@ -41,7 +41,7 @@ def create_article():
     article['tags'] = request.json['tags']
     # Write article file to disk
     f = open('articles/article.' + str(article['id']) + '.md', 'w')
-    f.write(request.json['text'])
+    f.write(str(request.json['text']))
     f.close()
     # Add article object to manifest
     manifest = read_manifest()
@@ -69,6 +69,36 @@ def delete_article(aid):
     write_manifest(manifest)
     # Remove article from disk.
     os.remove('articles/article.' + str(aid) + '.md')
+    # Return status
+    ret = {}
+    ret['message'] = 'Success'
+    return json.dumps(ret)
+
+@app.route('/article/<aid>', methods = ['PUT'])
+def update_article(aid):
+    if (not aid) or \
+            (not 'title' in request.json) or \
+            (not 'excerpt' in request.json) or \
+            (not 'tags' in request.json) or \
+            (not 'text' in request.json):
+        abort(400)
+    aid = int(aid)
+    # Update in manifest.
+    manifest = read_manifest()
+    index = -1
+    for i in range(0, len(manifest)):
+        if manifest[i]['id'] == aid:
+            index = i
+    if index == -1:
+        abort(400)
+    manifest[index]['title'] = str(request.json['title'])
+    manifest[index]['tags'] = request.json['tags']
+    manifest[index]['excerpt'] = str(request.json['excerpt'])
+    write_manifest(manifest)
+    # Update article on disk.
+    f = open('articles/article.' + str(aid) + '.md', 'w')
+    f.write(str(request.json['text']))
+    f.close()
     # Return status
     ret = {}
     ret['message'] = 'Success'

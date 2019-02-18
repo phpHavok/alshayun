@@ -45,6 +45,8 @@ export class ArticleService {
   }
 
   updateArticle(article) {
-    console.log('TODO: Update');
+    this.http.put(this.urlPrefix + '/article/' + article.id, article).subscribe(_ => {
+      this.getArticles();
+    });
   }
 }
