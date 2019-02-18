@@ -1,3 +1,15 @@
-<p>
-  articles works!
-</p>
+<div class="toolbar">
+  <button (click)="createArticle()" class="btn btn-success">Create Article</button>
+</div>
+
+<div class="card" *ngFor="let article of articles | async">
+  <div class="card-body">
+    <h5 class="card-title">{{article.title}}</h5>
+    <p *ngIf="article.tags">
+      <span *ngFor="let tag of article.tags" class="badge badge-primary">{{tag}}</span>
+    </p>
+    <p class="card-text">{{article.excerpt}}</p>
+    <button (click)="deleteArticle(article)" class="btn btn-danger">Delete</button>
+    <a [routerLink]="['/article', article.id]" class="btn btn-primary">View/Edit</a>
+  </div>
+</div>

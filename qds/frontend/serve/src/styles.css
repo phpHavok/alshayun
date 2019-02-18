@@ -8,3 +8,19 @@ body {
 .nav-link {
     cursor: pointer;
 }
+
+.toolbar {
+    margin-bottom: 1rem;
+}
+
+.card .card-body .btn {
+    margin-right: 1rem;
+}
+
+.card .card-body .badge {
+    margin-right: 0.5rem;
+}
+
+.card {
+    margin-bottom: 1rem;
+}

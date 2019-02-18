@@ -13,6 +13,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth-guard.service';
 import { FormsModule } from '@angular/forms';
+import { ArticleService } from './article.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,9 +36,10 @@ import { FormsModule } from '@angular/forms';
       {path: '**', component: NotFoundComponent}
     ]),
     NgbModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [AuthService, AuthGuardService],
+  providers: [AuthService, AuthGuardService, ArticleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
