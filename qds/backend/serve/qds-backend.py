@@ -1,6 +1,7 @@
 from flask import Flask, send_from_directory, request, abort
 import sys
 import json
+import os
 app = Flask(__name__)
 
 def checkout_serial():
@@ -49,11 +50,28 @@ def create_article():
     ret['message'] = 'Success'
     return json.dumps(ret)
 
-#@app.route('/article', methods = ['DELETE'])
-#def delete_article():
-#    manifest = read_manifest()
-#    print('Length of manifest is: ' + str(len(manifest)), file=sys.stderr)
-#    return 'Serial number is: ' + str(checkout_serial())
+@app.route('/article', methods = ['DELETE'])
+def delete_article():
+    if (not request.json) or \
+            (not 'id' in request.json):
+                abort(400)
+    aid = int(request.json['id'])
+    # Remove article from manifest.
+    manifest = read_manifest()
+    index = -1
+    for i in range(0, len(manifest)):
+        if manifest[i]['id'] == aid:
+            index = i
+    if index == -1:
+        abort(400)
+    del manifest[index]
+    write_manifest(manifest)
+    # Remove article from disk.
+    os.remove('articles/article.' + str(aid) + '.md')
+    # Return status
+    ret = {}
+    ret['message'] = 'Success'
+    return json.dumps(ret)
 
 @app.route('/articles/<path:filename>')
 def get_article(filename):
