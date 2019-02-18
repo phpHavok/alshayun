@@ -72,4 +72,5 @@ Launch the AVD in an emulator.
 
 ## Quick-n-Dirty Server (QDS)
 
-See `qds/README.md`.
+Articles must be created and served on a Web server. Alshayun provides a
+built-in development Web server. See `qds/README.md`.
