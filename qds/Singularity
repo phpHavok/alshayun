@@ -1,0 +1,26 @@
+Bootstrap: library
+From: ubuntu:18.04
+
+%environment
+    export LANG=en_US.UTF-8
+
+%files
+    qds.py /srv/qds.py
+
+%post
+   apt-get update
+   apt-get install -y python3 python3-venv locales
+   locale-gen en_US.UTF-8
+   python3 -m venv /usr/local/flask
+   . /usr/local/flask/bin/activate
+   pip install Flask
+
+%runscript
+    export FLASK_APP=/srv/qds.py
+    . /usr/local/flask/bin/activate
+    flask run
+
+%startscript
+    export FLASK_APP=/srv/qds.py
+    . /usr/local/flask/bin/activate
+    flask run

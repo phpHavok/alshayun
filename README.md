@@ -1,6 +1,6 @@
 # Alshayun
 
-A mobile mathematics education application.
+A mobile education application.
 
 ## Building
 
@@ -69,3 +69,7 @@ installed in the previous step. Note that, by default, AVDs are installed under
 Launch the AVD in an emulator.
 
     emulator -no-snapshot -avd test
+
+## Quick-n-Dirty Server (QDS)
+
+See `qds/README.md`.
