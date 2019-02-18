@@ -58,3 +58,9 @@ def create_article():
 @app.route('/articles/<path:filename>')
 def get_article(filename):
     return send_from_directory('articles/', filename)
+
+@app.after_request
+def add_header(response):
+    response.cache_control.max_age = 0
+    response.cache_control.public = True
+    return response
