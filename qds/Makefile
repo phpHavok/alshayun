@@ -1,18 +1,13 @@
-TARGET := qds.sif
+default:
+	make -C backend
 
-$(TARGET): Singularity
-	singularity build -F $@ $<
+start: $(TARGET)
+	make -C backend start
 
-run: $(TARGET)
-	singularity run -p $(TARGET)
-
-daemon-start: $(TARGET)
-	singularity instance start qds.sif qds
-
-daemon-stop:
-	singularity instance stop -F qds
+stop:
+	make -C backend stop
 
 clean:
-	rm -f $(TARGET)
+	make -C backend clean
 
-.PHONY: run daemon-start daemon-stop clean
+.PHONY: default start stop clean
