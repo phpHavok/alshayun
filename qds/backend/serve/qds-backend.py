@@ -1,8 +1,10 @@
 from flask import Flask, send_from_directory, request, abort
+from flask_cors import CORS
 import sys
 import json
 import os
 app = Flask(__name__)
+CORS(app)
 
 def checkout_serial():
     f = open('serial', 'r+')

@@ -12,7 +12,7 @@ From: ubuntu:18.04
    locale-gen en_US.UTF-8
    python3 -m venv /usr/local/flask
    . /usr/local/flask/bin/activate
-   pip install Flask
+   pip install Flask flask-cors
 
 %runscript
     cd /srv/www
