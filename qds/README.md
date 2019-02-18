@@ -24,4 +24,4 @@ The QDS will launch and run in the background. You may stop it at anytime.
     make stop
 
 The QDS will make use of ports 8080 and 5000. Access the frontend in a Web
-browser at [http://127.0.0.1:8080/].
+browser at (http://127.0.0.1:8080/).
