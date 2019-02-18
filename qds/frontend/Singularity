@@ -26,9 +26,9 @@ From: ubuntu:18.04
 %runscript
     cd /srv/www
     npm update
-    ng serve
+    ng serve --host=0.0.0.0
 
 %startscript
     cd /srv/www
     npm update
-    ng serve
+    ng serve --host=0.0.0.0
