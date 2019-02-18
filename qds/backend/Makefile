@@ -13,7 +13,10 @@ stop:
 run: $(TARGET)
 	singularity run -p -B serve:/srv/www $(TARGET)
 
+shell: $(TARGET)
+	singularity shell -p -B serve:/srv/www $(TARGET)
+
 clean:
 	rm -f $(TARGET)
 
-.PHONY: start stop run clean
+.PHONY: start stop run shell clean
