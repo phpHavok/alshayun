@@ -29,4 +29,22 @@ export class ArticleService {
       this.getArticles();
     });
   }
+
+  async getArticle(id: number) {
+    let theArticle = null;
+    for (let article of this.articles) {
+      if (article.id === id) {
+        theArticle = article;
+        break;
+      }
+    }
+    if (theArticle) {
+      theArticle.text = await this.http.get(this.urlPrefix + '/articles/article.' + id + '.md', {responseType: 'text'}).toPromise();
+    }
+    return theArticle;
+  }
+
+  updateArticle(article) {
+    console.log('TODO: Update');
+  }
 }

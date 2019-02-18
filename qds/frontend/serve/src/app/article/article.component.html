@@ -1,3 +1,36 @@
-<p>
-  article works!
-</p>
+<div class="toolbar">
+  <button (click)="deleteArticle()" class="btn btn-danger">Delete</button>
+  <button (click)="updateArticle()" class="btn btn-primary">Save Changes</button>
+</div>
+<form #articleForm="ngForm">
+  <div class="row">
+    <div class="col-lg">
+      <div class="form-group">
+        <label for="artTitle">Title</label>
+        <input ngModel name="title" type="text" class="form-control" id="artTitle" placeholder="Title">
+      </div>
+      <div class="form-group">
+        <label for="artTags">Tags</label>
+        <input ngModel name="tags" type="text" class="form-control" id="artTags" aria-describedby="artTagsHelp"
+          placeholder="Tags">
+        <small id="artTagsHelp" class="form-text text-muted">Separate multiple tags with commas.</small>
+      </div>
+      <div class="form-group">
+        <label for="artExcerpt">Excerpt</label>
+        <input ngModel name="excerpt" type="text" class="form-control" id="artExcerpt" aria-describedby="artExcerptHelp"
+          placeholder="Excerpt">
+        <small id="artExcerptHelp" class="form-text text-muted">The excerpt should be a one-sentence summary of the
+          article.</small>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md">
+      <div class="form-group">
+        <textarea ngModel name="text" class="form-control" rows="25"></textarea>
+      </div>
+    </div>
+    <div class="col-md">
+    </div>
+  </div>
+</form>
