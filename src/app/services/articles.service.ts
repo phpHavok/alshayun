@@ -19,27 +19,37 @@ export class ArticlesService {
     });
     */
     let data = await new Promise((resolve, reject) => {
-      this.http.get(this.urlPrefix + '/manifest.json', {responseType: 'text'}).subscribe(data => {
+      this.http.get(this.urlPrefix + '/manifest.json', { responseType: 'text' }).subscribe(data => {
         resolve(data as string);
+      }, error => {
+        resolve(null);
       });
     });
-    this.articles = JSON.parse(data as string);
+    if (data !== null) {
+      this.articles = JSON.parse(data as string);
+    } else {
+      this.articles = null;
+    }
   }
 
   async getArticles(query?: string) {
     // If no articles, load them and wait.
     if (!this.articles) {
       await this.loadArticles();
+      // Still no articles? That's an error.
+      if (!this.articles) {
+        return null;
+      }
     }
     if (!query || 0 === query.length) {
       return this.articles;
     } else {
       return this.articles.filter(article => {
         return article.title.toLowerCase().includes(query.toLowerCase()) ||
-               article.excerpt.toLowerCase().includes(query.toLowerCase()) ||
-               article.tags.filter(tag => {
-                 return tag.toLowerCase().includes(query.toLowerCase());
-               }).length > 0;
+          article.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+          article.tags.filter(tag => {
+            return tag.toLowerCase().includes(query.toLowerCase());
+          }).length > 0;
       });
     }
   }
@@ -57,9 +67,9 @@ export class ArticlesService {
           */
           let data = await new Promise((resolve, reject) => {
             this.http.get(this.urlPrefix + '/article.' + article.id.toString() + '.md',
-                          {responseType: 'text'}).subscribe(data => {
-              resolve(data as string);
-            });
+              { responseType: 'text' }).subscribe(data => {
+                resolve(data as string);
+              });
           });
           article.text = data as string;
         }

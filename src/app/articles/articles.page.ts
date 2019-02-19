@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Article, ArticlesService, ArticleAttributes } from '../services/articles.service';
 import { LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-articles',
@@ -11,25 +12,33 @@ export class ArticlesPage implements OnInit {
   private currentArticles: Article[];
   private currentAttrs: Map<number, ArticleAttributes> = new Map<number, ArticleAttributes>();
   private articlesLoaded: boolean = false;
+  private loadFailed: boolean = false;
   @ViewChild('searchbar') searchbar;
 
-  constructor(private articles: ArticlesService, private loadingCtrl: LoadingController) { }
+  constructor(private articles: ArticlesService, private loadingCtrl: LoadingController, private router: Router) { }
 
   ngOnInit() {
     this.loadArticles();
   }
 
   async loadArticles() {
+    if (this.searchbar) {
+      this.searchbar.value = '';
+    }
+    this.loadFailed = false;
     this.articlesLoaded = false;
-    this.searchbar.value = '';
     const loading = await this.loadingCtrl.create({
       message: 'Loading articles...'
     });
     await loading.present();
     await this.articles.loadArticles();
     this.currentArticles = await this.articles.getArticles();
-    await this.refreshAttributes();
-    this.articlesLoaded = true;
+    if (this.currentArticles !== null) {
+      await this.refreshAttributes();
+      this.articlesLoaded = true;
+    } else {
+      this.loadFailed = true;
+    }
     return await loading.dismiss();
   }
 
@@ -41,9 +50,11 @@ export class ArticlesPage implements OnInit {
   }
 
   searchArticles(query: string) {
-    this.articles.getArticles(query).then(articles => {
-      this.currentArticles = articles;
-    });
+    if (this.articlesLoaded) {
+      this.articles.getArticles(query).then(articles => {
+        this.currentArticles = articles;
+      });
+    }
   }
 
   articleRead(id) {
@@ -69,6 +80,10 @@ export class ArticlesPage implements OnInit {
     this.loadArticles().then(_ => {
       evt.target.complete();
     });
+  }
+
+  gotoSettings() {
+    this.router.navigate(['/settings']);
   }
 
 }

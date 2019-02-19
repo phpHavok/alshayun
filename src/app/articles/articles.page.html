@@ -1,15 +1,24 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Articles</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="gotoSettings()" color="primary">
+        <ion-icon slot="icon-only" name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-refresher slot="fixed" pullMin="100" pullMax="100" (ionRefresh)="reloadArticles($event)">
-    <ion-refresher-content pullingIcon="refresh" pullingText="Pull to reload articles."
-      refreshingSpinner="circles" refreshingText="Reloading articles..."></ion-refresher-content>
+    <ion-refresher-content pullingIcon="refresh" pullingText="Pull to reload articles." refreshingSpinner="circles"
+      refreshingText="Reloading articles..."></ion-refresher-content>
   </ion-refresher>
-  <ion-searchbar #searchbar placeholder="Search Articles" (ionChange)="searchArticles($event.target.value)"></ion-searchbar>
+  <p class="error-msg" *ngIf="loadFailed">
+    Failed to load articles. Check your article server in settings. Pull down to reload.
+  </p>
+  <ion-searchbar #searchbar placeholder="Search Articles" (ionChange)="searchArticles($event.target.value)" *ngIf="articlesLoaded">
+  </ion-searchbar>
   <ion-list lines="full" #articlesList>
     <ion-item-sliding *ngFor="let article of currentArticles">
       <ion-item [routerLink]="['/article', article.id]" detail>
