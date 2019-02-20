@@ -17,7 +17,7 @@ export class ArticleService {
   }
 
   getArticles() {
-    this.http.get(this.urlPrefix + '/articles/manifest.json', { responseType: 'text', headers: { 'Access-Control-Allow-Origin': '*' } }).subscribe(data => {
+    this.http.get(this.urlPrefix + '/articles/manifest.json', {responseType: 'text'}).subscribe(data => {
       this.articles = JSON.parse(data as string);
       this.articlesBehaviorSubject.next(this.articles);
     });
@@ -25,7 +25,7 @@ export class ArticleService {
   }
 
   deleteArticle(id) {
-    this.http.delete(this.urlPrefix + '/article/' + id, { headers: { 'Access-Control-Allow-Origin': '*' } }).subscribe(_ => {
+    this.http.delete(this.urlPrefix + '/article/' + id).subscribe(_ => {
       this.getArticles();
     });
   }
@@ -39,13 +39,13 @@ export class ArticleService {
       }
     }
     if (theArticle) {
-      theArticle.text = await this.http.get(this.urlPrefix + '/articles/article.' + id + '.md', {responseType: 'text', headers: { 'Access-Control-Allow-Origin': '*' }}).toPromise();
+      theArticle.text = await this.http.get(this.urlPrefix + '/articles/article.' + id + '.md', {responseType: 'text'}).toPromise();
     }
     return theArticle;
   }
 
   updateArticle(article) {
-    this.http.put(this.urlPrefix + '/article/' + article.id, article, {headers: { 'Access-Control-Allow-Origin': '*' }}).subscribe(_ => {
+    this.http.put(this.urlPrefix + '/article/' + article.id, article).subscribe(_ => {
       this.getArticles();
     });
   }
