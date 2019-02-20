@@ -12,9 +12,9 @@ Can we render **a table?** Let's find out!
 <td>R1C3</td>
 </tr>
 <tr>
-<td>R2C1</td>
-<td>R2C2</td>
-<td>R2C3</td>
+<td><applet name="example" data-color="#FF0000"></applet></td>
+<td><applet name="example"></applet></td>
+<td><applet name="example" data-color="#0000FF"></applet></td>
 </tr>
 <tr>
 <td>R3C1</td>
@@ -25,8 +25,8 @@ Can we render **a table?** Let's find out!
 
 Looks like it worked... **yay!!** Here is an example applet:
 
-<applet name="example" data-color="#FF0000"></applet>
+<applet name="example" data-color="#FFFF00" width="50%"></applet>
 
 How's it look? And another:
 
-<applet name="example" data-color="#0000FF"></applet>
+<applet name="example" data-color="#FF00FF" width="50%"></applet>
