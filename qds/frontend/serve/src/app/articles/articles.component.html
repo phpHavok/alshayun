@@ -1,5 +1,5 @@
 <div class="toolbar">
-  <button (click)="createArticle()" class="btn btn-success">Create Article</button>
+  <a [routerLink]="['/article']" class="btn btn-success">Create Article</a>
 </div>
 
 <div class="card" *ngFor="let article of articles | async">

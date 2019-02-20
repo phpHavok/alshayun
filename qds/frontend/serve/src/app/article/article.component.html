@@ -1,5 +1,5 @@
 <div class="toolbar">
-  <button (click)="deleteArticle()" class="btn btn-danger">Delete</button>
+  <button (click)="deleteArticle()" class="btn btn-danger" *ngIf="id">Delete</button>
   <button (click)="updateArticle()" class="btn btn-primary">Save Changes</button>
   <span class="save-status hidden" #saveStatus></span>
 </div>
@@ -8,7 +8,7 @@
     <div class="col-lg">
       <div class="form-group">
         <label for="artTitle">Title</label>
-        <input ngModel name="title" type="text" class="form-control" id="artTitle" placeholder="Title">
+        <input ngModel name="title" type="text" class="form-control" id="artTitle" placeholder="Title" required>
       </div>
       <div class="form-group">
         <label for="artTags">Tags</label>
@@ -19,7 +19,7 @@
       <div class="form-group">
         <label for="artExcerpt">Excerpt</label>
         <input ngModel name="excerpt" type="text" class="form-control" id="artExcerpt" aria-describedby="artExcerptHelp"
-          placeholder="Excerpt">
+          placeholder="Excerpt" required>
         <small id="artExcerptHelp" class="form-text text-muted">The excerpt should be a one-sentence summary of the
           article.</small>
       </div>
@@ -28,7 +28,7 @@
   <div class="row">
     <div class="col-md">
       <div class="form-group">
-        <textarea ngModel name="text" class="form-control" rows="25"></textarea>
+        <textarea ngModel name="text" class="form-control" rows="25" required></textarea>
       </div>
     </div>
     <div class="col-md">

@@ -32,6 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
       {path: '', redirectTo: '/articles', pathMatch: 'full'},
       {path: 'articles', component: ArticlesComponent, canActivate: [AuthGuardService]},
       {path: 'article/:id', component: ArticleComponent, canActivate: [AuthGuardService]},
+      {path: 'article', component: ArticleComponent, canActivate: [AuthGuardService]},
       {path: 'signin', component: SignInComponent},
       {path: '**', component: NotFoundComponent}
     ]),

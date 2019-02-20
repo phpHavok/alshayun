@@ -18,18 +18,24 @@ export class ArticleComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
       this.id = +params.get('id');
-      this.as.getArticle(this.id).then(article => {
-        this.articleForm.controls['title'].setValue(article.title);
-        this.articleForm.controls['tags'].setValue(article.tags.join());
-        this.articleForm.controls['excerpt'].setValue(article.excerpt);
-        this.articleForm.controls['text'].setValue(article.text);
-      });
+      if (this.id) {
+        this.as.getArticle(this.id).then(article => {
+          this.articleForm.controls['title'].setValue(article.title);
+          this.articleForm.controls['tags'].setValue(article.tags.join());
+          this.articleForm.controls['excerpt'].setValue(article.excerpt);
+          this.articleForm.controls['text'].setValue(article.text);
+        });
+      } else {
+        this.id = null;
+      }
     });
   }
 
   deleteArticle() {
-    this.as.deleteArticle(this.id);
-    this.router.navigate(['/']);
+    if (this.id) {
+      this.as.deleteArticle(this.id);
+      this.router.navigate(['/']);
+    }
   }
 
   updateArticle() {
@@ -43,10 +49,12 @@ export class ArticleComponent implements OnInit {
       excerpt: this.articleForm.controls['excerpt'].value,
       text: this.articleForm.controls['text'].value
     };
-    let subscription = this.as.updateArticle(article).subscribe(_ => {
+    this.as.updateArticle(article).subscribe(response => {
+      if (!this.id) {
+        this.id = response.id;
+      }
       saveStatus.innerText = 'Saved!';
       this.renderer.setElementClass(saveStatus, 'hidden', true);
-      subscription.unsubscribe();
     });
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class ArticleService {
   }
 
   getArticles() {
-    this.http.get(this.urlPrefix + '/articles/manifest.json', {responseType: 'text'}).subscribe(data => {
+    this.http.get(this.urlPrefix + '/articles/manifest.json', { responseType: 'text' }).subscribe(data => {
       this.articles = JSON.parse(data as string);
       this.articlesBehaviorSubject.next(this.articles);
     });
@@ -40,16 +41,19 @@ export class ArticleService {
       }
     }
     if (theArticle) {
-      theArticle.text = await this.http.get(this.urlPrefix + '/articles/article.' + id + '.md', {responseType: 'text'}).toPromise();
+      theArticle.text = await this.http.get(this.urlPrefix + '/articles/article.' + id + '.md', { responseType: 'text' }).toPromise();
     }
     return theArticle;
   }
 
   updateArticle(article) {
-    let httpCall = this.http.put(this.urlPrefix + '/article/' + article.id, article);
-    httpCall.subscribe(_ => {
-      this.getArticles();
-    });
-    return httpCall;
+    if (article.id) {
+      return this.http.put(this.urlPrefix + '/article/' + article.id, article);
+    } else {
+      return this.http.post(this.urlPrefix + '/article', article).pipe(map(data => {
+        this.getArticles();
+        return data as any;
+      }));
+    }
   }
 }
