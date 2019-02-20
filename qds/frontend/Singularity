@@ -25,8 +25,10 @@ From: ubuntu:18.04
 
 %runscript
     cd /srv/www
+    npm update
     ng serve --host=0.0.0.0 --disable-host-check
 
 %startscript
     cd /srv/www
+    npm update
     ng serve --host=0.0.0.0 --disable-host-check
