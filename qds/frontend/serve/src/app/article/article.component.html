@@ -1,6 +1,7 @@
 <div class="toolbar">
   <button (click)="deleteArticle()" class="btn btn-danger">Delete</button>
   <button (click)="updateArticle()" class="btn btn-primary">Save Changes</button>
+  <span class="save-status hidden" #saveStatus></span>
 </div>
 <form #articleForm="ngForm">
   <div class="row">

@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../article.service';
-import { toUnicode } from 'punycode';
 
 @Component({
   selector: 'app-article',
@@ -11,9 +10,10 @@ import { toUnicode } from 'punycode';
 })
 export class ArticleComponent implements OnInit {
   @ViewChild('articleForm') articleForm: NgForm;
+  @ViewChild('saveStatus') saveStatus: ElementRef;
   private id = null;
 
-  constructor(private activatedRoute: ActivatedRoute, private as: ArticleService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private as: ArticleService, private router: Router, private renderer: Renderer) { }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -33,6 +33,9 @@ export class ArticleComponent implements OnInit {
   }
 
   updateArticle() {
+    let saveStatus = this.saveStatus.nativeElement as HTMLElement;
+    saveStatus.innerText = 'Saving...';
+    this.renderer.setElementClass(saveStatus, 'hidden', false);
     let article = {
       id: this.id,
       title: this.articleForm.controls['title'].value,
@@ -40,7 +43,11 @@ export class ArticleComponent implements OnInit {
       excerpt: this.articleForm.controls['excerpt'].value,
       text: this.articleForm.controls['text'].value
     };
-    this.as.updateArticle(article);
+    let subscription = this.as.updateArticle(article).subscribe(_ => {
+      saveStatus.innerText = 'Saved!';
+      this.renderer.setElementClass(saveStatus, 'hidden', true);
+      subscription.unsubscribe();
+    });
   }
 
 }

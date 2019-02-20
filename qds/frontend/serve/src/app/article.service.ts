@@ -46,8 +46,10 @@ export class ArticleService {
   }
 
   updateArticle(article) {
-    this.http.put(this.urlPrefix + '/article/' + article.id, article).subscribe(_ => {
+    let httpCall = this.http.put(this.urlPrefix + '/article/' + article.id, article);
+    httpCall.subscribe(_ => {
       this.getArticles();
     });
+    return httpCall;
   }
 }
