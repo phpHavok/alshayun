@@ -8,18 +8,23 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ArticlesService {
   private articles: Article[];
-  private urlPrefix: string = 'http://saturn.ccs.uky.edu/alshayun';
 
   constructor(private file: File, private storage: Storage, private http: HttpClient) { }
 
-  async loadArticles() {
-    /*
-    await this.file.readAsText(this.file.applicationDirectory, 'www/assets/articles/manifest.json').then(manifest => {
-      this.articles = JSON.parse(manifest);
+  getUrlPrefix() {
+    return this.storage.get('settings.urlPrefix').then(urlPrefix => {
+      return urlPrefix ? urlPrefix : 'http://127.0.0.1:5000/articles';
     });
-    */
+  }
+
+  setUrlPrefix(urlPrefix) {
+    return this.storage.set('settings.urlPrefix', urlPrefix);
+  }
+
+  async loadArticles() {
+    let urlPrefix = await this.getUrlPrefix();
     let data = await new Promise((resolve, reject) => {
-      this.http.get(this.urlPrefix + '/manifest.json', { responseType: 'text' }).subscribe(data => {
+      this.http.get(urlPrefix + '/manifest.json', { responseType: 'text' }).subscribe(data => {
         resolve(data as string);
       }, error => {
         resolve(null);
@@ -55,18 +60,13 @@ export class ArticlesService {
   }
 
   async getArticle(id: number) {
+    let urlPrefix = await this.getUrlPrefix();
     for (let article of this.articles) {
       if (id === article.id) {
         // Load article text if we don't have it.
         if (!article.text) {
-          /*
-          await this.file.readAsText(this.file.applicationDirectory,
-                                     'www/assets/articles/article.' + article.id.toString() + '.md').then(text => {
-            article.text = text;
-          });
-          */
           let data = await new Promise((resolve, reject) => {
-            this.http.get(this.urlPrefix + '/article.' + article.id.toString() + '.md',
+            this.http.get(urlPrefix + '/article.' + article.id.toString() + '.md',
               { responseType: 'text' }).subscribe(data => {
                 resolve(data as string);
               });

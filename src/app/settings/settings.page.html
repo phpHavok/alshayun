@@ -5,5 +5,13 @@
 </ion-header>
 
 <ion-content padding>
-
+  <form #settingsForm="ngForm" (ngSubmit)="updateSettings(settingsForm)">
+    <ion-list>
+      <ion-item lines="none">
+        <ion-label position="stacked">Articles URL</ion-label>
+        <ion-input name="articlesURL" ngModel type="url" placeholder="http://" required></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button type="submit" color="primary" expand="block">Save Settings</ion-button>
+  </form>
 </ion-content>
