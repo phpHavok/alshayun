@@ -13,7 +13,7 @@ import { File } from '@ionic-native/file/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { HttpClientModule } from '@angular/common/http';
-import { AppletsService } from './services/applets.service';
+import { AppletsService } from './applets/applets.service';
 
 @NgModule({
   declarations: [AppComponent],

@@ -6,7 +6,7 @@ import { MarkdownService } from 'ngx-markdown';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AppletExampleComponent } from '../applets/applet-example.component';
 import { Applet } from '../applets/applet';
-import { AppletsService } from '../services/applets.service';
+import { AppletsService } from '../applets/applets.service';
 
 @Component({
   selector: 'app-article',
