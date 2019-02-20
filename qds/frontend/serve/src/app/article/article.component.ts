@@ -68,7 +68,9 @@ export class ArticleComponent implements OnInit {
   }
 
   updatePreview() {
-    this.parsedText = this.markdown.compile(this.articleForm.controls['text'].value);
+    let text = (this.articleForm.controls['text'].value as string).replace(/<applet[^>]+name="([^"]+)"[^>]*>[^<]*<\/applet>/g,
+                                                                           "<div class=\"applet\">Applet: $1</div>");
+    this.parsedText = this.markdown.compile(text);
   }
 
 }

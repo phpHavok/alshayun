@@ -28,3 +28,11 @@ body {
 .card {
     margin-bottom: 1rem;
 }
+
+div.applet {
+    background: #DEDEDE;
+    border: 1px solid #333;
+    text-align: center;
+    padding: 2rem;
+    margin-bottom: 1rem;
+}
