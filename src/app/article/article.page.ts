@@ -6,6 +6,7 @@ import { MarkdownService } from 'ngx-markdown';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AppletExampleComponent } from '../applets/applet-example.component';
 import { Applet } from '../applets/applet';
+import { AppletsService } from '../services/applets.service';
 
 @Component({
   selector: 'app-article',
@@ -30,7 +31,8 @@ export class ArticlePage implements OnInit, AfterViewChecked {
     private cfr: ComponentFactoryResolver,
     private injector: Injector,
     private appRef: ApplicationRef,
-    private renderer: Renderer) { }
+    private renderer: Renderer,
+    private apps: AppletsService) { }
 
   ngOnInit() {
     this.loadArticle();
@@ -56,28 +58,15 @@ export class ArticlePage implements OnInit, AfterViewChecked {
   }
 
   createApplet(applet: HTMLElement) {
-    let component = null;
-    switch (applet.getAttribute('name')) {
-      case 'example':
-        component = AppletExampleComponent;
-        break;
-      default:
-        return null;
-    }
-    const componentRef = this.cfr.resolveComponentFactory(component).create(this.injector);
-    (componentRef.instance as Applet).setAppletTag(applet);
-    (componentRef.instance as Applet).fullscreen.subscribe(fullscreen => {
+    let app = this.apps.createApplet(applet, this.cfr, this.injector, this.appRef, fullscreen => {
       this.processScrolls = !fullscreen;
       this.renderer.setElementClass(this.header.nativeElement, 'hidden', fullscreen);
       if (this.processScrolls) {
         this.content.scrollToPoint(0, Math.max(this.attrs.readPos, 0));
       }
     });
-    componentRef.changeDetectorRef.detectChanges();
-    this.appRef.attachView(componentRef.hostView);
-    let element = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-    this.applets.push(element);
-    return element;
+    this.applets.push(app);
+    return app;
   }
 
   async loadArticle() {

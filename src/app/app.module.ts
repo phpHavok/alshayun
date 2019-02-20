@@ -13,6 +13,7 @@ import { File } from '@ionic-native/file/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { HttpClientModule } from '@angular/common/http';
+import { AppletsService } from './services/applets.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +42,7 @@ import { HttpClientModule } from '@angular/common/http';
     StatusBar,
     SplashScreen,
     ArticlesService,
+    AppletsService,
     File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
