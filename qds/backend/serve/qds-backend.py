@@ -50,6 +50,7 @@ def create_article():
     # Return status
     ret = {}
     ret['message'] = 'Success'
+    ret['id'] = article['id']
     return json.dumps(ret)
 
 @app.route('/article/<aid>', methods = ['DELETE'])
