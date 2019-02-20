@@ -17,11 +17,13 @@ From: ubuntu:18.04
 %runscript
     cd /srv/www
     export FLASK_APP=qds-backend.py
+    export FLASK_ENV=development
     . /usr/local/flask/bin/activate
     flask run --host=0.0.0.0
 
 %startscript
     cd /srv/www
     export FLASK_APP=qds-backend.py
+    export FLASK_ENV=development
     . /usr/local/flask/bin/activate
     flask run --host=0.0.0.0
