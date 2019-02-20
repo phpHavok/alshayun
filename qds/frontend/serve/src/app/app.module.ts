@@ -15,6 +15,7 @@ import { AuthGuardService } from './auth-guard.service';
 import { FormsModule } from '@angular/forms';
 import { ArticleService } from './article.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
     ]),
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MarkdownModule.forRoot()
   ],
   providers: [AuthService, AuthGuardService, ArticleService],
   bootstrap: [AppComponent]

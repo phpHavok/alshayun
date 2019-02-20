@@ -28,10 +28,10 @@
   <div class="row">
     <div class="col-md">
       <div class="form-group">
-        <textarea ngModel name="text" class="form-control" rows="25" required></textarea>
+        <textarea ngModel name="text" class="form-control" rows="25" required (ngModelChange)="updatePreview()"></textarea>
       </div>
     </div>
-    <div class="col-md">
+    <div class="col-md" [innerHTML]="sanitizer.bypassSecurityTrustHtml(parsedText)">
     </div>
   </div>
 </form>

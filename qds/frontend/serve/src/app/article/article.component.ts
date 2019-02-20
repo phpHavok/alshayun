@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/cor
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../article.service';
+import { MarkdownService } from 'ngx-markdown';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-article',
@@ -12,8 +14,14 @@ export class ArticleComponent implements OnInit {
   @ViewChild('articleForm') articleForm: NgForm;
   @ViewChild('saveStatus') saveStatus: ElementRef;
   private id = null;
+  private parsedText = '';
 
-  constructor(private activatedRoute: ActivatedRoute, private as: ArticleService, private router: Router, private renderer: Renderer) { }
+  constructor(private activatedRoute: ActivatedRoute,
+              private as: ArticleService,
+              private router: Router,
+              private renderer: Renderer,
+              private markdown: MarkdownService,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -24,6 +32,7 @@ export class ArticleComponent implements OnInit {
           this.articleForm.controls['tags'].setValue(article.tags.join());
           this.articleForm.controls['excerpt'].setValue(article.excerpt);
           this.articleForm.controls['text'].setValue(article.text);
+          this.updatePreview();
         });
       } else {
         this.id = null;
@@ -56,6 +65,10 @@ export class ArticleComponent implements OnInit {
       saveStatus.innerText = 'Saved!';
       this.renderer.setElementClass(saveStatus, 'hidden', true);
     });
+  }
+
+  updatePreview() {
+    this.parsedText = this.markdown.compile(this.articleForm.controls['text'].value);
   }
 
 }
