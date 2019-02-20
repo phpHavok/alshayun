@@ -6,7 +6,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ArticleService {
-  readonly urlPrefix = 'http://127.0.0.1:5000';
+  //readonly urlPrefix = 'http://127.0.0.1:5000';
+  // Use empty urlPrefix when using proxyconfig.json.
+  readonly urlPrefix = '';
   articlesBehaviorSubject: BehaviorSubject<Array<any>> = null;
   articlesObserver: Observable<Array<any>> = null;
   articles: Array<any> = null;
