@@ -69,9 +69,15 @@ export class ArticlesService {
             this.http.get(urlPrefix + '/article.' + article.id.toString() + '.md',
               { responseType: 'text' }).subscribe(data => {
                 resolve(data as string);
+              }, error => {
+                resolve(null);
               });
           });
-          article.text = data as string;
+          if (data !== null) {
+            article.text = data as string;
+          } else {
+            article.text = null;
+          }
         }
         return article;
       }

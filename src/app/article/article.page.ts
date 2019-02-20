@@ -18,19 +18,19 @@ export class ArticlePage implements OnInit, AfterViewChecked {
   private parsedText: string;
   @ViewChild(IonContent) content: IonContent;
   @ViewChild('container') container: ElementRef;
-  @ViewChild('header', {read: ElementRef}) header: ElementRef;
+  @ViewChild('header', { read: ElementRef }) header: ElementRef;
   private applets: HTMLElement[] = [];
   private processScrolls = true;
 
   constructor(private route: ActivatedRoute,
-              private articles: ArticlesService,
-              private loadingCtrl: LoadingController,
-              private sanitizer: DomSanitizer,
-              private markdown: MarkdownService,
-              private cfr: ComponentFactoryResolver,
-              private injector: Injector,
-              private appRef: ApplicationRef,
-              private renderer: Renderer) { }
+    private articles: ArticlesService,
+    private loadingCtrl: LoadingController,
+    private sanitizer: DomSanitizer,
+    private markdown: MarkdownService,
+    private cfr: ComponentFactoryResolver,
+    private injector: Injector,
+    private appRef: ApplicationRef,
+    private renderer: Renderer) { }
 
   ngOnInit() {
     this.loadArticle();
@@ -91,12 +91,16 @@ export class ArticlePage implements OnInit, AfterViewChecked {
       });
     });
     this.article = await this.articles.getArticle(<number>id);
-    this.parsedText = this.markdown.compile(this.article.text);
-    this.attrs = await this.articles.getArticleAttributes(<number>id);
-    this.attrs.read = true;
-    this.articles.setArticleAttributes(this.article.id, this.attrs);
-    if (this.attrs.readPos > 0) {
-      this.content.scrollToPoint(0, Math.max(this.attrs.readPos, 0));
+    if (this.article !== null && this.article.text !== null) {
+      this.parsedText = this.markdown.compile(this.article.text);
+      this.attrs = await this.articles.getArticleAttributes(<number>id);
+      this.attrs.read = true;
+      this.articles.setArticleAttributes(this.article.id, this.attrs);
+      if (this.attrs.readPos > 0) {
+        this.content.scrollToPoint(0, Math.max(this.attrs.readPos, 0));
+      }
+    } else {
+      this.parsedText = '<p>Failed to load article.</p>';
     }
     return await loading.dismiss();
   }
