@@ -1,6 +1,7 @@
 import { Injectable, Injector, ComponentFactoryResolver, ApplicationRef, EmbeddedViewRef } from '@angular/core';
 import { AppletExampleComponent } from '../applets/applet-example.component';
 import { Applet } from '../applets/applet';
+import { AppletHanoiComponent } from './applet-hanoi.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,9 @@ export class AppletsService {
     switch (applet.getAttribute('name')) {
       case 'example':
         component = AppletExampleComponent;
+        break;
+      case 'hanoi':
+        component = AppletHanoiComponent;
         break;
       default:
         return null;
