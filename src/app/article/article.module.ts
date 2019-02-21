@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ArticlePage } from './article.page';
 import { AppletExampleComponent } from '../applets/applet-example.component';
+import { AppletHanoiComponent } from '../applets/applet-hanoi.component';
 
 const routes: Routes = [
   {
@@ -24,10 +25,12 @@ const routes: Routes = [
   ],
   declarations: [
     ArticlePage,
-    AppletExampleComponent
+    AppletExampleComponent,
+    AppletHanoiComponent
   ],
   entryComponents: [
-    AppletExampleComponent
+    AppletExampleComponent,
+    AppletHanoiComponent
   ]
 })
 export class ArticlePageModule {}
