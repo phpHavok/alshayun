@@ -1,3 +1,8 @@
 <div>
-    <canvas tappable (click)="toggleFullscreen()" #canvas></canvas>
+    <canvas #canvas></canvas>
+</div>
+<div #appletToolbar class="applet-toolbar">
+    <div class="applet-links">
+        <a (click)="toggleFullscreen()">Fullscreen</a>
+    </div>
 </div>
