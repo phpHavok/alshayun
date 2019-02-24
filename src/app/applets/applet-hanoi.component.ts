@@ -29,8 +29,11 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
   ngOnInit() {
     super.ngOnInit();
     this.numRings = this.appletTag.getAttribute('data-num-rings');
-    if (!this.numRings) {
+    if (!this.numRings || this.numRings < 3) {
       this.numRings = 3;
+    }
+    if (this.numRings > 8) {
+      this.numRings = 8;
     }
     let scaleXStart = 1.0;
     let scaleYStart = 1.0;
@@ -39,7 +42,8 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
         colorDark: this.palette[i % this.palette.length][0],
         colorLight: this.palette[i % this.palette.length][1],
         scaleX: scaleXStart * 0.9,
-        scaleY: scaleYStart * 0.98
+        scaleY: scaleYStart * 0.98,
+        index: i
       });
       scaleXStart *= 0.9;
       scaleYStart *= 0.98;
@@ -109,5 +113,6 @@ interface Ring {
   scaleX: number,
   scaleY: number,
   colorDark: string,
-  colorLight: string
+  colorLight: string,
+  index: number
 }
