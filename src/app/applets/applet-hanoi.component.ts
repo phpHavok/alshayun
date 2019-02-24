@@ -91,7 +91,7 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
   protected draw() {
     super.draw();
     this.accumulator++
-    if (this.accumulator >= 90) {
+    if (this.accumulator >= 30) {
       this.accumulator = 0;
       if (this.doTicks) {
         this.doTick();
