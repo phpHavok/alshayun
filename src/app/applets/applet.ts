@@ -1,5 +1,17 @@
-import { ViewChild, ElementRef, Renderer, AfterViewInit, Output, EventEmitter, OnInit } from "@angular/core";
+import { ViewChild, ElementRef, Renderer, AfterViewInit, Output, EventEmitter, OnInit, TemplateRef } from "@angular/core";
 import { Platform } from "@ionic/angular";
+
+export const appletsGenericTemplate = `
+<div>
+    <canvas #canvas></canvas>
+</div>
+<div #appletToolbar class="applet-toolbar">
+    <div class="applet-links">
+        <a (click)="toggleFullscreen()">Fullscreen</a>
+        <ng-container *ngTemplateOutlet="childToolbar"></ng-container>
+    </div>
+</div>
+`;
 
 export class Applet implements AfterViewInit, OnInit {
     @Output('fullscreen') fullscreen = new EventEmitter();

@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit, Renderer } from '@angular/core';
-import { Applet } from './applet';
+import { Applet, appletsGenericTemplate } from './applet';
 import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'applet-example',
-  templateUrl: './applet.html',
+  template: appletsGenericTemplate,
   styleUrls: ['./applet.scss']
 })
 export class AppletExampleComponent extends Applet implements OnInit, AfterViewInit {

@@ -1,10 +1,17 @@
 import { Component, OnInit, AfterViewInit, Renderer } from '@angular/core';
-import { Applet } from './applet';
+import { Applet, appletsGenericTemplate } from './applet';
 import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'applet-hanoi',
-  templateUrl: './applet.html',
+  template: appletsGenericTemplate + `
+<ng-template #childToolbar>
+  <a *ngIf="!doTicks && !allDone" (click)="doTicks = true">Play</a>
+  <a *ngIf="doTicks && !allDone" (click)="doTicks = false">Pause</a>
+  <a *ngIf="!doTicks && !allDone" (click)="doTick()">Next Frame</a>
+  <a *ngIf="!doTicks || allDone" (click)="doReset()">Reset</a>
+</ng-template>
+  `,
   styleUrls: ['./applet.scss']
 })
 export class AppletHanoiComponent extends Applet implements OnInit, AfterViewInit {
@@ -25,7 +32,8 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
   private minRod = 0;
   private accumulator = 0;
   private moveMin = true;
-  private doTicks = true;
+  private doTicks = false;
+  private allDone = false;
   private readonly numRods = 3;
 
   constructor(protected platform: Platform, protected renderer: Renderer) {
@@ -46,6 +54,13 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
     } else {
       this.jumpOffset = 2;
     }
+    this.doReset();
+  }
+
+  doReset() {
+    this.rings = [
+      [] as Ring[], [] as Ring[], [] as Ring[]
+    ];
     let scaleXStart = 1.0;
     let scaleYStart = 1.0;
     for (let i = 0; i < this.numRings; ++i) {
@@ -59,6 +74,11 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
       scaleXStart *= 0.9;
       scaleYStart *= 0.98;
     }
+    this.minRod = 0;
+    this.accumulator = 0;
+    this.moveMin = true;
+    this.doTicks = false;
+    this.allDone = false;
   }
 
   ngAfterViewInit() {
@@ -66,12 +86,16 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
   }
 
   protected doTick() {
+    if (this.allDone) {
+      return;
+    }
     if (this.moveMin) {
       let minRing = this.rings[this.minRod].pop();
       let newRod = (this.minRod + this.jumpOffset) % this.numRods;
       this.rings[newRod].push(minRing);
       this.minRod = newRod;
       if (this.rings[newRod].length == this.numRings) {
+        this.allDone = true;
         this.doTicks = false;
       }
     } else {
@@ -91,7 +115,7 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
   protected draw() {
     super.draw();
     this.accumulator++
-    if (this.accumulator >= 30) {
+    if (this.accumulator >= 15) {
       this.accumulator = 0;
       if (this.doTicks) {
         this.doTick();
