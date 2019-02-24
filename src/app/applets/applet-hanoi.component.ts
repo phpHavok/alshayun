@@ -21,6 +21,12 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
     ['#00BFAF', '#00FFE9'],
     ['#BF5700', '#FF7400']
   ];
+  private jumpOffset = 0;
+  private minRod = 0;
+  private accumulator = 0;
+  private moveMin = true;
+  private doTicks = true;
+  private readonly numRods = 3;
 
   constructor(protected platform: Platform, protected renderer: Renderer) {
     super(platform, renderer, true);
@@ -35,6 +41,11 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
     if (this.numRings > 8) {
       this.numRings = 8;
     }
+    if (this.numRings % 2 == 0) {
+      this.jumpOffset = 1;
+    } else {
+      this.jumpOffset = 2;
+    }
     let scaleXStart = 1.0;
     let scaleYStart = 1.0;
     for (let i = 0; i < this.numRings; ++i) {
@@ -43,7 +54,7 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
         colorLight: this.palette[i % this.palette.length][1],
         scaleX: scaleXStart * 0.9,
         scaleY: scaleYStart * 0.98,
-        index: i
+        index: this.numRings - (i + 1)
       });
       scaleXStart *= 0.9;
       scaleYStart *= 0.98;
@@ -54,8 +65,38 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
     super.ngAfterViewInit();
   }
 
+  protected doTick() {
+    if (this.moveMin) {
+      let minRing = this.rings[this.minRod].pop();
+      let newRod = (this.minRod + this.jumpOffset) % this.numRods;
+      this.rings[newRod].push(minRing);
+      this.minRod = newRod;
+      if (this.rings[newRod].length == this.numRings) {
+        this.doTicks = false;
+      }
+    } else {
+      let firstRod = (this.minRod + 1) % this.numRods;
+      let secondRod = (this.minRod + 2) % this.numRods;
+      let minFirst = this.rings[firstRod].length > 0 ? this.rings[firstRod][this.rings[firstRod].length - 1].index : this.numRings;
+      let minSecond = this.rings[secondRod].length > 0 ? this.rings[secondRod][this.rings[secondRod].length - 1].index : this.numRings;
+      if (minFirst < minSecond) {
+        this.rings[secondRod].push(this.rings[firstRod].pop());
+      } else {
+        this.rings[firstRod].push(this.rings[secondRod].pop());
+      }
+    }
+    this.moveMin = !this.moveMin;
+  }
+
   protected draw() {
     super.draw();
+    this.accumulator++
+    if (this.accumulator >= 90) {
+      this.accumulator = 0;
+      if (this.doTicks) {
+        this.doTick();
+      }
+    }
     if (this.canvas.width < this.canvas.height) {
       // Portrait
       this.discWidth = this.canvas.width / 4;
