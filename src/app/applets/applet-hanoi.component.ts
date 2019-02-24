@@ -32,14 +32,17 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
     if (!this.numRings) {
       this.numRings = 3;
     }
-    let widthStart = 1.0;
+    let scaleXStart = 1.0;
+    let scaleYStart = 1.0;
     for (let i = 0; i < this.numRings; ++i) {
       this.rings[0].push({
         colorDark: this.palette[i % this.palette.length][0],
         colorLight: this.palette[i % this.palette.length][1],
-        width: widthStart * 0.9
+        scaleX: scaleXStart * 0.9,
+        scaleY: scaleYStart * 0.98
       });
-      widthStart *= 0.9;
+      scaleXStart *= 0.9;
+      scaleYStart *= 0.98;
     }
   }
 
@@ -92,7 +95,7 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
     for (let i = 0; i < this.rings[index].length; ++i) {
       let ring = this.rings[index][i];
       let ringHeight = this.discWidth * 0.1;
-      this.drawDisc(x, y - ringHeight * (i + 1), this.discWidth * ring.width, ringHeight, ring.colorDark, ring.colorLight);
+      this.drawDisc(x, y - ringHeight * (i + 1), this.discWidth * ring.scaleX, ringHeight * ring.scaleY, ring.colorDark, ring.colorLight);
       // Spindle top
       if (i + 1 == this.rings[index].length) {
         this.ctx.fillStyle = '#333333';
@@ -103,7 +106,8 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
 }
 
 interface Ring {
-  width: number,
+  scaleX: number,
+  scaleY: number,
   colorDark: string,
   colorLight: string
 }
