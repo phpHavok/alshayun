@@ -37,9 +37,9 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
   private doTicks = false;
   private allDone = false;
   private readonly numRods = 3;
-  private readonly maxSpeed = 1;
-  private readonly minSpeed = 91;
-  private speed = 21;
+  private readonly maxSpeed = 0;
+  private readonly minSpeed = 100;
+  private speed = 20;
 
   constructor(protected platform: Platform, protected renderer: Renderer) {
     super(platform, renderer, true);
