@@ -89,8 +89,8 @@
     },
     {
         "id": 12,
-        "title": "Towers of Hanoi",
-        "excerpt": "Learn about the Towers of Hanoi with animated examples.",
+        "title": "Tower of Hanoi",
+        "excerpt": "Learn about the Tower of Hanoi problem with an iterative algorithm and animated examples.",
         "tags": [
             "algorithms"
         ]
