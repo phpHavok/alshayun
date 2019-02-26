@@ -88,9 +88,18 @@ export class AppletSortComponent extends Applet implements OnInit {
     this.allDone = false;
     this.rr = 21;
     this.accumulator = 0;
-    this.i = 0;
-    this.j = 0;
     this.focused = [];
+    switch (this.method) {
+      default:
+      case 'bubble':
+        this.i = 0;
+        this.j = 0;
+        break;
+      case 'insertion':
+        this.i = 1;
+        this.j = 1;
+      break;
+    }
   }
 
   doTick() {
@@ -101,6 +110,9 @@ export class AppletSortComponent extends Applet implements OnInit {
       default:
       case 'bubble':
         this.bubbleSort();
+        break;
+      case 'insertion':
+        this.insertionSort();
         break;
     }
   }
@@ -150,6 +162,27 @@ export class AppletSortComponent extends Applet implements OnInit {
       this.focused = [];
       this.allDone = true;
       return;
+    }
+  }
+
+  protected insertionSort() {
+    this.focused = [this.j, this.j - 1];
+    if (this.j > 0 && this.bars[this.j - 1].index > this.bars[this.j].index) {
+      // Swap j and j - 1
+      let temp = this.bars[this.j - 1];
+      this.bars[this.j - 1] = this.bars[this.j];
+      this.bars[this.j] = temp;
+      // Update j
+      this.j--;
+    } else {
+      this.i++;
+      if (this.i < this.numBars) {
+        this.j = this.i;
+      } else {
+        this.focused = [];
+        this.allDone = true;
+        return;
+      }
     }
   }
 }
