@@ -2,6 +2,7 @@ import { Injectable, Injector, ComponentFactoryResolver, ApplicationRef, Embedde
 import { AppletExampleComponent } from '../applets/applet-example.component';
 import { Applet } from '../applets/applet';
 import { AppletHanoiComponent } from './applet-hanoi.component';
+import { AppletSortComponent } from './applet-sort.component';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,9 @@ export class AppletsService {
         break;
       case 'hanoi':
         component = AppletHanoiComponent;
+        break;
+      case 'sort':
+        component = AppletSortComponent;
         break;
       default:
         return null;

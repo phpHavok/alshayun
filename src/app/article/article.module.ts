@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { ArticlePage } from './article.page';
 import { AppletExampleComponent } from '../applets/applet-example.component';
 import { AppletHanoiComponent } from '../applets/applet-hanoi.component';
+import { AppletSortComponent } from '../applets/applet-sort.component';
 
 const routes: Routes = [
   {
@@ -26,11 +27,13 @@ const routes: Routes = [
   declarations: [
     ArticlePage,
     AppletExampleComponent,
-    AppletHanoiComponent
+    AppletHanoiComponent,
+    AppletSortComponent
   ],
   entryComponents: [
     AppletExampleComponent,
-    AppletHanoiComponent
+    AppletHanoiComponent,
+    AppletSortComponent
   ]
 })
 export class ArticlePageModule {}
