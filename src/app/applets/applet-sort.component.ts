@@ -19,7 +19,7 @@ import { Platform } from '@ionic/angular';
 export class AppletSortComponent extends Applet implements OnInit {
   private doTicks;
   private allDone;
-  private rr;
+  private rr = 21;
   private readonly maxRR = 91;
   private readonly minRR = 5;
   private method;
@@ -86,7 +86,7 @@ export class AppletSortComponent extends Applet implements OnInit {
     this.doShuffle();
     this.doTicks = false;
     this.allDone = false;
-    this.rr = 21;
+    //this.rr = 21;
     this.accumulator = 0;
     this.focused = [];
     switch (this.method) {
