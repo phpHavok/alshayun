@@ -94,5 +94,14 @@
         "tags": [
             "algorithms"
         ]
+    },
+    {
+        "id": 13,
+        "title": "Sorting Algorithms",
+        "excerpt": "Learn about various sorting algorithms with animated examples.",
+        "tags": [
+            "algorithms",
+            "sorting"
+        ]
     }
 ]
