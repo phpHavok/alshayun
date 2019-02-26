@@ -2,7 +2,7 @@ The **Tower of Hanoi** is a mathematical puzzle consisting of three rods and one
 
 Use the below applet to play through the 3-ring Tower of Hanoi example. You may step through the solution frame by frame to observe the moves.
 
-<applet name="hanoi" data-num-rings="3"></applet>
+<applet name="hanoi" data-num-rings="3" width="50%"></applet>
 
 A beautifully simple iterative algorithm exists for solving the Tower of Hanoi problem. To begin discussing the algorithm, a couple more definitions are necessary. The rods are traditionally placed in a circle where the terms **clockwise** and **counterclockwise** are apparent. However, these applets display the rods in a line. Therefore, to be clear, we define the following movements.
 
@@ -28,4 +28,4 @@ Observe the three- and four- ring examples to see how the smallest ring moves in
 
 A beautifully simple algorithm indeed. In conclusion, experiment with an 8-ring example.
 
-<applet name="hanoi" data-num-rings="8"></applet>
+<applet name="hanoi" data-num-rings="8" width="50%"></applet>
