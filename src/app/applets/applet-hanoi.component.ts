@@ -10,6 +10,8 @@ import { Platform } from '@ionic/angular';
   <a *ngIf="doTicks && !allDone" (click)="doTicks = false">Pause</a>
   <a *ngIf="!doTicks && !allDone" (click)="doTick()">Next Frame</a>
   <a *ngIf="!doTicks || allDone" (click)="doReset()">Reset</a>
+  <a *ngIf="doTicks && !allDone && speed < minSpeed" (click)="doSpeedDown()">&lt;&lt; Speed</a>
+  <a *ngIf="doTicks && !allDone && speed > maxSpeed" (click)="doSpeedUp()">Speed &gt;&gt;</a>
 </ng-template>
   `,
   styleUrls: ['./applet.scss']
@@ -35,6 +37,9 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
   private doTicks = false;
   private allDone = false;
   private readonly numRods = 3;
+  private readonly maxSpeed = 5;
+  private readonly minSpeed = 90;
+  private speed;
 
   constructor(protected platform: Platform, protected renderer: Renderer) {
     super(platform, renderer, true);
@@ -57,6 +62,18 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
     this.doReset();
   }
 
+  doSpeedUp() {
+    if (this.speed > this.maxSpeed) {
+      this.speed -= 5;
+    }
+  }
+
+  doSpeedDown() {
+    if (this.speed < this.minSpeed) {
+      this.speed += 5;
+    }
+  }
+
   doReset() {
     this.rings = [
       [] as Ring[], [] as Ring[], [] as Ring[]
@@ -74,6 +91,7 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
       scaleXStart *= 0.9;
       scaleYStart *= 0.98;
     }
+    this.speed = 20;
     this.minRod = 0;
     this.accumulator = 0;
     this.moveMin = true;
@@ -115,7 +133,7 @@ export class AppletHanoiComponent extends Applet implements OnInit, AfterViewIni
   protected draw() {
     super.draw();
     this.accumulator++
-    if (this.accumulator >= 15) {
+    if (this.accumulator >= this.speed) {
       this.accumulator = 0;
       if (this.doTicks) {
         this.doTick();
