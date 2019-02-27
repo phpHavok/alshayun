@@ -16,6 +16,10 @@ canvas.fullscreen {
     margin: 0 !important;
 }
 
+.applet-toolbar {
+  text-align: center;
+}
+
 .applet-toolbar a {
     margin-right: 1rem;
 }
@@ -28,6 +32,7 @@ canvas.fullscreen {
     left: 0 !important;
     z-index: 9999 !important;
     background: rgba(255, 255, 255, 0.5);
+    text-align: left;
 }
 
 .applet-toolbar.fullscreen .applet-links {
