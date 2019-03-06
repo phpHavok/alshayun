@@ -1,6 +1,9 @@
 \documentclass[12pt]{report}
 
 \usepackage{palatino}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+\renewcommand{\baselinestretch}{1.5}
 
 \begin{document}
 
@@ -11,43 +14,106 @@
 
 \tableofcontents
 
+% Definitions in bold: \textbf{}
+
 \chapter{Introduction}
-\section{What is Alshayun?}
-\section{Inspiration}
-\section{About the Name}
+
+    \section{What is Alshayun?}
+
+\textbf{Alshayun} is a mobile application for delivering articles consisting of
+rich text and interactive \textbf{applet}s to readers. Written in the portable
+\textbf{Ionic} framework, Alshayun is capable of running on the Web, Android
+devices, and Apple iOS devices. However, Alshayun has currently only been tested
+on a Samsung Galaxy S7 device running Android.
+
+Alshayun is designed with three actors in mind: the \textbf{content author}, the
+\textbf{reader}, and the \textbf{developer}. The content author is anyone who
+has anything they would like to write about, potentially making use of
+interactive and embedded applets as assistive visual aids. The reader is anyone
+who would like to read what one or more content authors have to say. The
+developer is the one capable of developing applets and other functionality of
+Alshayun of which content authors and readers can make use. Note that while I
+speak of these roles in the singular, many individuals may inhabit any given
+role, and some individuals may inhabit multiple roles.
+
+    \section{Inspiration}
+
+After taking a numerical methods course as part of my Computer Science
+undergraduate degree, I became fascinated with Bézier curves. Whilst researching
+Bézier curves online, I came across an article titled \textit{A Primer on Bézier
+Curves} \cite{pomax} authored by someone named Pomax. The highly detailed and
+enlightening article was filled with interactive applets designed to strengthen
+the reader's understanding of each progressively difficult concept.
+
+Intrigued by Pomax's work, I was inspired to develop a sort of content delivery
+mechanism designed to allow content authors like Pomax author similar articles
+and deliver them to interested readers. Supporting the development and use of
+interesting, interactive applets was a priority. I recognized that any such
+modern application needed to be mobile-friendly, and so I decided to develop
+exclusively with mobility in mind.
+
+    \section{About the Name}
+
+Alshayun was originally meant to be tailored towards mathematics education.
+However, during the process of developing the application, I realized that I had
+created a much more generalizable platform capable of servicing any subject and
+perhaps more. Albeit, I decided to keep the name I gave the application from the
+time of its inception---a name which carries with it certain mathematical
+connotations.
+
+Algebra (from the Arabic ``al-jabr'') is one of the most powerful mathematical
+devices and fields of study, as well as my personal favorite subject of
+mathematics. The English-speaking world inherited its written algebraic works
+from Latin, which came from Spanish, which came from Arabic. This line of
+inheritance spanned many years and involved merchants and trade routes, among
+other things. In the original Arabic sources, the word ``al-shayun,'' meaning
+``the unknown thing,'' was frequently used to describe the unknown in algebraic
+equations. Therefore, I found ``al-shayun'' to be an appropriate name filled
+with mathematical historical meaning.
+
+To learn more about how ``al-shayun'' came to be the letter ``x'' used in modern
+algebra, check out the article \textit{Why X marks the unknown} by Terry Moore
+\cite{moore}.
 
 \chapter{Technologies Used}
-\section{Node.js}
-\section{Angular}
-\section{Ionic}
-\section{Cordova}
-\section{Flask}
-\section{Singularity}
+    \section{Node.js}
+    \section{Angular}
+    \section{Ionic}
+    \section{Cordova}
+    \section{Flask}
+    \section{Singularity}
 
 \chapter{Quick n' Dirty Server}
-\section{Building and Running}
-\section{Motivation}
-\section{Backend}
-\section{Frontend}
-\section{Production Considerations}
+    \section{Building and Running}
+    \section{Motivation}
+    \section{Backend}
+    \section{Frontend}
+    \section{Production Considerations}
 
 \chapter{Alshayun Mobile Application}
-\section{Building and Running}
-\section{User Interface}
-\section{Caching Strategy}
-\section{Applets}
-\section{Accepting Contributions}
+    \section{Building and Running}
+    \section{User Interface}
+    \section{Caching Strategy}
+    \section{Applets}
+    \section{Accepting Contributions}
 
 \chapter{Use Cases}
-\section{Classroom Auxiliary Content}
-\section{Starter Mobile Blog}
+    \section{Classroom Auxiliary Content}
+    \section{Starter Mobile Blog}
 
 \chapter{Future Work}
-\section{User Accounts}
-\section{Cloud Hosting}
-\section{Power Efficiency}
+    \section{User Accounts}
+    \section{Cloud Hosting}
+    \section{Power Efficiency}
 
 \chapter{Conclusion}
-\section{Learning Outcomes}
+    \section{Learning Outcomes}
+
+\begin{thebibliography}{9}
+    \bibitem{moore} Moore, Terry. \textit{Why X marks the unknown.} Retrieved
+        from \url{https://cosmosmagazine.com/mathematics/why-x-marks-unknown-0}.
+    \bibitem{pomax} Pomax. \textit{A Primer on Bézier Curves.} Retrieved from
+        \url{https://pomax.github.io/bezierinfo/}.
+\end{thebibliography}
 
 \end{document}
