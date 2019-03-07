@@ -76,12 +76,115 @@ algebra, check out the article \textit{Why X marks the unknown} by Terry Moore
 \cite{moore}.
 
 \chapter{Technologies Used}
+
     \section{Node.js}
+
+\textbf{Node\@.js} (Node) \cite{nodejs} is a JavaScript runtime designed mainly
+to facilitate writing scalable, server-side software in JavaScript. Before Node,
+first released in May of 2009, the idea of writing server-side software in
+JavaScript was relatively unknown. Since its conception, Node has received much
+attention and both praise and criticism from developers.
+
+Less than a year after Node's inception, a package manager was released in
+January of 2010 named the \textbf{Node Package Manager} (npm, intentionally not
+capitalized) \cite{npm}. npm has since played a vital role in the development of
+most JavaScript software and frameworks and has transcended its original intent
+to become a general JavaScript package manager.
+
+While developing Alshayun, I never interacted directly with Node. However, npm
+was a vital part of my development process. It is for that reason that I mention
+npm and Node as a used technology.
+
+    \section{TypeScript}
+
+\textbf{TypeScript} \cite{typescript} is a superset of JavaScript which
+ultimately compiles into JavaScript. TypeScript complements JavaScript with type
+safety and true object-oriented programming constructs such as classes, access
+modifiers, and inheritance. In TypeScript, every variable and symbol in general
+will have a type, either stated explicitly by the programmer or inferred by the
+TypeScript compiler from usage. The TypeScript compiler is available for
+installation as an npm package.
+
+As the programming language of Alshayun, TypeScript has been extraordinarily
+useful in development. In particular, the access to object-oriented programming
+constructs has allowed me to write clean, modular, and purpose-driven code.
+
     \section{Angular}
+
+\textbf{Angular} \cite{angular} is a Web application framework developed by
+Google and written in TypeScript.  Relatively new, Angular was released in
+September of 2016, although it's based on a rewrite of its older predecessor,
+AngularJS. Angular is useful for developing responsive, single-page Web
+applications backed by a full suite of development tools to assist in
+application development, testing, and deployment. Angular is available for
+installation as an npm package.
+
+The single-page architecture of Angular is accomplished by the backing
+Web-server rewriting URLs and redirecting requests to the root index\@.html file
+of the Angular application. Angular then uses an internal router module to load
+the appropriate page of the application. The application can be fully loaded up
+front, or lazily loaded on demand. Lazy loading is recommended for larger
+applications to avoid a lengthy initial page load.
+
+One of Angular's strongest development points is its use of the
+\textbf{Model-View-Controller} (MVC) design pattern. Angular provides a template
+syntax for easily binding the model (data, variables) to the view (HTML elements
+such as forms). Thus, if a variable \texttt{title} exists and the application
+has bound it to the heading tag of a page with the syntax
+\texttt{<h1>\{\{title\}\}</h1>}, then simply updating the \texttt{title}
+variable will automatically result in the heading of the page being updated. The
+developer need not worry about the details or be concerned with updating the
+view his or herself. Furthermore, interactive actions such as button clicks can
+trigger the calling of methods which further update the model.
+    
     \section{Ionic}
+
+\textbf{Ionic} \cite{ionic} is a framework for building cross-platform
+applications in Hypertext Markup Language (HTML), Cascading Style Sheets (CSS),
+and JavaScript. Ionic supports developing an application with a single codebase
+which deploys to Web, Android, and iOS devices. As of version 4, the Ionic
+codebase is divorced of an underlying JavaScript framework, although Angular is
+still the most supported and widely used base for Ionic.
+
+Ionic provides a collection of HTML tags and CSS which generate components
+similar to \textbf{Bootstrap} \cite{bootstrap}. Examples of components include
+buttons, cards, toasts, modals, and lists. Ionic components are designed mimic
+the look and feel of a native Android or iOS application, complete with built-in
+gestures and animations.
+    
     \section{Cordova}
+
+\textbf{Cordova} \cite{cordova} is an Apache project which provides a uniform
+interface for generating device-dependent code for Android and iOS. For example,
+Cordova provides a JavaScript interface for interacting with the built-in camera
+of mobile devices. Thus, the developer can write one piece of code for taking
+pictures and gathering image data, and Cordova automatically translates that
+code into the appropriate programming language and format for desired devices
+(Java for Android, Swift for iOS). Cordova is a vital part of Ionic, and Ionic
+provides a direct command-line interface to Cordova for building mobile
+packages.
+    
     \section{Flask}
+
+\textbf{Flask} \cite{flask} is a Python framework for the rapid development of
+RESTful APIs (Representational State Transfer, Application Programming
+Interface). Flask allows developers to prefix Python functions with decorators
+indicating the URL endpoint which triggers the function, the acceptable HTTP
+methods, and more. Flask also provides a collection of helpful methods for
+generating HTTP responses, handling exceptions, and easily processing HTTP
+request data. A built-in development server is provided for prototyping
+purposes.
+    
     \section{Singularity}
+
+\textbf{Singularity} \cite{singularity} is a containerization software which
+allows users to develop, package, and relocate full-fledged compute environments
+consisting of an operating system and software binaries and libraries.
+Singularity is one of several containerization platforms in existence. However,
+it stands apart by being the most secure and, in my opinion, simplest to use. I
+have a personal connection to Singularity, having contributed code to the
+open-source project and developed many containers as part of my employment at
+the University of Kentucky.
 
 \chapter{Quick n' Dirty Server}
     \section{Building and Running}
@@ -110,10 +213,21 @@ algebra, check out the article \textit{Why X marks the unknown} by Terry Moore
     \section{Learning Outcomes}
 
 \begin{thebibliography}{9}
+    \bibitem{angular} Angular. Retrieved from \url{https://angular.io/}.
+    \bibitem{bootstrap} Bootstrap. Retrieved from
+        \url{https://getbootstrap.com/}.
+    \bibitem{cordova} Cordova. Retrieved from \url{https://cordova.apache.org/}.
+    \bibitem{flask} Flask. Retrieved from \url{http://flask.pocoo.org/}.
+    \bibitem{ionic} Ionic. Retrieved from \url{https://ionicframework.com/}.
     \bibitem{moore} Moore, Terry. \textit{Why X marks the unknown.} Retrieved
         from \url{https://cosmosmagazine.com/mathematics/why-x-marks-unknown-0}.
+    \bibitem{nodejs} Node\@.js. Retrieved from \url{https://nodejs.org/en/}.
+    \bibitem{npm} npm. Retrieved from \url{https://www.npmjs.com/}.
     \bibitem{pomax} Pomax. \textit{A Primer on Bézier Curves.} Retrieved from
         \url{https://pomax.github.io/bezierinfo/}.
+    \bibitem{singularity} Singularity. Retrieved from \url{https://www.sylabs.io/singularity/}.
+    \bibitem{typescript} TypeScript. Retrieved from
+        \url{https://www.typescriptlang.org/}.
 \end{thebibliography}
 
 \end{document}
