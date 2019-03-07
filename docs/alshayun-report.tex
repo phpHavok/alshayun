@@ -2,6 +2,7 @@
 
 \usepackage{palatino}
 \usepackage{hyperref}
+\usepackage[htt]{hyphenat}
 \usepackage[margin=1in]{geometry}
 \renewcommand{\baselinestretch}{1.5}
 
@@ -60,7 +61,7 @@ so I decided to develop exclusively with mobility in mind.
 education.  However, during the process of developing the application, I
 realized that I had created a much more generalizable platform capable of
 servicing any subject and perhaps more. Albeit, I decided to keep the name I
-gave the application from the time of its inception---a name which carries with
+gave the application from the time of its inception---a name that carries with
 it certain mathematical connotations.
 
 Algebra (from the Arabic ``al-jabr'') is one of the most powerful mathematical
@@ -101,7 +102,7 @@ technology.
 
     \section{TypeScript}
 
-\textbf{TypeScript} \cite{typescript} is a superset of \textbf{JavaScript} which
+\textbf{TypeScript} \cite{typescript} is a superset of \textbf{JavaScript} that
 ultimately compiles into \textbf{JavaScript}. \textbf{TypeScript} complements
 \textbf{JavaScript} with type safety and true object-oriented programming
 constructs such as classes, access modifiers, and inheritance. In
@@ -141,27 +142,27 @@ syntax \texttt{<h1>\{\{title\}\}</h1>}, then simply updating the \texttt{title}
 variable will automatically result in the heading of the page being updated. The
 \textbf{developer} need not worry about the details or be concerned with
 updating the view his or herself. Furthermore, interactive actions such as
-button clicks can trigger the calling of methods which further update the model.
+button clicks can trigger the calling of methods that further update the model.
     
     \section{Ionic}
 
 \textbf{Ionic} \cite{ionic} is a framework for building cross-platform
 applications in \textbf{Hypertext Markup Language (HTML)}, \textbf{Cascading
 Style Sheets (CSS)}, and \textbf{JavaScript}. \textbf{Ionic} supports developing
-an application with a single codebase which deploys to Web, Android, and iOS
+an application with a single codebase that deploys to Web, Android, and iOS
 devices. As of version 4, the \textbf{Ionic} codebase is divorced of an
 underlying \textbf{JavaScript} framework, although \textbf{Angular} is still the
 most supported and widely used base for \textbf{Ionic}.
 
-\textbf{Ionic} provides a collection of \textbf{HTML} tags and \textbf{CSS}
-which generate components similar to \textbf{Bootstrap} \cite{bootstrap}.
-Examples of components include buttons, cards, toasts, modals, and lists.
-\textbf{Ionic} components are designed mimic the look and feel of a native
-Android or iOS application, complete with built-in gestures and animations.
+\textbf{Ionic} provides a collection of \textbf{HTML} tags and \textbf{CSS} that
+generate components similar to \textbf{Bootstrap} \cite{bootstrap}.  Examples of
+components include buttons, cards, toasts, modals, and lists.  \textbf{Ionic}
+components are designed mimic the look and feel of a native Android or iOS
+application, complete with built-in gestures and animations.
     
     \section{Cordova}
 
-\textbf{Cordova} \cite{cordova} is an Apache project which provides a uniform
+\textbf{Cordova} \cite{cordova} is an Apache project that provides a uniform
 interface for generating device-dependent code for Android and iOS. For example,
 \textbf{Cordova} provides a \textbf{JavaScript} interface for interacting with
 the built-in camera of mobile devices. Thus, the \textbf{developer} can write
@@ -178,7 +179,7 @@ packages.
 development of \textbf{Representational State Transfer (REST)}
 \textbf{Application Programming Interface (API)}s. \textbf{Flask} allows
 \textbf{developer}s to prefix \textbf{Python} functions with decorators
-indicating the URL endpoint which triggers the function, the acceptable HTTP
+indicating the URL endpoint that triggers the function, the acceptable HTTP
 methods, and more. \textbf{Flask} also provides a collection of helpful methods
 for generating HTTP responses, handling exceptions, and easily processing HTTP
 request data. A built-in development server is provided for prototyping
@@ -186,7 +187,7 @@ purposes.
     
     \section{Singularity}
 
-\textbf{Singularity} \cite{singularity} is a containerization software which
+\textbf{Singularity} \cite{singularity} is a containerization software that
 allows users to develop, package, and relocate full-fledged compute environments
 consisting of an operating system and software binaries and libraries.
 \textbf{Singularity} is one of several containerization platforms in existence.
@@ -195,16 +196,185 @@ to use. I have a personal connection to \textbf{Singularity}, having contributed
 code to the open-source project and developed many containers as part of my
 employment at the University of Kentucky.
 
-\chapter{Quick n' Dirty Server}
+\chapter{Quick n' Dirty Server (QDS)}
 
     \section{Building and Running}
+
+The \textbf{Quick n' Dirty Server (QDS)} consists of two components: a
+\textbf{backend} and a \textbf{frontend}. The \textbf{backend} is written in
+\textbf{Flask}, whereas the \textbf{frontend} is written in \textbf{Angular}. In
+order to facilitate easy building and running of the \textbf{QDS}, I have built
+two \textbf{Singularity} containers: one for the \textbf{frontend} and one for
+the \textbf{backend.} Though the \textbf{QDS} is technically two components, I
+will refer to it in the singular, and a single Makefile is provided for
+convenience.
+
+To begin, make sure \textbf{Singularity} 3.0 \cite{singularity3inst} or greater
+is installed on your computer. Then, run the following command from the
+application root directory. Note that the command will prompt you to escalate to
+root privileges.
+
+\begin{verbatim}
+make -C qds
+\end{verbatim}
+
+Upon completion, the \textbf{QDS} will be built and ready for running. To start
+the \textbf{QDS} as a background service, run the following command from the
+application root directory.
+
+\begin{verbatim}
+make -C qds start
+\end{verbatim}
+
+While the \textbf{QDS} is running, ports 4200 and 5000 will be bound on your
+computer. The \textbf{frontend} can be accessed from the URL
+\url{http://127.0.0.1:4200/}. The \textbf{backend} runs on port 5000 and is used
+by the \textbf{frontend} and by \textbf{Alshayun.}
+
+At any time, you may stop the \textbf{QDS} by running the following command.
+
+\begin{verbatim}
+make -C qds stop
+\end{verbatim}
+
+        \subsection{Troubleshooting}
+
+Building may fail if there is not sufficient space in \texttt{/tmp} or under
+unpredictable networking circumstances. In the former case, allocate more space
+under \texttt{/tmp}. In the latter case, just try the build command again.
+
     \section{Motivation}
+
+TODO
+
     \section{Backend}
+
+TODO
+
     \section{Frontend}
+
+TODO
+
     \section{Production Considerations}
+    
+TODO
 
 \chapter{Alshayun}
+
     \section{Building and Running}
+
+Building \textbf{Alshayun} requires \textbf{Ionic}, \textbf{Cordova}, and the
+Android Software Development Kit (SDK) with all of their dependencies. Note that
+while \textbf{Ionic} and \textbf{Cordova} support many platforms, I have only
+tested \textbf{Alshayun} with Android, which is why I call it out here. Setting
+up such an environment is complicated and time consuming. As a result, I have
+built a \textbf{Singularity} container that encapsulates the full development
+environment necessary to build and run \textbf{Alshayun.} Using the container is
+more complicated than the \textbf{QDS} containers.
+
+To begin, make sure \textbf{Singularity} 3.0 \cite{singularity3inst} or greater
+is installed on your computer. I found the container to be useful to all Ionic
+developers, so I uploaded it to the Sylabs Cloud Library. To download the image,
+run the following command from the application root directory.
+
+\begin{verbatim}
+singularity pull ionic.sif library://phphavok/default/ionic:latest
+\end{verbatim}
+
+Should that command fail for some reason, or if you prefer to build the
+container yourself, run the following command from the application root
+directory.
+
+\begin{verbatim}
+sudo singularity build ionic.sif Singularity
+\end{verbatim}
+
+Once the container has been downloaded or built, run the following commands from
+the application root directory.
+
+\begin{verbatim}
+mkdir -p sdk/build-tools sdk/platforms
+singularity shell \
+    -B sdk/build-tools:/usr/local/android/build-tools \
+    -B sdk/platforms:/usr/local/android/platforms \
+    -p ionic.sif
+sdkmanager 'platforms;android-27' 'build-tools;27.0.3'
+ionic cordova build android
+\end{verbatim}
+
+Note that the \texttt{singularity} command will launch a shell inside the
+container environment, and you will still be inside this container environment
+upon the completion of the \texttt{ionic} command. You may type \texttt{exit} or
+press \texttt{CTRL+D} on your keyboard to exit this environment.
+
+An Android Package (APK) file should be built, which you can install on any
+compatible Android device. If you wish to build for a different platform or
+version of the Android SDK, you may modify the \texttt{sdkmanager} command as
+desired. You can also have \textbf{Ionic} directly install and run the built APK
+file on your compatible Android device by attaching your Android device to your
+computer via Universal Serial Bus (USB), enabling USB debugging on the Android
+device, and running the following command from within the container environment.
+
+\begin{verbatim}
+ionic cordova run android
+\end{verbatim}
+
+If you don't have an Android device, you may setup and test \textbf{Alshayun} on
+an Android Virtual Device (AVD).
+
+        \subsection{Setting up an Android Virtual Device (AVD)}
+
+Exit the container environment and create an additional directory by running the
+following command from the application root directory.
+
+\begin{verbatim}
+mkdir -p sdk/system-images
+\end{verbatim}
+
+Then, once again launch a shell into the container environment, and be sure to
+mount in the additional directory.
+
+\begin{verbatim}
+singularity shell \
+    -B sdk/build-tools:/usr/local/android/build-tools \
+    -B sdk/platforms:/usr/local/android/platforms \
+    -B sdk/system-images:/usr/local/android/system-images \
+    -p ionic.sif
+\end{verbatim}
+
+Select a system image to use for your AVD and install it by running the
+following command from within the container environment (assuming you chose
+Android version 27).
+
+\begin{verbatim}
+sdkmanager 'system-images;android-27;google_apis;x86'
+\end{verbatim}
+
+Choose a name for your AVD (e.g., \texttt{test}), and create it using the system
+image installed in the previous step. Note that, by default, AVDs are installed
+under \texttt{\$HOME/.android/avd}. If you want a different path, add \texttt{-p
+/path/to/avd} to the \texttt{avdmanager} command.
+
+\begin{verbatim}
+avdmanager create avd \
+    -n test \
+    -k 'system-images;android-27;google_apis;x86'
+\end{verbatim}
+
+Finally, launch the AVD in an emulator.
+
+\begin{verbatim}
+emulator -no-snapshot -avd test
+\end{verbatim}
+
+Afterwards, you should be able to install and run APK files on the emulator.
+
+        \subsection{Troubleshooting}
+
+Building may fail if there is not sufficient space in \texttt{/tmp} or under
+unpredictable networking circumstances. In the former case, allocate more space
+under \texttt{/tmp}. In the latter case, just try the build command again.
+
     \section{User Interface}
     \section{Caching Strategy}
     \section{Applets}
