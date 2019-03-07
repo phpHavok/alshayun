@@ -245,7 +245,22 @@ under \texttt{/tmp}. In the latter case, just try the build command again.
 
     \section{Motivation}
 
-TODO
+During the early stages of developing \textbf{Alshayun}, I included articles in
+the APK to be installed on devices. While great for initial testing and rapid
+development, it quickly became clear that such an approach was inflexible and
+would hinder any future production-readiness of the application. In response, I
+setup an Nginx Web server on my desktop computer and began storing articles
+there. However, I wanted the source code of \textbf{Alshayun} to be
+all-inclusive of everything necessary to build, run, and test the application.
+Thus, the \textbf{QDS} was born.
+
+After the \textbf{QDS} was built and successfully serving articles to
+\textbf{Alshayun}, I decided to prototype a \textbf{frontend} Web interface
+designed to facilitate the creation and management of articles by
+\textbf{content author}s. Because the \textbf{frontend} depended on a RESTful
+interface provided by the \textbf{backend} of the \textbf{QDS}, it was only
+natural to roll the \textbf{frontend} into the \textbf{QDS} and treat both
+components as a single deployable unit.
 
     \section{Backend}
 
