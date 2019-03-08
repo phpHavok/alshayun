@@ -7,6 +7,6 @@ all: $(TARGET)
 	pdflatex $<
 
 clean:
-	rm -f *.aux *.log *.toc *.out $(TARGET)
+	rm -f *.aux *.log *.toc *.out *.lof $(TARGET)
 
 .PHONY: all clean

@@ -15,6 +15,7 @@
 \maketitle
 
 \tableofcontents
+\listoffigures
 
 % Definitions in bold: \textbf{}
 
@@ -331,7 +332,53 @@ be discussed later.
 
     \section{Frontend}
 
-TODO
+The \textbf{frontend} is written as a standalone \textbf{Angular} application.
+The \textbf{frontend} listens on port 4200 when running, and can be accessed
+from the URL \url{http://127.0.0.1:4200/}. Upon accessing, the user is presented
+with a default sign in screen (see Figure \ref{fig:qds-login}). After signing in
+with the default username of \texttt{admin} and default password of
+\texttt{password}, the user is presented with a list of articles (see Figure
+\ref{fig:qds-articles}). If this is the first time the user has signed in, the
+articles will be the sample articles included with the application source code.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{images/qds-login.png}
+    \caption{Login page of QDS frontend.}
+    \label{fig:qds-login}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{images/qds-articles.png}
+    \caption{List of articles in the QDS frontend.}
+    \label{fig:qds-articles}
+\end{figure}
+
+The user may delete or view and edit an article by clicking the appropriate
+buttons next to each article's description. When viewing an article (see Figure
+\ref{fig:qds-article}), the user is presented with a field to enter the title of
+the article, a field to enter a comma-delimited list of tags associated with the
+article, a field to enter a short excerpt of the article, and a field to enter
+the main text of the article. Articles are written in Markdown \cite{markdown},
+and a live preview of the rendered article is presented next to the editable
+article text (see Figures \ref{fig:qds-article}, \ref{fig:qds-create-new}).  The
+user may also create a new article by clicking the appropriate button on the
+home page.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{images/qds-article-hanoi.png}
+    \caption{Viewing and editing an article in the QDS frontend.}
+    \label{fig:qds-article}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{images/qds-create-new.png}
+    \caption{Creating a new article in the QDS frontend.}
+    \label{fig:qds-create-new}
+\end{figure}
 
     \section{Production Considerations}
     
@@ -508,6 +555,8 @@ under \texttt{/tmp}. In the latter case, just try the build command again.
     \bibitem{cordova} Cordova. Retrieved from \url{https://cordova.apache.org/}.
     \bibitem{flask} Flask. Retrieved from \url{http://flask.pocoo.org/}.
     \bibitem{ionic} Ionic. Retrieved from \url{https://ionicframework.com/}.
+    \bibitem{markdown} Markdown. Retrieved from
+        \url{https://daringfireball.net/projects/markdown/}.
     \bibitem{moore} Moore, Terry. \textit{Why X marks the unknown.} Retrieved
         from \url{https://cosmosmagazine.com/mathematics/why-x-marks-unknown-0}.
     \bibitem{nodejs} Node\@.js. Retrieved from \url{https://nodejs.org/en/}.
