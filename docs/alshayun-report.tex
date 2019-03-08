@@ -2,7 +2,7 @@
 
 \usepackage{palatino}
 \usepackage{hyperref}
-\usepackage[htt]{hyphenat}
+\usepackage{upquote}
 \usepackage[margin=1in]{geometry}
 \renewcommand{\baselinestretch}{1.5}
 
@@ -365,15 +365,24 @@ Android version 27).
 sdkmanager 'system-images;android-27;google_apis;x86'
 \end{verbatim}
 
-Choose a name for your AVD (e.g., \texttt{test}), and create it using the system
-image installed in the previous step. Note that, by default, AVDs are installed
+Once you've installed a system image, run the following command to list
+available devices and pick one.
+
+\begin{verbatim}
+avdmanager list devices
+\end{verbatim}
+
+After picking a device (\texttt{pixel} in this example), choose a name for your
+AVD (e.g., \texttt{test}), and create it using the selected device and system
+image installed in the previous steps. Note that, by default, AVDs are installed
 under \texttt{\$HOME/.android/avd}. If you want a different path, add \texttt{-p
 /path/to/avd} to the \texttt{avdmanager} command.
 
 \begin{verbatim}
 avdmanager create avd \
     -n test \
-    -k 'system-images;android-27;google_apis;x86'
+    -k 'system-images;android-27;google_apis;x86' \
+    --device pixel
 \end{verbatim}
 
 Finally, launch the AVD in an emulator.
