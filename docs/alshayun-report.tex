@@ -3,6 +3,7 @@
 \usepackage{palatino}
 \usepackage{hyperref}
 \usepackage{upquote}
+\usepackage{graphicx}
 \usepackage[margin=1in]{geometry}
 \renewcommand{\baselinestretch}{1.5}
 
@@ -264,7 +265,69 @@ components as a single deployable unit.
 
     \section{Backend}
 
-TODO
+The \textbf{backend} is written in Flask and serves two functions: deliver
+articles to \textbf{Alshayun} and expose a \textbf{REST}ful interface to the
+\textbf{frontend} to allow \textbf{content author}s to create and manage
+articles. The articles are stored in plain-text files on the local disk, and
+\textbf{Flask} allows easily serving static content through the
+\texttt{send\_from\_directory} method.
+
+\begin{verbatim}
+@app.route('/articles/<path:filename>')
+def get_article(filename):
+    return send_from_directory('articles/', filename)
+\end{verbatim}
+
+In the above code, a request to \texttt{/articles/article.1.md} will result in
+the file \texttt{articles/article.1.md} relative to the \textbf{Flask}
+application being read from the disk and served back to the requesting client as
+the HTTP response. The minimum code to accomplish this task is part of what
+makes \textbf{Flask} so powerful and useful.
+
+As another example, consider the following code which exposes as
+\textbf{REST}ful interface for creating a new article.
+
+\begin{verbatim}
+@app.route('/article', methods = ['POST'])
+def create_article():
+    if (not request.json) or \
+            (not 'title' in request.json) or \
+            (not 'excerpt' in request.json) or \
+            (not 'tags' in request.json) or \
+            (not 'text' in request.json):
+                abort(400)
+    # Create article object
+    article = {}
+    article['id'] = checkout_serial()
+    article['title'] = str(request.json['title'])
+    article['excerpt'] = str(request.json['excerpt'])
+    article['tags'] = request.json['tags']
+    # Write article file to disk
+    f = open('articles/article.' + str(article['id']) + '.md', 'w')
+    f.write(str(request.json['text']))
+    f.close()
+    # Add article object to manifest
+    manifest = read_manifest()
+    manifest.append(article)
+    write_manifest(manifest)
+    # Return status
+    ret = {}
+    ret['message'] = 'Success'
+    ret['id'] = article['id']
+    return json.dumps(ret)
+\end{verbatim}
+
+The \texttt{@app.route} decorator prefixing the function indicates that the
+function should be called if an HTTP POST request is sent to \texttt{/article}
+on the server. The function begins by making sure a minimally valid request has
+been supplied. The \texttt{abort(400)} call is provided by \textbf{Flask} and
+conveniently triggers an HTTP response with error code 400. An article object is
+created to store information passed in from the request safely, and then the
+contents of the article are written out to disk using an established naming
+convention. The \texttt{checkout\_serial} function keeps track of an
+auto-incrementing integer called the serial, which is used to name and index
+articles. The manifest stores the metadata about the article, and its role will
+be discussed later.
 
     \section{Frontend}
 
@@ -272,7 +335,29 @@ TODO
 
     \section{Production Considerations}
     
-TODO
+The \textbf{Flask} instance of the \textbf{backend} runs a built-in development
+Web server, as does the \textbf{Angular} instance of the \textbf{frontend}.
+However these servers are not designed to handle production scenarios.
+Therefore, if an \textbf{Alshayun} user wanted to take the \textbf{QDS} into
+production, some things should be taken into consideration first.
+
+For the \textbf{backend}, a real production Web server such as Nginx or Apache
+should be setup. The Web server can run a Web Server Gateway Interface (WSGI)
+module which redirects applicable requests to the \textbf{Flask} code.
+Furthermore, the production Web server can and should have signed Secure Sockets
+Layer (SSL) certificates setup to encrypt requests. Lastly, the current
+\textbf{backend} has no authentication mechanism for the \textbf{REST}ful
+\textbf{API}s exposed to the \textbf{frontend}. Therefore, anyone can
+technically create, edit, and delete articles. An authentication mechanism would
+need to be developed. Options for this include HTTP Basic Authentication, OAuth,
+client certificate authentication handled by the production Web server, or a
+variety of other methods.
+
+For the \textbf{frontend}, a real production Web server would also need to be
+setup. Perhaps the same Web server powering the \textbf{backend} could be used,
+which may help aid in security and latency concerns. SSL certificates and an
+administrative account that isn't \texttt{admin/password} is of course
+necessary.
 
 \chapter{Alshayun}
 
