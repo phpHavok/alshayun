@@ -454,7 +454,7 @@ container environment, and you will still be inside this container environment
 upon the completion of the \texttt{ionic} command. You may type \texttt{exit} or
 press \texttt{CTRL+D} on your keyboard to exit this environment.
 
-An Android Package (APK) file should be built, which you can install on any
+An Android Package (APK) file should be built, that you can install on any
 compatible Android device. If you wish to build for a different platform or
 version of the Android SDK, you may modify the \texttt{sdkmanager} command as
 desired. You can also have \textbf{Ionic} directly install and run the built APK
@@ -532,29 +532,278 @@ unpredictable networking circumstances. In the former case, allocate more space
 under \texttt{/tmp}. In the latter case, just try the build command again.
 
     \section{User Interface}
+
+Upon loading \textbf{Alshayun} for the first time, the application has yet to be
+configured to point at a real articles server. Therefore, the application will
+display an appropriate error to the user (see Figure \ref{fig:avd-no-articles}).
+The user may navigate to the settings page by tapping on the blue settings cog
+in the upper-right-hand side of the screen. Once in settings, the user is able
+to configure the articles URL to point at a real server, perhaps powered by the
+\textbf{QDS} (see Figure \ref{fig:avd-settings-saved}). Then, upon returning to
+the home screen, the user may pull down from the top of the screen to trigger a
+reload of all articles (see Figure \ref{fig:avd-articles-loading}).
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{images/avd-no-articles.png}
+    \caption{Initial startup screen, failed to load articles.}
+    \label{fig:avd-no-articles}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{images/avd-settings-saved.png}
+    \caption{Articles URL saved in settings.}
+    \label{fig:avd-settings-saved}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{images/avd-articles-loading.png}
+    \caption{Reloading articles.}
+    \label{fig:avd-articles-loading}
+\end{figure}
+
+After the articles have been successfully loaded, the user is faced with a list
+of articles where each article is identified by a title, zero or more tags, and
+an excerpt of the article's content (see Figure \ref{fig:avd-articles-loaded}).
+Furthermore, the user may search for articles using the search box at the top of
+the screen.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{images/avd-articles-loaded.png}
+    \caption{List of loaded articles.}
+    \label{fig:avd-articles-loaded}
+\end{figure}
+
+By tapping on an article in the list, the user will be redirected to a dedicated
+page to read the chosen article. Articles are displayed in rich-text with the
+possibility of embedded images and \textbf{applet}s. For example, the Tower of
+Hanoi article in Figure \ref{fig:avd-articles-tower} has a series of embedded
+interactive applets. An example of one of these applets in full screen can be
+seen in Figure \ref{fig:avd-hanoi-fullscreen}.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{images/avd-articles-tower.png}
+    \caption{Tower of Hanoi article being read.}
+    \label{fig:avd-articles-tower}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{images/avd-hanoi-fullscreen.png}
+    \caption{Tower of Hanoi applet playing in full screen.}
+    \label{fig:avd-hanoi-fullscreen}
+\end{figure}
+
+After returning to the articles listing, the visited article will now be marked
+as read as indicated by a book icon and a gray text color (see Figure
+\ref{fig:avd-article-read}). The user my swipe an article from the right to
+access a button allowing the article to be marked unread if desired (see Figure
+\ref{fig:avd-article-mark-unread}).
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{images/avd-article-read.png}
+    \caption{Article marked as read from articles list.}
+    \label{fig:avd-article-read}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{images/avd-article-mark-unread.png}
+    \caption{Article being marked as unread from articles list.}
+    \label{fig:avd-article-mark-unread}
+\end{figure}
+
     \section{Caching Strategy}
+
+In order to improve application performance as the number of articles grows, the
+full text of each article is not loaded unless the article has been read. I
+accomplished this by breaking articles into two pieces: metadata and text. The
+metadata of an article is its unique ID, title, tags, and excerpt (short
+description of the article). The text is the body of the article formatted in
+markdown. When the application loads the list of articles, only the article
+metadata has been loaded. An implication of this is that article text is not
+searchable, which is part of the reason I included the excerpt. Once a user
+views an article, the text is loaded on demand and kept in RAM for the duration
+of the application session.
+
+The manifest (example given below) is stored in \textbf{JavaScript Object
+Notation (JSON),} and consists of an array of objects where each object
+represents an article. The unique ID is the serial number alluded to in a
+previous section, and is meant to only ever increment. When a user reads an
+article, the fact the article has been read is saved on the user's local device
+storage based on the article ID. If older (smaller) IDs were recycled, this
+could cause some articles to be displayed as falsely read.
+
+\begin{verbatim}
+[
+    {
+        "id": 12,
+        "title": "Tower of Hanoi",
+        "excerpt": "Learn about the Tower of Hanoi...",
+        "tags": [
+            "algorithms"
+        ]
+    }
+]
+\end{verbatim}
+
     \section{Applets}
+
+The \textbf{applet}s are the crux of \textbf{Alshayun}. \textbf{Applet}s are
+implemented as \textbf{Angular} components which extend an \textbf{Applet}
+superclass. The superclass automatically sets up an \textbf{HTML} canvas tag
+with drawing context and implements an animation loop if the subclass requests
+it. All the subclass needs to do is extend a draw method, which is automatically
+called by the superclass 30 times per second. The draw method should perform
+whatever drawing needs to be done in the context of the canvas to implement the
+\textbf{applet}'s functionality. Furthermore, the subclass may choose to extend
+the \textbf{applet} toolbar that the superclass sets up. The default toolbar has
+a button for toggling full screen mode, but more buttons can be added.
+
+\textbf{Applet}s are included in articles with a dedicated \texttt{<applet>}
+tag. All \textbf{applet}s accept at least two parameters: name and width. The
+name parameter indicates which specific \textbf{applet} should be loaded, and
+the width parameter sets the width of the \textbf{applet} on the screen. All
+\textbf{applet}s render in the aspect ratio of the device's screen dimensions
+and orientation. Furthermore, specific \textbf{applet}s may implement their own
+parameters. An example \textbf{applet} tag is given below.
+
+\begin{verbatim}
+<applet name="sort"
+        width="50%"
+        data-method="insertion"
+        data-num-bars="50"></applet>
+\end{verbatim}
+
+Currently, there are two \textbf{applet}s implemented in \textbf{Alshayun}.
+Details follow.
+
+        \subsection{Tower of Hanoi Applet}
+        
+The Tower of Hanoi (see Figure \ref{fig:avd-hanoi-fullscreen}) \textbf{applet}
+is designed to illustrate the solution to the famous Tower of Hanoi problem. The
+\textbf{applet} supports running between 3 and 8 rings. The user can step
+through the algorithm frame by frame or have the algorithm run itself with an
+adjustable speed. The spindles and rings are all drawn mathematically and are
+two-dimensional despite the three-dimensional appearance.
+
+        \subsection{Sorting Applet}
+
+The sorting \textbf{applet} (see Figure \ref{fig:avd-sort-fullscreen}) is
+designed to illustrate the inner-workings and relative performance metrics of
+various sorting algorithms. The \textbf{applet} works by sorting between 10 and
+100 integers represented by bars of height proportional to the integer.
+Presently, bubble sort and insertion sort are the two sorting methods
+implemented. Dark gray bars are in unsorted position, light gray bars are in
+sorted position, and blue bars have just been targeted for consideration by the
+algorithm.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{images/avd-sort-fullscreen.png}
+    \caption{Insertion sort applet running on 50 bars.}
+    \label{fig:avd-sort-fullscreen}
+\end{figure}
+
     \section{Accepting Contributions}
 
+For \textbf{Alshayun} to be useful to a large audience, a number of developers
+need to come on board and contribute code. Particularly, the development of a
+wide variety of configurable applets is necessary. Because \textbf{Alshayun} is
+hosted on GitHub \cite{github}, accepting contributions is easy.
+
+To accept a contribution, a developer must fork the \textbf{Alshayun}
+repository, create a development branch, and work on whatever feature they want.
+After development, the developer will submit a pull request to the main
+\textbf{Alshayun} repository, at which point I will be triggered to thoroughly
+review the code, make comments and suggestions, and ultimately accept the pull
+request. Once the contribution is merged in the master branch, and after
+sufficient time passes, a release cycle will occur. At the time of a release
+cycle, a snapshot of the master branch will be made and released to the public.
+Thus all Android users for example will have access to the new applets and
+features developed in between release cycles.
+
 \chapter{Use Cases}
+
     \section{Classroom Auxiliary Content}
+
+One use case for \textbf{Alshayun} is as an auxiliary content platform for K--12
+schools and universities. Each independent classroom can run its own articles
+server (perhaps through \textbf{QDS} to get started) and notify students to
+configure \textbf{Alshayun} to point to the articles server. Then, the teacher
+could function as the sole \textbf{content author}, providing lecture notes,
+practice problems, and so on. While \textbf{Alshayun} is not designed to protect
+articles, teachers could implement minor security by only allowing the articles
+server to be accessed while on the school or university network. The tagging
+feature could be used to organize subjects.
+
     \section{Starter Mobile Blog}
 
+Another use case for \textbf{Alshayun} is as a starter blog. If an upcoming
+blogger wants to quickly distribute content to readers but hasn't had time to
+setup a real blogging Web site or build a real blogging application,
+\textbf{Alshayun} could be used as a temporary blog distribution channel.
+
 \chapter{Future Work}
+
+There are many areas where \textbf{Alshayun} can be improved. While not an
+exhaustive list by any stretch of the imagination, here are a few areas I'd like
+to improve on.
+
     \section{User Accounts}
+
+I would like to support user accounts so that \textbf{reader}s can potentially
+save or bookmark articles, comment on articles, and synchronize their
+personalized settings between devices. This feature would require an overhaul of
+the \textbf{QDS} or preferably a production Web server, and it carries with it
+certain security and privacy concerns. Furthermore, accounts should be able to
+have \textbf{content author} privileges granted so that users of the
+\textbf{QDS} can sign in independently and author their own articles with a
+proper set of capabilities and roles implemented.
+
     \section{Cloud Hosting}
+
+Another feature I would like to have is a central production \textbf{Alshayun}
+server hosted somewhere on the cloud (perhaps Amazon Web Services). This cloud
+server should be used as the default so that users first opening
+\textbf{Alshayun} retrieve articles from the primary central server. This could
+turn into a large project fast, as the cloud server could implement users and
+privileges, and would likely lead to a variety of other necessary features.
+
     \section{Power Efficiency}
 
+Finally, I have noticed that \textbf{Alshayun} is quite power hungry when many
+\textbf{applet}s are loaded. I would like to invest considerable time optimizing
+the \textbf{applet}s to consume less power and also implement better caching and
+unloading of unused elements on each page.
+
 \chapter{Conclusion}
-    \section{Learning Outcomes}
+
+In conclusion, \textbf{Alshayun} has been a wonderful project to work on. I have
+learned many things throughout the development process, including
+\textbf{TypeScript} and \textbf{Angular} most notably. Although \textbf{Ionic}
+was the ultimate framework being used, the dependence on \textbf{Angular} was so
+strong that I was able to build out the \textbf{QDS} as its own \textbf{Angular}
+application using the skills I developed. Furthermore, I have since began
+building an \textbf{Angular}-powered Web site for my mom's Real Estate business
+\cite{knr}, and other projects may be upcoming.
 
 \begin{thebibliography}{9}
+    \bibitem{github} Alshayun on GitHub. Retrieved from
+        \url{https://github.com/phpHavok/alshayun}.
     \bibitem{angular} Angular. Retrieved from \url{https://angular.io/}.
     \bibitem{bootstrap} Bootstrap. Retrieved from
         \url{https://getbootstrap.com/}.
     \bibitem{cordova} Cordova. Retrieved from \url{https://cordova.apache.org/}.
     \bibitem{flask} Flask. Retrieved from \url{http://flask.pocoo.org/}.
     \bibitem{ionic} Ionic. Retrieved from \url{https://ionicframework.com/}.
+    \bibitem{knr} Kristi Nickells REALTOR®. Retrieved from
+        \url{https://kristinickells.com/}.
     \bibitem{markdown} Markdown. Retrieved from
         \url{https://daringfireball.net/projects/markdown/}.
     \bibitem{moore} Moore, Terry. \textit{Why X marks the unknown.} Retrieved
