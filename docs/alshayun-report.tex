@@ -27,7 +27,8 @@
 rich text and interactive \textbf{applet}s to \textbf{reader}s. Written in the
 portable \textbf{Ionic} framework, \textbf{Alshayun} is capable of running on
 the Web, Android devices, and Apple iOS devices. However, \textbf{Alshayun} has
-currently only been tested on a Samsung Galaxy S7 device running Android.
+currently only been tested on a Samsung Galaxy S7 device running Android and a
+Google Pixel emulator.
 
 \textbf{Alshayun} is designed with three actors in mind: the \textbf{content
 author}, the \textbf{reader}, and the \textbf{developer}. The \textbf{content
@@ -84,15 +85,16 @@ algebra, check out the article \textit{Why X marks the unknown} by Terry Moore
 
     \section{User Interface}
 
-Upon loading \textbf{Alshayun} for the first time, the application has yet to be
-configured to point at a real articles server. Therefore, the application will
-display an appropriate error to the user (see Figure \ref{fig:avd-no-articles}).
-The user may navigate to the settings page by tapping on the blue settings cog
-in the upper-right-hand side of the screen. Once in settings, the user is able
-to configure the articles URL to point at a real server, perhaps powered by the
-\textbf{QDS} (see Figure \ref{fig:avd-settings-saved}). Then, upon returning to
-the home screen, the user may pull down from the top of the screen to trigger a
-reload of all articles (see Figure \ref{fig:avd-articles-loading}).
+When a user loads \textbf{Alshayun} for the first time, the application is
+configured to point at a bogus articles server. Therefore, the application
+displays an appropriate error to the user (see Figure
+\ref{fig:avd-no-articles}).  The user may navigate to the settings page by
+tapping on the blue settings cog in the upper-right-hand side of the screen.
+Once in settings, the user is able to configure the articles URL to point at a
+real server, perhaps powered by the \textbf{QDS} (see Figure
+\ref{fig:avd-settings-saved}). Then, upon returning to the home screen, the user
+may pull down from the top of the screen to trigger a reload of all articles
+(see Figure \ref{fig:avd-articles-loading}).
 
 \begin{figure}
     \centering
@@ -128,8 +130,8 @@ the screen.
     \label{fig:avd-articles-loaded}
 \end{figure}
 
-By tapping on an article in the list, the user will be redirected to a dedicated
-page to read the chosen article. Articles are displayed in rich-text with the
+By tapping on an article in the list, the user is redirected to a dedicated page
+to read the chosen article. Articles are displayed in rich-text with the
 possibility of embedded images and \textbf{applet}s. For example, the Tower of
 Hanoi article in Figure \ref{fig:avd-articles-tower} has a series of embedded
 interactive applets. An example of one of these applets in full screen can be
@@ -149,9 +151,9 @@ seen in Figure \ref{fig:avd-hanoi-fullscreen}.
     \label{fig:avd-hanoi-fullscreen}
 \end{figure}
 
-After returning to the articles listing, the visited article will now be marked
-as read as indicated by a book icon and a gray text color (see Figure
-\ref{fig:avd-article-read}). The user my swipe an article from the right to
+After returning to the articles listing, the visited article is marked as read
+as indicated by a book icon and a gray text color (see Figure
+\ref{fig:avd-article-read}). The user may swipe an article from the right to
 access a button allowing the article to be marked unread if desired (see Figure
 \ref{fig:avd-article-mark-unread}).
 
@@ -178,17 +180,17 @@ metadata of an article is its unique ID, title, tags, and excerpt (short
 description of the article). The text is the body of the article formatted in
 markdown. When the application loads the list of articles, only the article
 metadata has been loaded. An implication of this is that article text is not
-searchable, which is part of the reason I included the excerpt. Once a user
+searchable, which is part of the reason I included the excerpt. When a user
 views an article, the text is loaded on demand and kept in RAM for the duration
 of the application session.
 
 The manifest (example given below) is stored in \textbf{JavaScript Object
 Notation (JSON),} and consists of an array of objects where each object
-represents an article. The unique ID is the serial number alluded to in a
-previous section, and is meant to only ever increment. When a user reads an
-article, the fact the article has been read is saved on the user's local device
-storage based on the article ID. If older (smaller) IDs were recycled, this
-could cause some articles to be displayed as falsely read.
+represents an article. The unique ID is a monotonically-increasing serial
+number. When a user reads an article, the fact the article has been read is
+saved on the user's local device storage based on the article ID. If older
+(smaller) IDs were recycled, this could cause some articles to be displayed as
+falsely read.
 
 \begin{verbatim}
 [
@@ -210,8 +212,8 @@ implemented as \textbf{Angular} components which extend an \textbf{Applet}
 superclass. The superclass automatically sets up an \textbf{HTML} canvas tag
 with drawing context and implements an animation loop if the subclass requests
 it. All the subclass needs to do is extend a draw method, which is automatically
-called by the superclass 30 times per second. The draw method should perform
-whatever drawing needs to be done in the context of the canvas to implement the
+called by the superclass 30 times per second. The draw method performs whatever
+drawing needs to be done in the context of the canvas to implement the
 \textbf{applet}'s functionality. Furthermore, the subclass may choose to extend
 the \textbf{applet} toolbar that the superclass sets up. The default toolbar has
 a button for toggling full screen mode, but more buttons can be added.
@@ -219,7 +221,8 @@ a button for toggling full screen mode, but more buttons can be added.
 \textbf{Applet}s are included in articles with a dedicated \texttt{<applet>}
 tag. All \textbf{applet}s accept at least two parameters: name and width. The
 name parameter indicates which specific \textbf{applet} should be loaded, and
-the width parameter sets the width of the \textbf{applet} on the screen. All
+the width parameter sets the width of the \textbf{applet} on the screen. If no
+width is specified, the \textbf{applet} assumes a width of 100\%. All
 \textbf{applet}s render in the aspect ratio of the device's screen dimensions
 and orientation. Furthermore, specific \textbf{applet}s may implement their own
 parameters. An example \textbf{applet} tag is given below.
@@ -270,14 +273,14 @@ hosted on GitHub \cite{github}, accepting contributions is easy.
 
 To accept a contribution, a developer must fork the \textbf{Alshayun}
 repository, create a development branch, and work on whatever feature they want.
-After development, the developer will submit a pull request to the main
-\textbf{Alshayun} repository, at which point I will be triggered to thoroughly
-review the code, make comments and suggestions, and ultimately accept the pull
-request. Once the contribution is merged in the master branch, and after
-sufficient time passes, a release cycle will occur. At the time of a release
-cycle, a snapshot of the master branch will be made and released to the public.
-Thus all Android users for example will have access to the new applets and
-features developed in between release cycles.
+After development, the developer submits a pull request to the main
+\textbf{Alshayun} repository, at which point I am triggered to thoroughly review
+the code, make comments and suggestions, and ultimately accept the pull request.
+Once the contribution is merged in the master branch, and after sufficient time
+passes, a release cycle occurs. At the time of a release cycle, a snapshot of
+the master branch is made and released to the public.  Thus all Android users
+for example have access to the new applets and features developed in between
+release cycles.
 
     \section{Building and Running}
 
@@ -319,10 +322,10 @@ sdkmanager 'platforms;android-27' 'build-tools;27.0.3'
 ionic cordova build android
 \end{verbatim}
 
-Note that the \texttt{singularity} command will launch a shell inside the
-container environment, and you will still be inside this container environment
-upon the completion of the \texttt{ionic} command. You may type \texttt{exit} or
-press \texttt{CTRL+D} on your keyboard to exit this environment.
+Note that the \texttt{singularity} command launches a shell inside the container
+environment, and you are still inside this container environment upon the
+completion of the \texttt{ionic} command. You may type \texttt{exit} or press
+\texttt{CTRL+D} on your keyboard to exit this environment.
 
 An Android Package (APK) file should be built, that you can install on any
 compatible Android device. If you wish to build for a different platform or
@@ -437,14 +440,14 @@ def get_article(filename):
     return send_from_directory('articles/', filename)
 \end{verbatim}
 
-In the above code, a request to \texttt{/articles/article.1.md} will result in
-the file \texttt{articles/article.1.md} relative to the \textbf{Flask}
-application being read from the disk and served back to the requesting client as
+In the above code, a request to \texttt{/articles/article.1.md} results in the
+file \\ \texttt{articles/article.1.md} relative to the \textbf{Flask}
+application to be read from the disk and served back to the requesting client as
 the HTTP response. The minimum code to accomplish this task is part of what
 makes \textbf{Flask} so powerful and useful.
 
-As another example, consider the following code which exposes as
-\textbf{REST}ful interface for creating a new article.
+As another example, consider the following code which exposes a \textbf{REST}ful
+interface for creating a new article.
 
 \begin{verbatim}
 @app.route('/article', methods = ['POST'])
@@ -485,8 +488,7 @@ created to store information passed in from the request safely, and then the
 contents of the article are written out to disk using an established naming
 convention. The \texttt{checkout\_serial} function keeps track of an
 auto-incrementing integer called the serial, which is used to name and index
-articles. The manifest stores the metadata about the article, and its role will
-be discussed later.
+articles. The manifest stores the metadata about the article.
 
     \section{Frontend}
 
@@ -497,7 +499,7 @@ with a default sign in screen (see Figure \ref{fig:qds-login}). After signing in
 with the default username of \texttt{admin} and default password of
 \texttt{password}, the user is presented with a list of articles (see Figure
 \ref{fig:qds-articles}). If this is the first time the user has signed in, the
-articles will be the sample articles included with the application source code.
+articles are the sample articles included with the application source code.
 
 \begin{figure}
     \centering
@@ -513,8 +515,8 @@ articles will be the sample articles included with the application source code.
     \label{fig:qds-articles}
 \end{figure}
 
-The user may delete or view and edit an article by clicking the appropriate
-buttons next to each article's description. When viewing an article (see Figure
+The user may delete or view/edit an article by clicking the appropriate buttons
+next to each article's description. When viewing an article (see Figure
 \ref{fig:qds-article}), the user is presented with a field to enter the title of
 the article, a field to enter a comma-delimited list of tags associated with the
 article, a field to enter a short excerpt of the article, and a field to enter
@@ -543,7 +545,7 @@ home page.
 The \textbf{Flask} instance of the \textbf{backend} runs a built-in development
 Web server, as does the \textbf{Angular} instance of the \textbf{frontend}.
 However these servers are not designed to handle production scenarios.
-Therefore, if an \textbf{Alshayun} user wanted to take the \textbf{QDS} into
+Therefore, if an \textbf{Alshayun} user wants to take the \textbf{QDS} into
 production, some things should be taken into consideration first.
 
 For the \textbf{backend}, a real production Web server such as Nginx or Apache
@@ -572,27 +574,26 @@ The \textbf{Quick n' Dirty Server (QDS)} consists of two components: a
 order to facilitate easy building and running of the \textbf{QDS}, I have built
 two \textbf{Singularity} containers: one for the \textbf{frontend} and one for
 the \textbf{backend.} Though the \textbf{QDS} is technically two components, I
-will refer to it in the singular, and a single Makefile is provided for
-convenience.
+refer to it in the singular, and a single Makefile is provided for convenience.
 
 To begin, make sure \textbf{Singularity} 3.0 \cite{singularity3inst} or greater
 is installed on your computer. Then, run the following command from the
-application root directory. Note that the command will prompt you to escalate to
-root privileges.
+application root directory. Note that the command prompts you to escalate to
+root privileges if you are not already root.
 
 \begin{verbatim}
 make -C qds
 \end{verbatim}
 
-Upon completion, the \textbf{QDS} will be built and ready for running. To start
-the \textbf{QDS} as a background service, run the following command from the
+Upon completion, the \textbf{QDS} is built and ready for running. To start the
+\textbf{QDS} as a background service, run the following command from the
 application root directory.
 
 \begin{verbatim}
 make -C qds start
 \end{verbatim}
 
-While the \textbf{QDS} is running, ports 4200 and 5000 will be bound on your
+While the \textbf{QDS} is running, ports 4200 and 5000 are bound on your
 computer. The \textbf{frontend} can be accessed from the URL
 \url{http://127.0.0.1:4200/}. The \textbf{backend} runs on port 5000 and is used
 by the \textbf{frontend} and by \textbf{Alshayun.}
@@ -617,8 +618,8 @@ under \texttt{/tmp}. In the latter case, just try the build command again.
 designed mainly to facilitate writing scalable, server-side software in
 \textbf{JavaScript}. Before \textbf{Node}, first released in May of 2009, the
 idea of writing server-side software in \textbf{JavaScript} was relatively
-unknown. Since its conception, \textbf{Node} has received much attention and
-both praise and criticism from \textbf{developer}s.
+unknown. Since its inception, \textbf{Node} has received much attention and both
+praise and criticism from \textbf{developer}s.
 
 Less than a year after \textbf{Node}'s inception, a package manager was released
 in January of 2010 named the \textbf{Node Package Manager (NPM)} \cite{npm}.
@@ -637,10 +638,10 @@ technology.
 ultimately compiles into \textbf{JavaScript}. \textbf{TypeScript} complements
 \textbf{JavaScript} with type safety and true object-oriented programming
 constructs such as classes, access modifiers, and inheritance. In
-\textbf{TypeScript}, every variable and symbol in general will have a type,
-either stated explicitly by the programmer or inferred by the
-\textbf{TypeScript} compiler from usage. The \textbf{TypeScript} compiler is
-available for installation as an \textbf{NPM} package.
+\textbf{TypeScript}, every variable and symbol in general have a type, either
+stated explicitly by the programmer or inferred by the \textbf{TypeScript}
+compiler from usage. The \textbf{TypeScript} compiler is available for
+installation as an \textbf{NPM} package.
 
 As the programming language of \textbf{Alshayun}, \textbf{TypeScript} has been
 extraordinarily useful in development. In particular, the access to
@@ -670,7 +671,7 @@ template syntax for easily binding the model (data, variables) to the view
 (\textbf{HTML} elements such as forms). Thus, if a variable \texttt{title}
 exists and the application has bound it to the heading tag of a page with the
 syntax \texttt{<h1>\{\{title\}\}</h1>}, then simply updating the \texttt{title}
-variable will automatically result in the heading of the page being updated. The
+variable automatically results in the heading of the page being updated. The
 \textbf{developer} need not worry about the details or be concerned with
 updating the view his or herself. Furthermore, interactive actions such as
 button clicks can trigger the calling of methods that further update the model.
@@ -688,7 +689,7 @@ most supported and widely used base for \textbf{Ionic}.
 \textbf{Ionic} provides a collection of \textbf{HTML} tags and \textbf{CSS} that
 generate components similar to \textbf{Bootstrap} \cite{bootstrap}.  Examples of
 components include buttons, cards, toasts, modals, and lists.  \textbf{Ionic}
-components are designed mimic the look and feel of a native Android or iOS
+components are designed to mimic the look and feel of a native Android or iOS
 application, complete with built-in gestures and animations.
     
     \section{Cordova}
@@ -724,8 +725,8 @@ consisting of an operating system and software binaries and libraries.
 \textbf{Singularity} is one of several containerization platforms in existence.
 However, it stands apart by being the most secure and, in my opinion, simplest
 to use. I have a personal connection to \textbf{Singularity}, having contributed
-code to the open-source project and developed many containers as part of my
-employment at the University of Kentucky.
+code to the open-source project and having developed many containers as part of
+my employment at the University of Kentucky.
 
 \chapter{Use Cases}
 
@@ -752,7 +753,7 @@ setup a real blogging Web site or build a real blogging application,
 
 There are many areas where \textbf{Alshayun} can be improved. While not an
 exhaustive list by any stretch of the imagination, here are a few areas I'd like
-to improve on.
+to improve upon.
 
     \section{User Accounts}
 
@@ -783,14 +784,45 @@ unloading of unused elements on each page.
 
 \chapter{Conclusion}
 
-In conclusion, \textbf{Alshayun} has been a wonderful project to work on. I have
-learned many things throughout the development process, including
-\textbf{TypeScript} and \textbf{Angular} most notably. Although \textbf{Ionic}
-was the ultimate framework being used, the dependence on \textbf{Angular} was so
-strong that I was able to build out the \textbf{QDS} as its own \textbf{Angular}
-application using the skills I developed. Furthermore, I have since began
-building an \textbf{Angular}-powered Web site for my mom's Real Estate business
-\cite{knr}, and other projects may be upcoming.
+Through my work on \textbf{Alshayun}, I have learned the essentials of
+\textbf{TypeScript}, \textbf{Angular}, and \textbf{Ionic}---three technologies
+that I likely would not have learned otherwise. I was also able to build
+interesting \textbf{Singularity} containers and contribute back to the
+\textbf{Singularity} community. My work with \textbf{Flask} was minor, and
+mainly drew upon some previous experience. While \textbf{Ionic} was the
+top-level primary framework of my development stack, I learned the most about
+\textbf{Angular}, and my work with \textbf{Angular} is likely to impact my
+future work the most.
+
+\textbf{Angular} is a beautiful \textbf{JavaScript} framework, and I never
+thought I would be the one to compliment or praise a \textbf{JavaScript}
+framework. However, by taking advantage of the programming constructs made
+available by \textbf{TypeScript} and utilizing modern programming methodologies,
+\textbf{Angular} feels like a legitimate software engineering platform. From
+re-usable modules and components to features like automatic dependency
+injection, lazy loading and flexible routing, \textbf{Angular} is a truly
+well-rounded development platform.
+
+The most powerful and enlightening feature I learned to use is observables.
+Observables allow providers to emit events over time while zero or more
+subscribers can subscribe and unsubscribe from events at any point. For example,
+the \textbf{QDS} has a list of articles with their titles, tags, and excerpts
+printed. When a user updates an article, I want that list to update immediately
+as well. In the past, I would have devoted an extraordinary amount of time and
+code to cleanly realize such a feature. However, with \textbf{Angular} I simply
+developed an observable around the article metadata and used an asynchronous
+data pipe to bind the observable to the view. The \textbf{Angular} framework
+takes care of the rest. This is just one of many memorable \textbf{Angular}
+features that I have found useful and enlightening.
+
+Since completing \textbf{Alshayun}, I have begun building an
+\textbf{Angular}-powered Web site for my mom's Real Estate business \cite{knr}.
+With the help of \textbf{Bootstrap} for styling, the Web site is quickly
+becoming the most beautiful REALTOR® Web site in the region (others have told me
+this, I am not just being grandiose). This Web site as it exists would not have
+been possible without my knowledge of \textbf{Angular}, and \textbf{Angular}'s
+full build environment with deployment tools is incredibly useful.  At this
+rate, I suspect many more projects will come.
 
 \begin{thebibliography}{9}
     \bibitem{github} Alshayun on GitHub. Retrieved from
