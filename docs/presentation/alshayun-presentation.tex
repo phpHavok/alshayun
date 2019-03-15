@@ -18,10 +18,6 @@
 
 \maketitle
 
-\begin{frame}{Agenda}
-    \tableofcontents
-\end{frame}
-
 \section{Introduction}
 
 \begin{frame}{What is Alshayun?}
@@ -30,14 +26,20 @@
             text and interactive \textbf{applet}s to \textbf{reader}s.
         \item Designed for three actors in mind (a user is any of them):
             \begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Content Author}]
-                \item[Content Author] Anyone who has anything about which they
-                    would like to write.
+                \item[Content Author] Anyone who has anything that they would
+                    like to write.
                 \item[Reader] Anyone who would like to read what one or more
                     \textbf{content author}s have to say.
                 \item[Developer] Anyone capable of developing \textbf{applet}s
-                    and other functionality of \textbf{Alshayun} of which
-                    \textbf{content author}s and \textbf{reader}s can make use.
+                    and other functionality of \textbf{Alshayun} that
+                    \textbf{content author}s and \textbf{reader}s can use.
             \end{description}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Demonstration}
+    \begin{itemize}
+        \item Live Demonstration
     \end{itemize}
 \end{frame}
 
@@ -80,12 +82,6 @@
 
 \section{Alshayun}
 
-\begin{frame}{User Interface}
-    \begin{itemize}
-        \item Live Demonstration
-    \end{itemize}
-\end{frame}
-
 \begin{frame}[fragile,allowframebreaks]{Caching Strategy}
     \begin{itemize}
         \item Articles broken into two pieces: metadata and text.
@@ -109,22 +105,22 @@
 [
   {
     "id": 12,
-    "title": "Tower of Hanoi",
-    "excerpt": "Learn about the Tower of Hanoi...",
+    "title": "Towers of Hanoi",
+    "excerpt": "Learn about the Towers of Hanoi...",
     "tags": [
       "algorithms"
     ]
   }
 ]
     \end{verbatim}
-    \caption{Snippet of articles manifest in \textbf{JSON}.}
+    \caption{Excerpt of article manifest in \textbf{JSON}.}
     \end{figure}
 \end{frame}
 
 \begin{frame}[fragile,allowframebreaks]{Applets}
     \begin{itemize}
         \item The crux of \textbf{Alshayun}.
-        \item Implemented as \textbf{Angular} components which extend an
+        \item Implemented as \textbf{Angular} components that extend an
             \textbf{Applet} superclass.
         \item Superclass provides a \textbf{Hypertext Markup Language (HTML)}
             canvas tag and drawing context, implements an animation loop,
@@ -154,25 +150,20 @@
 })
 export class AppletSortComponent extends Applet {
     \end{verbatim}
-        \caption{Snippet of the Tower of Hanoi \textbf{applet} class.}
+        \caption{Excerpt of the Towers of Hanoi \textbf{applet} class.}
     \end{figure}
 \end{frame}
 
 \section{Quick n' Dirty Server (QDS)}
 
-\begin{frame}{Motivation}
+\begin{frame}{What is the QDS?}
     \begin{itemize}
-        \item During initial development, I packaged articles into the Android
-            Package (APK) file of \textbf{Alshayun}.
-        \item This was a temporary solution and hindered the
-            production-readiness of the application.
-        \item In response, I setup an Nginx Web server on my desktop and hosted
-            articles there.
-        \item I wanted everything necessary to build, run, and test
-            \textbf{Alshayun} to be included in the source code with detailed
-            instructions.
-        \item The \textbf{QDS} was born, composed of a \textbf{backend} and a
-            \textbf{frontend}.
+        \item The \textbf{QDS} is a standalone Web application that allows
+            \textbf{content author}s to create and manage articles.
+        \item While spoken of in the singular, the \textbf{QDS} consists of two
+            disparate components: a \textbf{backend} and a \textbf{frontend}.
+        \item The \textbf{QDS} is completely containerized to simplify building
+            and deployment.
     \end{itemize}
 \end{frame}
 
@@ -203,7 +194,7 @@ def create_article():
     f.close()
     # ... add article object to manifest ...
     \end{verbatim}
-    \caption{Snippet of \textbf{QDS} interface to dynamically create articles.}
+    \caption{Excerpt of \textbf{QDS} interface to dynamically create articles.}
     \end{figure}
 \end{frame}
 
@@ -222,14 +213,28 @@ def create_article():
     \begin{itemize}
         \item The \textbf{QDS} is for development purposes and is not production
             ready.
-        \item A real Web server (Nginx, Apache) should be configured to back the
+        \item Configure a real Web server (Nginx, Apache) to back the
             \textbf{frontend} and \textbf{backend}.
         \item Use a Web Server Gateway Interface (WSGI) module for interfacing
             with the \textbf{Flask} code.
-        \item Secure Sockets Layer (SSL) certificates should be setup and
-            utilized.
+        \item Setup Secure Sockets Layer (SSL) certificates and force HTTPS.
         \item Develop an authentication wall around the \textbf{REST}ful
             interface of the \textbf{backend}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Motivation}
+    \begin{itemize}
+        \item During initial development, I packaged articles into the Android
+            Package (APK) file of \textbf{Alshayun}.
+        \item This was a temporary solution and hindered the
+            production-readiness of the application.
+        \item In response, I setup an Nginx Web server on my desktop and hosted
+            articles there.
+        \item I wanted everything necessary to build, run, and test
+            \textbf{Alshayun} to be included in the source code with detailed
+            instructions.
+        \item The \textbf{QDS} was born.
     \end{itemize}
 \end{frame}
 
