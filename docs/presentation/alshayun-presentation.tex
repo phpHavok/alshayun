@@ -9,7 +9,7 @@
 \usepackage{hyperref}
 \hypersetup{colorlinks = true, linkcolor = .}
 
-\title{Alshayun: A mobile education application}
+\title{Alshayun: A mobile content-delivery application}
 \date{March 20, 2019}
 \author{Jacob Chappell}
 \institute{University of Kentucky}
@@ -22,25 +22,31 @@
 
 \begin{frame}{What is Alshayun?}
     \begin{itemize}
-        \item A mobile application for delivering articles consisting of rich
-            text and interactive \textbf{applet}s to \textbf{reader}s.
-        \item Designed for three actors in mind (a user is any of them):
+        \item \textbf{Alshayun} is a mobile application for delivering articles
+            consisting of rich text and interactive \textbf{applet}s to
+            \textbf{reader}s.
+        \item \textbf{Alshayun} is designed for three actors in mind (a user is
+            any of them):
             \begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries Content Author}]
-                \item[Content Author] Anyone who has anything that they would
-                    like to write.
-                \item[Reader] Anyone who would like to read what one or more
-                    \textbf{content author}s have to say.
-                \item[Developer] Anyone capable of developing \textbf{applet}s
-                    and other functionality of \textbf{Alshayun} that
-                    \textbf{content author}s and \textbf{reader}s can use.
+                \item[Content Author] A \textbf{content author} is anyone who
+                    has anything that they would like to write.
+                \item[Reader] A \textbf{reader} is anyone who would like to read
+                    what one or more \textbf{content author}s have to say.
+                \item[Developer] A \textbf{developer} is anyone capable of
+                    developing \textbf{applet}s and other functionality of
+                    \textbf{Alshayun} that \textbf{content author}s and
+                    \textbf{reader}s can use.
             \end{description}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Demonstration}
-    \begin{itemize}
-        \item Live Demonstration
-    \end{itemize}
+\begin{frame}{Live Demonstration}
+    \begin{figure}
+        \begin{center}
+            \includegraphics[scale=0.4]{images/bsod.png}
+        \end{center}
+        \caption{Foreshadowing how this live demonstration will go.}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Inspiration}
@@ -84,14 +90,13 @@
 
 \begin{frame}[fragile,allowframebreaks]{Caching Strategy}
     \begin{itemize}
-        \item Articles broken into two pieces: metadata and text.
-        \item Metadata of all articles stored in a single manifest represented
-            in \textbf{JavaScript Object Notation (JSON)} and consists of:
+        \item Articles are broken into two pieces: metadata and text.
+        \item The metadata of all articles is stored in a single manifest
+            represented in \textbf{JavaScript Object Notation (JSON)} and
+            consists of:
             \begin{description}[leftmargin=!,labelwidth=\widthof{\bfseries
                     Excerpt}]
-                \item[id] A unique, monotonically-increasing integer. Used to
-                    store on \textbf{reader}s' devices which articles have been
-                    read.
+                \item[id] A unique, monotonically-increasing integer.
                 \item[title] The title of the article.
                 \item[tags] Zero or more taxonomic tags.
                 \item[excerpt] A short (one sentence) description of the article.
@@ -119,12 +124,12 @@
 
 \begin{frame}[fragile,allowframebreaks]{Applets}
     \begin{itemize}
-        \item The crux of \textbf{Alshayun}.
-        \item Implemented as \textbf{Angular} components that extend an
-            \textbf{Applet} superclass.
-        \item Superclass provides a \textbf{Hypertext Markup Language (HTML)}
-            canvas tag and drawing context, implements an animation loop,
-            provides an extensible toolbar.
+        \item \textbf{Applet}s are the crux of \textbf{Alshayun}.
+        \item \textbf{Applet}s are implemented as \textbf{Angular} components
+            that extend an \textbf{Applet} superclass.
+        \item The superclass provides a \textbf{Hypertext Markup Language
+            (HTML)} canvas tag and drawing context, implements an animation
+            loop, and provides an extensible toolbar.
         \item \textbf{Applet}s are included in articles via an \texttt{<applet>}
             \textbf{HTML} tag with extensible properties.
     \end{itemize}
@@ -162,16 +167,17 @@ export class AppletSortComponent extends Applet {
             \textbf{content author}s to create and manage articles.
         \item While spoken of in the singular, the \textbf{QDS} consists of two
             disparate components: a \textbf{backend} and a \textbf{frontend}.
-        \item The \textbf{QDS} is completely containerized to simplify building
-            and deployment.
+        \item The \textbf{QDS} is completely containerized with
+            \textbf{Singularity} to simplify building and deployment.
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile,allowframebreaks]{Backend}
     \begin{itemize}
-        \item Written in \textbf{Flask} and serves two functions: deliver
-            articles to \textbf{Alshayun} and expose a \textbf{Representational
-            State Transfer (REST)} interface to the \textbf{frontend}.
+        \item Written in \textbf{Flask}, the \textbf{backend} serves two
+            functions: deliver articles to \textbf{Alshayun} and expose a
+            \textbf{Representational State Transfer (REST)} interface to the
+            \textbf{frontend}.
     \end{itemize}
     \begin{figure}
     \begin{verbatim}
@@ -200,24 +206,27 @@ def create_article():
 
 \begin{frame}{Frontend}
     \begin{itemize}
-        \item Written as a standalone \textbf{Angular} application.
-        \item Communicates with \textbf{backend} via the \textbf{REST}ful
-            interface the \textbf{backend} exposes.
-        \item Allows creation and management of articles.
-        \item Features a live preview of rendered articles as \textbf{content
-            author} writes them in Markdown.
+        \item The \textbf{frontend} is written as a standalone \textbf{Angular}
+            application.
+        \item The \textbf{frontend} communicates with the \textbf{backend} via
+            the \textbf{REST}ful interface the \textbf{backend} exposes.
+        \item The \textbf{frontend} allows for the creation and management of
+            articles.
+        \item The \textbf{frontend} features a live preview of rendered articles
+            as the \textbf{content author} writes them in Markdown.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Production Considerations}
     \begin{itemize}
         \item The \textbf{QDS} is for development purposes and is not production
-            ready.
+            ready without at least the following additional steps:
         \item Configure a real Web server (Nginx, Apache) to back the
             \textbf{frontend} and \textbf{backend}.
         \item Use a Web Server Gateway Interface (WSGI) module for interfacing
             with the \textbf{Flask} code.
-        \item Setup Secure Sockets Layer (SSL) certificates and force HTTPS.
+        \item Setup Secure Sockets Layer (SSL) certificates and force HTTPS for
+            all communication.
         \item Develop an authentication wall around the \textbf{REST}ful
             interface of the \textbf{backend}.
     \end{itemize}
@@ -242,13 +251,14 @@ def create_article():
 
 \begin{frame}{Node.js}
     \begin{itemize}
-        \item A \textbf{JavaScript} runtime designed mainly to facilitate
-            writing scalable, server-side software in \textbf{JavaScript}.
-        \item First released in May of 2009.
-        \item Has received much attention and both praise and criticism from
-            developers.
-        \item \textbf{Node Package Manager (NPM)} released in January of 2010 to
-            facilitate publishing and installing \textbf{Node} packages.
+        \item \textbf{Node.js (Node)} is a \textbf{JavaScript} runtime designed
+            mainly to facilitate writing scalable, server-side software in
+            \textbf{JavaScript}.
+        \item \textbf{Node} was first released in May of 2009.
+        \item \textbf{Node} has received much attention and both praise and
+            criticism from developers.
+        \item The \textbf{Node Package Manager (NPM)} was released in January of
+            2010 to facilitate publishing and installing \textbf{Node} packages.
         \item \textbf{NPM} has transcended its original intent to become a
             general purpose \textbf{JavaScript} package manager.
         \item \textbf{Alshayun} doesn't use \textbf{Node} per se, but is heavily
@@ -258,77 +268,88 @@ def create_article():
 
 \begin{frame}{TypeScript}
     \begin{itemize}
-        \item A superset of \textbf{JavaScript} that compiles into
-            \textbf{JavaScript}.
-        \item Introduces type safety and true object-oriented programming
-            constructs such as classes, access modifiers, and inheritance.
-        \item Has a compiler available for installation via \textbf{NPM}.
-        \item The programming language of \textbf{Alshayun}.
+        \item \textbf{TypeScript} is a superset of \textbf{JavaScript} that
+            compiles into \textbf{JavaScript}.
+        \item \textbf{TypeScript} introduces type safety and true
+            object-oriented programming constructs to \textbf{JavaScript} such
+            as classes, access modifiers, and inheritance.
+        \item \textbf{TypeScript} has a compiler available for installation via
+            \textbf{NPM}.
+        \item \textbf{Alshayun} is mostly written in \textbf{TypeScript}.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Angular}
     \begin{itemize}
-        \item A Web application framework developed by Google and written in
-            \textbf{TypeScript}.
-        \item Relatively new (ca. September 2016), but based on a rewrite of its
-            older predecessor, AngularJS.
-        \item Useful for developing responsive, single-page Web applications.
-        \item Comes with a whole suite of development tools for writing,
-            building, testing, and deploying applications.
-        \item Designed around the \textbf{Model-View-Controller (MVC)} design
-            pattern.
-        \item Available for installation via \textbf{NPM}.
-        \item Provides a built-in development server for prototyping purposes.
+        \item \textbf{Angular} is a Web application framework developed by
+            Google and written in \textbf{TypeScript}.
+        \item \textbf{Angular} is relatively new (ca. September 2016), but based
+            on a rewrite of its older predecessor, AngularJS.
+        \item \textbf{Angular} is useful for developing responsive, single-page
+            Web applications.
+        \item \textbf{Angular} comes with a whole suite of development tools for
+            writing, building, testing, and deploying applications.
+        \item \textbf{Angular} is designed around the
+            \textbf{Model-View-Controller (MVC)} design pattern.
+        \item \textbf{Angular} is available for installation via \textbf{NPM}.
+        \item \textbf{Angular} provides a built-in development server for
+            prototyping purposes.
         \item Most of \textbf{Alshayun}'s code is written for \textbf{Angular}.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Ionic}
     \begin{itemize}
-        \item Framework for building cross-platform applications in
-            \textbf{HTML}, \textbf{CSS}, and \textbf{JavaScript}.
-        \item Supports developing an application with a single codebase that
-            deploys to Web, Android, and iOS devices.
-        \item Divorced from an underlying \textbf{JavaScript} framework as of
-            version 4, but support for \textbf{Angular} is strong.
-        \item Provides a collection of \textbf{HTML} tags and \textbf{Angular}
-            components that generate Web components in similar style to
-            \href{https://getbootstrap.com/}{Bootstrap}.
-        \item The high-level framework that \textbf{Alshayun} is written in,
-            backed by \textbf{Angular}.
+        \item \textbf{Ionic} is a framework for building cross-platform
+            applications in \textbf{HTML}, \textbf{CSS}, and
+            \textbf{JavaScript}.
+        \item \textbf{Ionic} supports developing an application with a single
+            codebase that deploys to Web, Android, and iOS devices.
+        \item \textbf{Ionic} is divorced from an underlying \textbf{JavaScript}
+            framework as of version 4, but support for \textbf{Angular} is
+            strong.
+        \item \textbf{Ionic} provides a collection of \textbf{HTML} tags and
+            \textbf{Angular} components that generate Web components in similar
+            style to \href{https://getbootstrap.com/}{Bootstrap}.
+        \item \textbf{Ionic} is the high-level framework that \textbf{Alshayun}
+            is written in, backed by \textbf{Angular}.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Cordova}
     \begin{itemize}
-        \item An Apache project that provides a uniform interface for generating
-            device-dependent code for Android and iOS.
-        \item For example, provides a \textbf{JavaScript} interface for
-            interacting with the built-in camera of mobile devices.
-        \item A vital part of \textbf{Ionic} that allows \textbf{Ionic} to
-            generate its platform-dependent code from a single codebase.
+        \item \textbf{Cordova} is an Apache project that provides a uniform
+            interface for generating device-dependent code for Android and iOS.
+        \item For example, \textbf{Cordova} provides a \textbf{JavaScript}
+            interface for interacting with the built-in camera of mobile
+            devices.
+        \item \textbf{Cordova} is a vital part of \textbf{Ionic} that allows
+            \textbf{Ionic} to generate its platform-dependent code from a single
+            codebase.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Flask}
     \begin{itemize}
-        \item A \textbf{Python} framework for the rapid development of
-            \textbf{REST}ful \textbf{Application Programming Interface (API)}s.
-        \item Allows developers to prefix \textbf{Python} functions with
-            decorators indicating the URL endpoint that triggers the function,
-            the acceptable HTTP methods, and more.
-        \item Provides a collection of helpful methods for generating HTTP
+        \item \textbf{Flask} is a \textbf{Python} framework for the rapid
+            development of \textbf{REST}ful \textbf{Application Programming
+            Interface (API)}s.
+        \item \textbf{Flask} allows developers to prefix \textbf{Python}
+            functions with decorators indicating the URL endpoint that triggers
+            the function, the acceptable HTTP methods, and more.
+        \item \textbf{Flask} provides a collection of helpful methods for generating HTTP
             responses, handling exceptions, and processing HTTP request data.
-        \item Provides a built-in development server for prototyping purposes.
+        \item \textbf{Flask} provides a built-in development server for
+            prototyping purposes.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Singularity}
     \begin{itemize}
-        \item A containerization software that allows users to develop, package,
-            and relocate full-fledged compute environments consisting of an
-            operating system and software binaries and libraries.
+        \item \textbf{Singularity} is a containerization software that allows
+            users to develop, package, and relocate full-fledged compute
+            environments consisting of an operating system and software binaries
+            and libraries.
         \item \textbf{Alshayun} consists of three \textbf{Singularity}
             containers I've developed: one for the \textbf{Ionic} development
             environment, one for the \textbf{QDS} \textbf{backend}, and another
@@ -344,25 +365,29 @@ def create_article():
 
 \begin{frame}{Classroom Auxiliary Content}
     \begin{itemize}
-        \item For K--12 schools and universities.
-        \item Independent classrooms run their own articles servers
-            (\textbf{QDS}).
-        \item Students notified of which articles server to use in their copy of
-            \textbf{Alshayun}.
-        \item Teacher writes helpful articles or lecture notes making use of
+        \item K--12 schools and universities may find \textbf{Alshayun} to be
+            useful.
+        \item For example, independent classrooms can run their own articles
+            servers (\textbf{QDS}).
+        \item Students may be notified of which articles server to use in their
+            copy of \textbf{Alshayun}.
+        \item Teachers may write helpful articles or lecture notes making use of
             \textbf{applet}s if desired.
-        \item Access to articles server could be restricted to campus network.
-        \item Tagging feature could be useful for organizing subjects.
-        \item The main focus when designing \textbf{Alshayun}.
+        \item Access to articles servers could be restricted to the campus
+            network.
+        \item The tagging feature of \textbf{Alshayun} could be useful for
+            organizing subjects.
+        \item This use case was my main focus when designing \textbf{Alshayun}.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Starter Mobile Blog}
     \begin{itemize}
-        \item Allows an upcoming blogger to get off their feet with a
-            distribution platform.
-        \item Likely only useful if \textbf{Alshayun} becomes a more general and
-            widely used platform like a Really Simple Syndication (RSS) reader.
+        \item \textbf{Alshayun} can allow an upcoming blogger to get off their
+            feet with a distribution platform.
+        \item This will likely only be useful if \textbf{Alshayun} becomes a
+            more general and widely used platform like a Really Simple
+            Syndication (RSS) reader.
     \end{itemize}
 \end{frame}
 
@@ -370,11 +395,11 @@ def create_article():
 
 \begin{frame}{User Accounts}
     \begin{itemize}
-        \item Allow \textbf{reader}s to save or bookmark articles, comment on
-            articles, and synchronize their personalized settings between
-            devices.
-        \item Requires an overhall of the \textbf{QDS} and carries security and
-            privacy concerns.
+        \item I want to allow \textbf{reader}s to save or bookmark articles,
+            comment on articles, and synchronize their personalized settings
+            between devices.
+        \item This requires an overhall of the \textbf{QDS} and carries security
+            and privacy concerns.
         \item Accounts need roles so that \textbf{content author}s can also
             write and publish articles and manage access permissions.
     \end{itemize}
@@ -383,19 +408,22 @@ def create_article():
 \begin{frame}{Cloud Hosting}
     \begin{itemize}
         \item A central production \textbf{Alshayun} server hosted on the cloud
-            (i.e., Amazon Web Services, Google, Azure).
-        \item Useful as the default articles server.
-        \item Could spiral into a larger content delivery platform, although the
-            feature to host a local \textbf{QDS} would still be a plus.
+            (i.e., Amazon Web Services, Google, Azure) would be nice.
+        \item This would be useful as the default articles server.
+        \item I imagine this feature could spiral into a larger content delivery
+            platform, although the feature to host a local \textbf{QDS} would
+            still be a plus.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Power Efficiency}
     \begin{itemize}
         \item The \textbf{applet}s are power hungry.
-        \item Work on caching, accessing the network only when necessary.
-        \item Unload computationally intensive \textbf{applet}s when they are
-            not being used.
+        \item I need to work on more caching and accessing the network only when
+            necessary.
+        \item Also, I should unload computationally intensive \textbf{applet}s
+            when they are not being used and lazily load as much content as
+            possible without sacrificing too much application performance.
     \end{itemize}
 \end{frame}
 
@@ -403,13 +431,13 @@ def create_article():
 
 \begin{frame}{Learning Outcomes}
     \begin{itemize}
-        \item Learned the essentials of \textbf{TypeScript}, \textbf{Angular},
+        \item I learned the essentials of \textbf{TypeScript}, \textbf{Angular},
             and \textbf{Ionic}.
-        \item Fell in love with \textbf{Angular}.
-        \item Favorite feature used: Observables.
-        \item Biggest challenge: dynamic \textbf{applet}s generated from
-            Markdown.
-        \item Have since begun working on an \textbf{Angular}-powered
+        \item I fell in love with \textbf{Angular}.
+        \item My favorite feature of \textbf{Angular} was ``observables.''
+        \item The biggest challenge I faced was getting  the dynamic
+            \textbf{applet}s generated from Markdown working correctly.
+        \item I have since begun working on an \textbf{Angular}-powered
             \href{https://kristinickells.com}{Web site} for my mom who is a
             REALTOR®.
     \end{itemize}
