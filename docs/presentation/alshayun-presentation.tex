@@ -45,7 +45,7 @@
         \begin{center}
             \includegraphics[scale=0.4]{images/bsod.png}
         \end{center}
-        \caption{Foreshadowing how this live demonstration will go.}
+        \caption{Foreshadowing how this live demonstration will go}
     \end{figure}
 \end{frame}
 
@@ -63,7 +63,7 @@
             \includegraphics[scale=0.25]{images/pomax.png}
         \end{center}
         \caption{Example \textbf{applet}s from \textit{A Primer on Bézier
-        Curves}.}
+        Curves}}
     \end{figure}
 \end{frame}
 
@@ -118,15 +118,18 @@
   }
 ]
     \end{verbatim}
-    \caption{Excerpt of article manifest in \textbf{JSON}.}
+    \caption{Excerpt of article manifest in \textbf{JSON}}
     \end{figure}
 \end{frame}
 
 \begin{frame}[fragile,allowframebreaks]{Applets}
     \begin{itemize}
         \item \textbf{Applet}s are the crux of \textbf{Alshayun}.
-        \item \textbf{Applet}s are implemented as \textbf{Angular} components
-            that extend an \textbf{Applet} superclass.
+        \item \textbf{Applet}s are written in \textbf{TypeScript} and
+            implemented as \textbf{Angular} components that extend an
+            \textbf{Applet} superclass. \textbf{Angular} is a
+            \textbf{TypeScript} Web framework and will be discussed in detail on
+            a future slide.
         \item The superclass provides a \textbf{Hypertext Markup Language
             (HTML)} canvas tag and drawing context, implements an animation
             loop, and provides an extensible toolbar.
@@ -140,7 +143,7 @@
         data-method="insertion"
         data-num-bars="50"></applet>
     \end{verbatim}
-        \caption{Including an \textbf{applet} with an \texttt{<applet>} tag.}
+        \caption{Including an \textbf{applet} with an \texttt{<applet>} tag}
     \end{figure}
     \begin{figure}
     \begin{verbatim}
@@ -155,7 +158,8 @@
 })
 export class AppletSortComponent extends Applet {
     \end{verbatim}
-        \caption{Excerpt of the Towers of Hanoi \textbf{applet} class.}
+        \caption{\textbf{TypeScript} excerpt of the Towers of Hanoi
+        \textbf{applet} class}
     \end{figure}
 \end{frame}
 
@@ -163,10 +167,10 @@ export class AppletSortComponent extends Applet {
 
 \begin{frame}{What is the QDS?}
     \begin{itemize}
-        \item The \textbf{QDS} is a standalone Web application that allows
+        \item The \textbf{QDS} is a stand-alone Web application that allows
             \textbf{content author}s to create and manage articles.
         \item While spoken of in the singular, the \textbf{QDS} consists of two
-            disparate components: a \textbf{backend} and a \textbf{frontend}.
+            components: a \textbf{backend} and a \textbf{frontend}.
         \item The \textbf{QDS} is completely containerized with
             \textbf{Singularity} to simplify building and deployment.
     \end{itemize}
@@ -178,6 +182,9 @@ export class AppletSortComponent extends Applet {
             functions: deliver articles to \textbf{Alshayun} and expose a
             \textbf{Representational State Transfer (REST)} interface to the
             \textbf{frontend}.
+        \item \textbf{Flask} is a \textbf{Python} framework for designing
+            \textbf{REST}-ful interfaces and will be discussed on a future
+            slide.
     \end{itemize}
     \begin{figure}
     \begin{verbatim}
@@ -185,7 +192,7 @@ export class AppletSortComponent extends Applet {
 def get_article(filename):
     return send_from_directory('articles/', filename)
     \end{verbatim}
-    \caption{\textbf{QDS} interface to serve static articles.}
+    \caption{\textbf{QDS} interface to serve static articles}
     \end{figure}
     \begin{figure}
     \begin{verbatim}
@@ -200,13 +207,13 @@ def create_article():
     f.close()
     # ... add article object to manifest ...
     \end{verbatim}
-    \caption{Excerpt of \textbf{QDS} interface to dynamically create articles.}
+    \caption{Excerpt of \textbf{QDS} interface to dynamically create articles}
     \end{figure}
 \end{frame}
 
 \begin{frame}{Frontend}
     \begin{itemize}
-        \item The \textbf{frontend} is written as a standalone \textbf{Angular}
+        \item The \textbf{frontend} is written as a stand-alone \textbf{Angular}
             application.
         \item The \textbf{frontend} communicates with the \textbf{backend} via
             the \textbf{REST}ful interface the \textbf{backend} exposes.
@@ -219,13 +226,13 @@ def create_article():
 
 \begin{frame}{Production Considerations}
     \begin{itemize}
-        \item The \textbf{QDS} is for development purposes and is not production
-            ready without at least the following additional steps:
+        \item The \textbf{QDS} is for development purposes and is not
+            production-ready without at least the following additional steps:
         \item Configure a real Web server (Nginx, Apache) to back the
             \textbf{frontend} and \textbf{backend}.
         \item Use a Web Server Gateway Interface (WSGI) module for interfacing
             with the \textbf{Flask} code.
-        \item Setup Secure Sockets Layer (SSL) certificates and force HTTPS for
+        \item Set up Secure Sockets Layer (SSL) certificates and force HTTPS for
             all communication.
         \item Develop an authentication wall around the \textbf{REST}ful
             interface of the \textbf{backend}.
@@ -238,8 +245,8 @@ def create_article():
             Package (APK) file of \textbf{Alshayun}.
         \item This was a temporary solution and hindered the
             production-readiness of the application.
-        \item In response, I setup an Nginx Web server on my desktop and hosted
-            articles there.
+        \item To improve the quality of the implementation, I setup an Nginx Web
+            server on my desktop and hosted articles there.
         \item I wanted everything necessary to build, run, and test
             \textbf{Alshayun} to be included in the source code with detailed
             instructions.
@@ -287,7 +294,7 @@ def create_article():
             on a rewrite of its older predecessor, AngularJS.
         \item \textbf{Angular} is useful for developing responsive, single-page
             Web applications.
-        \item \textbf{Angular} comes with a whole suite of development tools for
+        \item \textbf{Angular} comes with a suite of development tools for
             writing, building, testing, and deploying applications.
         \item \textbf{Angular} is designed around the
             \textbf{Model-View-Controller (MVC)} design pattern.
@@ -383,9 +390,9 @@ def create_article():
 
 \begin{frame}{Starter Mobile Blog}
     \begin{itemize}
-        \item \textbf{Alshayun} can allow an upcoming blogger to get off their
-            feet with a distribution platform.
-        \item This will likely only be useful if \textbf{Alshayun} becomes a
+        \item \textbf{Alshayun} can allow an upcoming blogger to quickly build a
+            blog without building a lot of infrastructure.
+        \item \textbf{Alshayun} would be useful for blogs if it were to become a
             more general and widely used platform like a Really Simple
             Syndication (RSS) reader.
     \end{itemize}
@@ -398,7 +405,7 @@ def create_article():
         \item I want to allow \textbf{reader}s to save or bookmark articles,
             comment on articles, and synchronize their personalized settings
             between devices.
-        \item This requires an overhall of the \textbf{QDS} and carries security
+        \item This requires an overhaul of the \textbf{QDS} and carries security
             and privacy concerns.
         \item Accounts need roles so that \textbf{content author}s can also
             write and publish articles and manage access permissions.
