@@ -35,11 +35,11 @@ author}, the \textbf{reader}, and the \textbf{developer}. The \textbf{content
 author} is anyone who has anything they would like to write about, potentially
 making use of interactive and embedded \textbf{applet}s as assistive visual
 aids. The \textbf{reader} is anyone who would like to read what one or more
-\textbf{content author}s have to say. The \textbf{developer} is the one capable of
-developing \textbf{applet}s and other functionality of \textbf{Alshayun} of
-which \textbf{content author}s and \textbf{reader}s can make use. Note that
-while I speak of these roles in the singular, many individuals may inhabit any
-given role, and some individuals may inhabit multiple roles.
+\textbf{content author}s have to say. The \textbf{developer} is the one capable
+of developing \textbf{applet}s and other functionality of \textbf{Alshayun} of
+which \textbf{content author}s and \textbf{reader}s can make use. While I speak
+of these roles in the singular, many individuals may inhabit any given role, and
+some individuals may inhabit multiple roles.
 
     \section{Inspiration}
 
@@ -99,21 +99,21 @@ may pull down from the top of the screen to trigger a reload of all articles
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{images/avd-no-articles.png}
-    \caption{Initial startup screen, failed to load articles.}
+    \caption{Initial startup screen, failed to load articles}
     \label{fig:avd-no-articles}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{images/avd-settings-saved.png}
-    \caption{Articles URL saved in settings.}
+    \caption{Articles URL saved in settings}
     \label{fig:avd-settings-saved}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{images/avd-articles-loading.png}
-    \caption{Reloading articles.}
+    \caption{Reloading articles}
     \label{fig:avd-articles-loading}
 \end{figure}
 
@@ -126,7 +126,7 @@ the screen.
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{images/avd-articles-loaded.png}
-    \caption{List of loaded articles.}
+    \caption{List of loaded articles}
     \label{fig:avd-articles-loaded}
 \end{figure}
 
@@ -140,14 +140,14 @@ seen in Figure \ref{fig:avd-hanoi-fullscreen}.
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{images/avd-articles-tower.png}
-    \caption{Tower of Hanoi article being read.}
+    \caption{Tower of Hanoi article being read}
     \label{fig:avd-articles-tower}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{images/avd-hanoi-fullscreen.png}
-    \caption{Tower of Hanoi applet playing in full screen.}
+    \caption{Tower of Hanoi applet playing in full-screen mode}
     \label{fig:avd-hanoi-fullscreen}
 \end{figure}
 
@@ -160,14 +160,14 @@ access a button allowing the article to be marked unread if desired (see Figure
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{images/avd-article-read.png}
-    \caption{Article marked as read from articles list.}
+    \caption{Article marked as read in the articles list}
     \label{fig:avd-article-read}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{images/avd-article-mark-unread.png}
-    \caption{Article being marked as unread from articles list.}
+    \caption{Marking an article as unread}
     \label{fig:avd-article-mark-unread}
 \end{figure}
 
@@ -208,7 +208,7 @@ falsely read.
     \section{Applets}
 
 The \textbf{applet}s are the crux of \textbf{Alshayun}. \textbf{Applet}s are
-implemented as \textbf{Angular} components which extend an \textbf{Applet}
+implemented as \textbf{Angular} components that extend an \textbf{Applet}
 superclass. The superclass automatically sets up an \textbf{HTML} canvas tag
 with drawing context and implements an animation loop if the subclass requests
 it. All the subclass needs to do is extend a draw method, which is automatically
@@ -249,7 +249,7 @@ two-dimensional despite the three-dimensional appearance.
         \subsection{Sorting Applet}
 
 The sorting \textbf{applet} (see Figure \ref{fig:avd-sort-fullscreen}) is
-designed to illustrate the inner-workings and relative performance metrics of
+designed to illustrate the inner workings and relative performance metrics of
 various sorting algorithms. The \textbf{applet} works by sorting between 10 and
 100 integers represented by bars of height proportional to the integer.
 Presently, bubble sort and insertion sort are the two sorting methods
@@ -260,7 +260,7 @@ algorithm.
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{images/avd-sort-fullscreen.png}
-    \caption{Insertion sort applet running on 50 bars.}
+    \caption{Insertion sort applet running on 50 bars}
     \label{fig:avd-sort-fullscreen}
 \end{figure}
 
@@ -285,11 +285,11 @@ release cycles.
     \section{Building and Running}
 
 Building \textbf{Alshayun} requires \textbf{Ionic}, \textbf{Cordova}, and the
-Android Software Development Kit (SDK) with all of their dependencies. Note that
-while \textbf{Ionic} and \textbf{Cordova} support many platforms, I have only
-tested \textbf{Alshayun} with Android, which is why I call it out here. Setting
-up such an environment is complicated and time consuming. As a result, I have
-built a \textbf{Singularity} container that encapsulates the full development
+Android Software Development Kit (SDK) with all of their dependencies. While
+\textbf{Ionic} and \textbf{Cordova} support many platforms, I have only tested
+\textbf{Alshayun} with Android, which is why I call it out here. Setting up such
+an environment is complicated and time consuming. As a result, I have built a
+\textbf{Singularity} container that encapsulates the full development
 environment necessary to build and run \textbf{Alshayun.}
 
 To begin, make sure \textbf{Singularity} 3.0 \cite{singularity3inst} or greater
@@ -322,18 +322,19 @@ sdkmanager 'platforms;android-27' 'build-tools;27.0.3'
 ionic cordova build android
 \end{verbatim}
 
-Note that the \texttt{singularity} command launches a shell inside the container
+The \texttt{singularity} command launches a shell inside the container
 environment, and you are still inside this container environment upon the
 completion of the \texttt{ionic} command. You may type \texttt{exit} or press
 \texttt{CTRL+D} on your keyboard to exit this environment.
 
-An Android Package (APK) file should be built, that you can install on any
-compatible Android device. If you wish to build for a different platform or
-version of the Android SDK, you may modify the \texttt{sdkmanager} command as
-desired. You can also have \textbf{Ionic} directly install and run the built APK
-file on your compatible Android device by attaching your Android device to your
-computer via Universal Serial Bus (USB), enabling USB debugging on the Android
-device, and running the following command from within the container environment.
+The \texttt{ionic} command builds an Android Package (APK) file, which you can
+install on any compatible Android device. If you wish to build for a different
+platform or version of the Android SDK, you may modify the \texttt{sdkmanager}
+command as desired. You can also have \textbf{Ionic} directly install and run
+the built APK file on your compatible Android device by attaching your Android
+device to your computer via Universal Serial Bus (USB), enabling USB debugging
+on the Android device, and running the following command from within the
+container environment.
 
 \begin{verbatim}
 ionic cordova run android
@@ -379,8 +380,8 @@ avdmanager list devices
 
 After picking a device (\texttt{pixel} in this example), choose a name for your
 AVD (e.g., \texttt{test}), and create it using the selected device and system
-image installed in the previous steps. Note that, by default, AVDs are installed
-under \texttt{\$HOME/.android/avd}. If you want a different path, add \texttt{-p
+image installed in the previous steps. By default, AVDs are installed under
+\texttt{\$HOME/.android/avd}. If you want a different path, add \texttt{-p
 /path/to/avd} to the \texttt{avdmanager} command.
 
 \begin{verbatim}
@@ -504,14 +505,14 @@ articles are the sample articles included with the application source code.
 \begin{figure}
     \centering
     \includegraphics[scale=0.4]{images/qds-login.png}
-    \caption{Login page of QDS frontend.}
+    \caption{Login page of QDS frontend}
     \label{fig:qds-login}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[scale=0.4]{images/qds-articles.png}
-    \caption{List of articles in the QDS frontend.}
+    \caption{List of articles in the QDS frontend}
     \label{fig:qds-articles}
 \end{figure}
 
@@ -529,14 +530,14 @@ home page.
 \begin{figure}
     \centering
     \includegraphics[scale=0.4]{images/qds-article-hanoi.png}
-    \caption{Viewing and editing an article in the QDS frontend.}
+    \caption{Viewing and editing an article in the QDS frontend}
     \label{fig:qds-article}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[scale=0.4]{images/qds-create-new.png}
-    \caption{Creating a new article in the QDS frontend.}
+    \caption{Creating a new article in the QDS frontend}
     \label{fig:qds-create-new}
 \end{figure}
 
@@ -578,8 +579,8 @@ refer to it in the singular, and a single Makefile is provided for convenience.
 
 To begin, make sure \textbf{Singularity} 3.0 \cite{singularity3inst} or greater
 is installed on your computer. Then, run the following command from the
-application root directory. Note that the command prompts you to escalate to
-root privileges if you are not already root.
+application root directory. The command prompts you to escalate to root
+privileges if you are not already root.
 
 \begin{verbatim}
 make -C qds
@@ -611,6 +612,19 @@ unpredictable networking circumstances. In the former case, allocate more space
 under \texttt{/tmp}. In the latter case, just try the build command again.
 
 \chapter{Technologies Used}
+
+    \section{Architecture}
+
+Figure \ref{fig:arch} illustrates the high-level architecture of
+\textbf{Alshayun}. A discussion of each of the components of the architecture
+follows.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{images/arch.png}
+    \caption{High-level architecture of \textbf{Alshayun}}
+    \label{fig:arch}
+\end{figure}
 
     \section{Node.js}
 
