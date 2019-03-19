@@ -137,8 +137,7 @@
         \item \textbf{Applet}s are written in \textbf{TypeScript} and
             implemented as \textbf{Angular} components that extend an
             \textbf{Applet} superclass. \textbf{Angular} is a
-            \textbf{TypeScript} Web framework and will be discussed in detail on
-            a future slide.
+            \textbf{TypeScript} Web framework.
         \item The superclass provides a \textbf{Hypertext Markup Language
             (HTML)} canvas tag and drawing context, implements an animation
             loop, and provides an extensible toolbar.
@@ -158,10 +157,10 @@
     \begin{verbatim}
 @Component({
   template: appletsGenericTemplate + `
-<ng-template #childToolbar>
-  <a *ngIf="!doTicks && !allDone"
-     (click)="doTicks = true">Play</a>
-</ng-template>
+    <ng-template #childToolbar>
+      <a *ngIf="!doTicks && !allDone"
+         (click)="doTicks = true">Play</a>
+    </ng-template>
   `,
   styleUrls: ['./applet.scss']
 })
@@ -178,8 +177,8 @@ export class AppletSortComponent extends Applet {
     \begin{itemize}
         \item The \textbf{QDS} is a stand-alone Web application that allows
             \textbf{content author}s to create and manage articles.
-        \item While spoken of in the singular, the \textbf{QDS} consists of two
-            components: a \textbf{backend} and a \textbf{frontend}.
+        \item The \textbf{QDS} consists of two components: a \textbf{backend}
+            and a \textbf{frontend}.
         \item The \textbf{QDS} is completely containerized with
             \textbf{Singularity} to simplify building and deployment.
     \end{itemize}
@@ -192,8 +191,7 @@ export class AppletSortComponent extends Applet {
             \textbf{Representational State Transfer (REST)} interface to the
             \textbf{frontend}.
         \item \textbf{Flask} is a \textbf{Python} framework for designing
-            \textbf{REST}-ful interfaces and will be discussed on a future
-            slide.
+            \textbf{REST}-ful interfaces.
     \end{itemize}
     \begin{figure}
     \begin{verbatim}
@@ -224,8 +222,10 @@ def create_article():
     \begin{itemize}
         \item The \textbf{frontend} is written as a stand-alone \textbf{Angular}
             application.
-        \item The \textbf{frontend} communicates with the \textbf{backend} via
-            the \textbf{REST}ful interface the \textbf{backend} exposes.
+        \item The \textbf{frontend} communicates with the \textbf{backend} over
+            TCP/IP via the \textbf{REST}ful interface the \textbf{backend}
+            exposes. Therefore, the \textbf{frontend} and \textbf{backend} can
+            be on different servers.
         \item The \textbf{frontend} allows for the creation and management of
             articles.
         \item The \textbf{frontend} features a live preview of rendered articles
@@ -237,14 +237,17 @@ def create_article():
     \begin{itemize}
         \item The \textbf{QDS} is for development purposes and is not
             production-ready without at least the following additional steps:
-        \item Configure a real Web server (Nginx, Apache) to back the
-            \textbf{frontend} and \textbf{backend}.
-        \item Use a Web Server Gateway Interface (WSGI) module for interfacing
-            with the \textbf{Flask} code.
-        \item Set up Secure Sockets Layer (SSL) certificates and force HTTPS for
-            all communication.
-        \item Develop an authentication wall around the \textbf{REST}ful
-            interface of the \textbf{backend}.
+        \item
+            \begin{itemize}[font=$\bullet$\scshape\bfseries]
+            \item Configure a real Web server (Nginx, Apache) to back the
+                \textbf{frontend} and \textbf{backend}.
+            \item Use a Web Server Gateway Interface (WSGI) module for
+                interfacing with the \textbf{Flask} code.
+            \item Set up Secure Sockets Layer (SSL) certificates and force HTTPS
+                for all communication.
+            \item Develop an authentication wall around the \textbf{REST}ful
+                interface of the \textbf{backend}.
+            \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -252,10 +255,10 @@ def create_article():
     \begin{itemize}
         \item During initial development, I packaged articles into the Android
             Package (APK) file of \textbf{Alshayun}.
-        \item This was a temporary solution and hindered the
-            production-readiness of the application.
-        \item To improve the quality of the implementation, I setup an Nginx Web
-            server on my desktop and hosted articles there.
+        \item This temporary solution hindered the production-readiness of the
+            application.
+        \item To improve the quality of the implementation, I set up an Nginx
+            Web server on my desktop and hosted articles there.
         \item I wanted everything necessary to build, run, and test
             \textbf{Alshayun} to be included in the source code with detailed
             instructions.
@@ -276,9 +279,9 @@ def create_article():
         \item The \textbf{Node Package Manager (NPM)} was released in January of
             2010 to facilitate publishing and installing \textbf{Node} packages.
         \item \textbf{NPM} has transcended its original intent to become a
-            general purpose \textbf{JavaScript} package manager.
-        \item \textbf{Alshayun} doesn't use \textbf{Node} per se, but is heavily
-            dependant on \textbf{NPM}.
+            general-purpose \textbf{JavaScript} package manager.
+        \item \textbf{Alshayun} doesn't use \textbf{Node} directly but is
+            heavily dependant on \textbf{NPM}.
     \end{itemize}
 \end{frame}
 
@@ -289,80 +292,71 @@ def create_article():
         \item \textbf{TypeScript} introduces type safety and true
             object-oriented programming constructs to \textbf{JavaScript} such
             as classes, access modifiers, and inheritance.
-        \item \textbf{TypeScript} has a compiler available for installation via
+        \item The \textbf{TypeScript} compiler is available for installation via
             \textbf{NPM}.
         \item \textbf{Alshayun} is mostly written in \textbf{TypeScript}.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Angular}
-    \begin{itemize}
-        \item \textbf{Angular} is a Web application framework developed by
-            Google and written in \textbf{TypeScript}.
-        \item \textbf{Angular} is relatively new (ca. September 2016), but based
-            on a rewrite of its older predecessor, AngularJS.
-        \item \textbf{Angular} is useful for developing responsive, single-page
-            Web applications.
-        \item \textbf{Angular} comes with a suite of development tools for
-            writing, building, testing, and deploying applications.
-        \item \textbf{Angular} is designed around the
-            \textbf{Model-View-Controller (MVC)} design pattern.
-        \item \textbf{Angular} is available for installation via \textbf{NPM}.
-        \item \textbf{Angular} provides a built-in development server for
-            prototyping purposes.
-        \item Most of \textbf{Alshayun}'s code is written for \textbf{Angular}.
+    \begin{itemize}[font=$\bullet$\scshape\bfseries]
+        \item is a Web-application framework developed by Google and written in
+            \textbf{TypeScript}.
+        \item is relatively new (ca. September 2016), but it is based on a
+            rewrite of its older predecessor, AngularJS.
+        \item is useful for developing responsive, single-page Web applications.
+        \item comes with a suite of development tools for writing, building,
+            testing, and deploying applications.
+        \item is designed around the \textbf{Model-View-Controller (MVC)} design
+            pattern.
+        \item is available for installation via \textbf{NPM}.
+        \item provides a built-in development server for prototyping purposes.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Ionic}
-    \begin{itemize}
-        \item \textbf{Ionic} is a framework for building cross-platform
-            applications in \textbf{HTML}, \textbf{CSS}, and
-            \textbf{JavaScript}.
-        \item \textbf{Ionic} supports developing an application with a single
-            codebase that deploys to Web, Android, and iOS devices.
-        \item \textbf{Ionic} is divorced from an underlying \textbf{JavaScript}
-            framework as of version 4, but support for \textbf{Angular} is
-            strong.
-        \item \textbf{Ionic} provides a collection of \textbf{HTML} tags and
-            \textbf{Angular} components that generate Web components in similar
-            style to \href{https://getbootstrap.com/}{Bootstrap}.
-        \item \textbf{Ionic} is the high-level framework that \textbf{Alshayun}
-            is written in, backed by \textbf{Angular}.
+    \begin{itemize}[font=$\bullet$\scshape\bfseries]
+        \item is a framework for building cross-platform applications in
+            \textbf{HTML}, \textbf{CSS}, and \textbf{JavaScript}.
+        \item supports developing an application with a single codebase that
+            deploys to Web, Android, and iOS devices.
+        \item is divorced from an underlying \textbf{JavaScript} framework as of
+            version 4, but support for \textbf{Angular} is strong.
+        \item provides a collection of \textbf{HTML} tags and \textbf{Angular}
+            components that generate Web components in similar style to
+            \href{https://getbootstrap.com/}{Bootstrap}.
+        \item is the high-level framework that \textbf{Alshayun} is written in,
+            backed by \textbf{Angular}.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Cordova}
-    \begin{itemize}
-        \item \textbf{Cordova} is an Apache project that provides a uniform
-            interface for generating device-dependent code for Android and iOS.
-        \item For example, \textbf{Cordova} provides a \textbf{JavaScript}
-            interface for interacting with the built-in camera of mobile
-            devices.
-        \item \textbf{Cordova} is a vital part of \textbf{Ionic} that allows
-            \textbf{Ionic} to generate its platform-dependent code from a single
-            codebase.
+    \begin{itemize}[font=$\bullet$\scshape\bfseries]
+        \item is an Apache project that provides a uniform interface for
+            generating device-dependent code for Android and iOS.
+        \item provides, e.g., a \textbf{JavaScript} interface for interacting
+            with the built-in camera of mobile devices.
+        \item is a vital part of \textbf{Ionic} that allows \textbf{Ionic} to
+            generate its platform-dependent code from a single codebase.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Flask}
-    \begin{itemize}
-        \item \textbf{Flask} is a \textbf{Python} framework for the rapid
-            development of \textbf{REST}ful \textbf{Application Programming
-            Interface (API)}s.
-        \item \textbf{Flask} allows developers to prefix \textbf{Python}
-            functions with decorators indicating the URL endpoint that triggers
-            the function, the acceptable HTTP methods, and more.
-        \item \textbf{Flask} provides a collection of helpful methods for generating HTTP
+    \begin{itemize}[font=$\bullet$\scshape\bfseries]
+        \item is a \textbf{Python} framework for the rapid development of
+            \textbf{REST}ful \textbf{Application Programming Interface (API)}s.
+        \item allows developers to prefix \textbf{Python} functions with
+            decorators indicating the URL endpoint that triggers the function,
+            the acceptable HTTP methods, and more.
+        \item provides a collection of helpful methods for generating HTTP
             responses, handling exceptions, and processing HTTP request data.
-        \item \textbf{Flask} provides a built-in development server for
-            prototyping purposes.
+        \item provides a built-in development server for prototyping purposes.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Singularity}
     \begin{itemize}
-        \item \textbf{Singularity} is a containerization software that allows
+        \item \textbf{Singularity} is containerization software that allows
             users to develop, package, and relocate full-fledged compute
             environments consisting of an operating system and software binaries
             and libraries.
@@ -443,7 +437,7 @@ def create_article():
 
 \begin{frame}{Power Efficiency}
     \begin{itemize}
-        \item The \textbf{applet}s are power hungry.
+        \item The \textbf{applet}s are power-hungry.
         \item I need to work on more caching and accessing the network only when
             necessary.
         \item Also, I should unload computationally intensive \textbf{applet}s
